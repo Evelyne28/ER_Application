@@ -1,0 +1,418 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="ERModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Ambulance">
+    <Key>
+      <PropertyRef Name="ambulanceID" />
+    </Key>
+    <Property Name="ambulanceID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="licensePlate" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="PatientAmbulance" Relationship="Self.FK__PatientAm__ambul__02FC7413" FromRole="Ambulance" ToRole="PatientAmbulance" />
+  </EntityType>
+  <EntityType Name="AmbulanceUser">
+    <Key>
+      <PropertyRef Name="ambulanceUserID" />
+    </Key>
+    <Property Name="ambulanceUserID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ssn" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="firstName" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="lastName" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="role" Type="Int32" />
+    <Property Name="userID" Type="Int32" />
+    <NavigationProperty Name="UserMode" Relationship="Self.FK__Ambulance__userI__778AC167" FromRole="AmbulanceUser" ToRole="UserMode" />
+  </EntityType>
+  <EntityType Name="Department">
+    <Key>
+      <PropertyRef Name="departmentID" />
+    </Key>
+    <Property Name="departmentID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Doctor" Relationship="Self.FK__Doctor__departme__5CD6CB2B" FromRole="Department" ToRole="Doctor" />
+  </EntityType>
+  <EntityType Name="Disease">
+    <Key>
+      <PropertyRef Name="diseaseID" />
+    </Key>
+    <Property Name="diseaseID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="categoryID" Type="Int32" />
+    <NavigationProperty Name="DiseaseCategory" Relationship="Self.FK__Disease__categor__59063A47" FromRole="Disease" ToRole="DiseaseCategory" />
+    <NavigationProperty Name="Treatment" Relationship="Self.FK__Treatment__disea__6EF57B66" FromRole="Disease" ToRole="Treatment" />
+  </EntityType>
+  <EntityType Name="DiseaseCategory">
+    <Key>
+      <PropertyRef Name="categoryID" />
+    </Key>
+    <Property Name="categoryID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Disease" Relationship="Self.FK__Disease__categor__59063A47" FromRole="DiseaseCategory" ToRole="Disease" />
+    <NavigationProperty Name="Doctor" Relationship="Self.FK__Doctor__category__5DCAEF64" FromRole="DiseaseCategory" ToRole="Doctor" />
+  </EntityType>
+  <EntityType Name="Doctor">
+    <Key>
+      <PropertyRef Name="doctorID" />
+    </Key>
+    <Property Name="doctorID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ssn" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+    <Property Name="firstName" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+    <Property Name="lastName" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+    <Property Name="role" Type="Int32" />
+    <Property Name="userID" Type="Int32" />
+    <Property Name="departmentID" Type="Int32" />
+    <Property Name="categoryID" Type="Int32" />
+    <NavigationProperty Name="Department" Relationship="Self.FK__Doctor__departme__5CD6CB2B" FromRole="Doctor" ToRole="Department" />
+    <NavigationProperty Name="DiseaseCategory" Relationship="Self.FK__Doctor__category__5DCAEF64" FromRole="Doctor" ToRole="DiseaseCategory" />
+    <NavigationProperty Name="UserMode" Relationship="Self.FK__Doctor__userID__5BE2A6F2" FromRole="Doctor" ToRole="UserMode" />
+    <NavigationProperty Name="Examination" Relationship="Self.FK__Examinati__docto__693CA210" FromRole="Doctor" ToRole="Examination" />
+    <NavigationProperty Name="Treatment" Relationship="Self.FK__Treatment__docto__6D0D32F4" FromRole="Doctor" ToRole="Treatment" />
+    <NavigationProperty Name="Surgery" Relationship="Self.SurgeryDoctor" FromRole="Doctor" ToRole="Surgery" />
+  </EntityType>
+  <EntityType Name="ER_User">
+    <Key>
+      <PropertyRef Name="erID" />
+    </Key>
+    <Property Name="erID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="userID" Type="Int32" />
+    <Property Name="ssn" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="firstName" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="lastName" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="role" Type="Int32" />
+    <NavigationProperty Name="UserMode" Relationship="Self.FK__ER_User__userID__7F2BE32F" FromRole="ER_User" ToRole="UserMode" />
+  </EntityType>
+  <EntityType Name="Examination">
+    <Key>
+      <PropertyRef Name="examinationID" />
+    </Key>
+    <Property Name="examinationID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="examinationDate" Type="DateTime" Precision="3" />
+    <Property Name="doctorID" Type="Int32" />
+    <Property Name="patientID" Type="Int32" />
+    <NavigationProperty Name="Doctor" Relationship="Self.FK__Examinati__docto__693CA210" FromRole="Examination" ToRole="Doctor" />
+    <NavigationProperty Name="Patient" Relationship="Self.FK__Examinati__patie__6A30C649" FromRole="Examination" ToRole="Patient" />
+  </EntityType>
+  <EntityType Name="Medicine">
+    <Key>
+      <PropertyRef Name="medicineID" />
+    </Key>
+    <Property Name="medicineID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Treatment" Relationship="Self.MedicineTreatment" FromRole="Medicine" ToRole="Treatment" />
+  </EntityType>
+  <EntityType Name="Patient">
+    <Key>
+      <PropertyRef Name="patientID" />
+    </Key>
+    <Property Name="patientID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ssn" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+    <Property Name="firstName" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+    <Property Name="lastName" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+    <Property Name="birthDate" Type="DateTime" Precision="3" />
+    <Property Name="patientState" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Examination" Relationship="Self.FK__Examinati__patie__6A30C649" FromRole="Patient" ToRole="Examination" />
+    <NavigationProperty Name="PatientAmbulance" Relationship="Self.FK__PatientAm__patie__02084FDA" FromRole="Patient" ToRole="PatientAmbulance" />
+    <NavigationProperty Name="Surgery" Relationship="Self.FK__Surgery__patient__628FA481" FromRole="Patient" ToRole="Surgery" />
+    <NavigationProperty Name="Treatment" Relationship="Self.FK__Treatment__patie__6E01572D" FromRole="Patient" ToRole="Treatment" />
+  </EntityType>
+  <EntityType Name="PatientAmbulance">
+    <Key>
+      <PropertyRef Name="patientID" />
+      <PropertyRef Name="ambulanceID" />
+    </Key>
+    <Property Name="patientID" Type="Int32" Nullable="false" />
+    <Property Name="ambulanceID" Type="Int32" Nullable="false" />
+    <Property Name="dateOfEvent" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="Ambulance" Relationship="Self.FK__PatientAm__ambul__02FC7413" FromRole="PatientAmbulance" ToRole="Ambulance" />
+    <NavigationProperty Name="Patient" Relationship="Self.FK__PatientAm__patie__02084FDA" FromRole="PatientAmbulance" ToRole="Patient" />
+  </EntityType>
+  <EntityType Name="Surgery">
+    <Key>
+      <PropertyRef Name="surgeryID" />
+    </Key>
+    <Property Name="surgeryID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="surgeryDate" Type="DateTime" Precision="3" />
+    <Property Name="info" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="patientID" Type="Int32" />
+    <NavigationProperty Name="Patient" Relationship="Self.FK__Surgery__patient__628FA481" FromRole="Surgery" ToRole="Patient" />
+    <NavigationProperty Name="Doctor" Relationship="Self.SurgeryDoctor" FromRole="Surgery" ToRole="Doctor" />
+  </EntityType>
+  <EntityType Name="Treatment">
+    <Key>
+      <PropertyRef Name="treatmentID" />
+    </Key>
+    <Property Name="treatmentID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="doctorID" Type="Int32" />
+    <Property Name="patientID" Type="Int32" />
+    <Property Name="diseaseID" Type="Int32" />
+    <NavigationProperty Name="Disease" Relationship="Self.FK__Treatment__disea__6EF57B66" FromRole="Treatment" ToRole="Disease" />
+    <NavigationProperty Name="Doctor" Relationship="Self.FK__Treatment__docto__6D0D32F4" FromRole="Treatment" ToRole="Doctor" />
+    <NavigationProperty Name="Patient" Relationship="Self.FK__Treatment__patie__6E01572D" FromRole="Treatment" ToRole="Patient" />
+    <NavigationProperty Name="Medicine" Relationship="Self.MedicineTreatment" FromRole="Treatment" ToRole="Medicine" />
+  </EntityType>
+  <EntityType Name="UserMode">
+    <Key>
+      <PropertyRef Name="userID" />
+    </Key>
+    <Property Name="userID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="username" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="password" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="role" Type="Int32" />
+    <NavigationProperty Name="AmbulanceUser" Relationship="Self.FK__Ambulance__userI__778AC167" FromRole="UserMode" ToRole="AmbulanceUser" />
+    <NavigationProperty Name="Doctor" Relationship="Self.FK__Doctor__userID__5BE2A6F2" FromRole="UserMode" ToRole="Doctor" />
+    <NavigationProperty Name="ER_User" Relationship="Self.FK__ER_User__userID__7F2BE32F" FromRole="UserMode" ToRole="ER_User" />
+  </EntityType>
+  <Association Name="FK__PatientAm__ambul__02FC7413">
+    <End Role="Ambulance" Type="Self.Ambulance" Multiplicity="1" />
+    <End Role="PatientAmbulance" Type="Self.PatientAmbulance" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Ambulance">
+        <PropertyRef Name="ambulanceID" />
+      </Principal>
+      <Dependent Role="PatientAmbulance">
+        <PropertyRef Name="ambulanceID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Ambulance__userI__778AC167">
+    <End Role="UserMode" Type="Self.UserMode" Multiplicity="0..1" />
+    <End Role="AmbulanceUser" Type="Self.AmbulanceUser" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UserMode">
+        <PropertyRef Name="userID" />
+      </Principal>
+      <Dependent Role="AmbulanceUser">
+        <PropertyRef Name="userID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Doctor__departme__5CD6CB2B">
+    <End Role="Department" Type="Self.Department" Multiplicity="0..1" />
+    <End Role="Doctor" Type="Self.Doctor" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Department">
+        <PropertyRef Name="departmentID" />
+      </Principal>
+      <Dependent Role="Doctor">
+        <PropertyRef Name="departmentID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Disease__categor__59063A47">
+    <End Role="DiseaseCategory" Type="Self.DiseaseCategory" Multiplicity="0..1" />
+    <End Role="Disease" Type="Self.Disease" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DiseaseCategory">
+        <PropertyRef Name="categoryID" />
+      </Principal>
+      <Dependent Role="Disease">
+        <PropertyRef Name="categoryID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Treatment__disea__6EF57B66">
+    <End Role="Disease" Type="Self.Disease" Multiplicity="0..1" />
+    <End Role="Treatment" Type="Self.Treatment" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Disease">
+        <PropertyRef Name="diseaseID" />
+      </Principal>
+      <Dependent Role="Treatment">
+        <PropertyRef Name="diseaseID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Doctor__category__5DCAEF64">
+    <End Role="DiseaseCategory" Type="Self.DiseaseCategory" Multiplicity="0..1" />
+    <End Role="Doctor" Type="Self.Doctor" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DiseaseCategory">
+        <PropertyRef Name="categoryID" />
+      </Principal>
+      <Dependent Role="Doctor">
+        <PropertyRef Name="categoryID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Doctor__userID__5BE2A6F2">
+    <End Role="UserMode" Type="Self.UserMode" Multiplicity="0..1" />
+    <End Role="Doctor" Type="Self.Doctor" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UserMode">
+        <PropertyRef Name="userID" />
+      </Principal>
+      <Dependent Role="Doctor">
+        <PropertyRef Name="userID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Examinati__docto__693CA210">
+    <End Role="Doctor" Type="Self.Doctor" Multiplicity="0..1" />
+    <End Role="Examination" Type="Self.Examination" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Doctor">
+        <PropertyRef Name="doctorID" />
+      </Principal>
+      <Dependent Role="Examination">
+        <PropertyRef Name="doctorID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Treatment__docto__6D0D32F4">
+    <End Role="Doctor" Type="Self.Doctor" Multiplicity="0..1" />
+    <End Role="Treatment" Type="Self.Treatment" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Doctor">
+        <PropertyRef Name="doctorID" />
+      </Principal>
+      <Dependent Role="Treatment">
+        <PropertyRef Name="doctorID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__ER_User__userID__7F2BE32F">
+    <End Role="UserMode" Type="Self.UserMode" Multiplicity="0..1" />
+    <End Role="ER_User" Type="Self.ER_User" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UserMode">
+        <PropertyRef Name="userID" />
+      </Principal>
+      <Dependent Role="ER_User">
+        <PropertyRef Name="userID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Examinati__patie__6A30C649">
+    <End Role="Patient" Type="Self.Patient" Multiplicity="0..1" />
+    <End Role="Examination" Type="Self.Examination" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Patient">
+        <PropertyRef Name="patientID" />
+      </Principal>
+      <Dependent Role="Examination">
+        <PropertyRef Name="patientID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__PatientAm__patie__02084FDA">
+    <End Role="Patient" Type="Self.Patient" Multiplicity="1" />
+    <End Role="PatientAmbulance" Type="Self.PatientAmbulance" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Patient">
+        <PropertyRef Name="patientID" />
+      </Principal>
+      <Dependent Role="PatientAmbulance">
+        <PropertyRef Name="patientID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Surgery__patient__628FA481">
+    <End Role="Patient" Type="Self.Patient" Multiplicity="0..1" />
+    <End Role="Surgery" Type="Self.Surgery" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Patient">
+        <PropertyRef Name="patientID" />
+      </Principal>
+      <Dependent Role="Surgery">
+        <PropertyRef Name="patientID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Treatment__patie__6E01572D">
+    <End Role="Patient" Type="Self.Patient" Multiplicity="0..1" />
+    <End Role="Treatment" Type="Self.Treatment" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Patient">
+        <PropertyRef Name="patientID" />
+      </Principal>
+      <Dependent Role="Treatment">
+        <PropertyRef Name="patientID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="MedicineTreatment">
+    <End Role="Medicine" Type="Self.Medicine" Multiplicity="*" />
+    <End Role="Treatment" Type="Self.Treatment" Multiplicity="*" />
+  </Association>
+  <Association Name="SurgeryDoctor">
+    <End Role="Doctor" Type="Self.Doctor" Multiplicity="*" />
+    <End Role="Surgery" Type="Self.Surgery" Multiplicity="*" />
+  </Association>
+  <EntityContainer Name="EREntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Ambulance" EntityType="Self.Ambulance" />
+    <EntitySet Name="AmbulanceUser" EntityType="Self.AmbulanceUser" />
+    <EntitySet Name="Department" EntityType="Self.Department" />
+    <EntitySet Name="Disease" EntityType="Self.Disease" />
+    <EntitySet Name="DiseaseCategory" EntityType="Self.DiseaseCategory" />
+    <EntitySet Name="Doctor" EntityType="Self.Doctor" />
+    <EntitySet Name="ER_User" EntityType="Self.ER_User" />
+    <EntitySet Name="Examination" EntityType="Self.Examination" />
+    <EntitySet Name="Medicine" EntityType="Self.Medicine" />
+    <EntitySet Name="Patient" EntityType="Self.Patient" />
+    <EntitySet Name="PatientAmbulance" EntityType="Self.PatientAmbulance" />
+    <EntitySet Name="Surgery" EntityType="Self.Surgery" />
+    <EntitySet Name="Treatment" EntityType="Self.Treatment" />
+    <EntitySet Name="UserMode" EntityType="Self.UserMode" />
+    <AssociationSet Name="FK__PatientAm__ambul__02FC7413" Association="Self.FK__PatientAm__ambul__02FC7413">
+      <End Role="Ambulance" EntitySet="Ambulance" />
+      <End Role="PatientAmbulance" EntitySet="PatientAmbulance" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Ambulance__userI__778AC167" Association="Self.FK__Ambulance__userI__778AC167">
+      <End Role="UserMode" EntitySet="UserMode" />
+      <End Role="AmbulanceUser" EntitySet="AmbulanceUser" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Doctor__departme__5CD6CB2B" Association="Self.FK__Doctor__departme__5CD6CB2B">
+      <End Role="Department" EntitySet="Department" />
+      <End Role="Doctor" EntitySet="Doctor" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Disease__categor__59063A47" Association="Self.FK__Disease__categor__59063A47">
+      <End Role="DiseaseCategory" EntitySet="DiseaseCategory" />
+      <End Role="Disease" EntitySet="Disease" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Treatment__disea__6EF57B66" Association="Self.FK__Treatment__disea__6EF57B66">
+      <End Role="Disease" EntitySet="Disease" />
+      <End Role="Treatment" EntitySet="Treatment" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Doctor__category__5DCAEF64" Association="Self.FK__Doctor__category__5DCAEF64">
+      <End Role="DiseaseCategory" EntitySet="DiseaseCategory" />
+      <End Role="Doctor" EntitySet="Doctor" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Doctor__userID__5BE2A6F2" Association="Self.FK__Doctor__userID__5BE2A6F2">
+      <End Role="UserMode" EntitySet="UserMode" />
+      <End Role="Doctor" EntitySet="Doctor" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Examinati__docto__693CA210" Association="Self.FK__Examinati__docto__693CA210">
+      <End Role="Doctor" EntitySet="Doctor" />
+      <End Role="Examination" EntitySet="Examination" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Treatment__docto__6D0D32F4" Association="Self.FK__Treatment__docto__6D0D32F4">
+      <End Role="Doctor" EntitySet="Doctor" />
+      <End Role="Treatment" EntitySet="Treatment" />
+    </AssociationSet>
+    <AssociationSet Name="FK__ER_User__userID__7F2BE32F" Association="Self.FK__ER_User__userID__7F2BE32F">
+      <End Role="UserMode" EntitySet="UserMode" />
+      <End Role="ER_User" EntitySet="ER_User" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Examinati__patie__6A30C649" Association="Self.FK__Examinati__patie__6A30C649">
+      <End Role="Patient" EntitySet="Patient" />
+      <End Role="Examination" EntitySet="Examination" />
+    </AssociationSet>
+    <AssociationSet Name="FK__PatientAm__patie__02084FDA" Association="Self.FK__PatientAm__patie__02084FDA">
+      <End Role="Patient" EntitySet="Patient" />
+      <End Role="PatientAmbulance" EntitySet="PatientAmbulance" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Surgery__patient__628FA481" Association="Self.FK__Surgery__patient__628FA481">
+      <End Role="Patient" EntitySet="Patient" />
+      <End Role="Surgery" EntitySet="Surgery" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Treatment__patie__6E01572D" Association="Self.FK__Treatment__patie__6E01572D">
+      <End Role="Patient" EntitySet="Patient" />
+      <End Role="Treatment" EntitySet="Treatment" />
+    </AssociationSet>
+    <AssociationSet Name="MedicineTreatment" Association="Self.MedicineTreatment">
+      <End Role="Medicine" EntitySet="Medicine" />
+      <End Role="Treatment" EntitySet="Treatment" />
+    </AssociationSet>
+    <AssociationSet Name="SurgeryDoctor" Association="Self.SurgeryDoctor">
+      <End Role="Doctor" EntitySet="Doctor" />
+      <End Role="Surgery" EntitySet="Surgery" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

@@ -1,0 +1,83 @@
+﻿body {
+    color: white;
+    background-image: url('../Images/e-learning.jpg');
+    background-size: 100%;
+    background-repeat: no-repeat;
+    font-family: 'Calibri';
+    width: 100% auto;
+    height: 100% auto;
+    background-position: center center;
+    background-attachment: fixed;
+    background-size: cover;
+  }
+
+  #outer {
+      text-align: center;
+      font-size: 25px;
+      font-weight: bold;
+  }
+
+  .container {
+    margin: 80px auto;
+    width: 640px;
+  }
+
+  .inner {
+    position: relative;
+    margin: 0 auto;
+    padding: 20px 20px 20px;
+    width: 310px;
+    border-radius: 40px;
+    background-color:rgba(0, 0, 0, 0.7);
+  }
+
+  h1 {
+    text-align: center;
+  }
+
+  input {
+    position: relative;
+    left: 22%;
+  }
+
+  button {
+    position: relative;
+    left: 40%;
+  }
+
+  #signin {
+   	text-align: center;
+  }
+  
+  input[type=submit] {
+    left: 41%;
+  }
+  
+  a{
+    color: powderblue;
+  }
+
+  a:visited {
+    color: #DEB887;
+}
+
+   #outer {
+    position: relative;
+    margin: 0 auto;
+    padding: 20px 20px 20px;
+    width: 500px;
+    border-radius: 40px;
+    background-color:rgba(0, 0, 0, 0.7);
+  }
+
+#Submit{
+	width:120px;
+	height:30px;
+	font-size: 15px;
+	font-family: 'PT Mono', sans-serif;
+	border-radius: 5px;
+	background-color:#3366FF;
+    border:none;
+    left:95px;
+	color: white;
+}

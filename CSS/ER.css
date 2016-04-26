@@ -1,0 +1,115 @@
+﻿body { 
+    width: 100%; 
+    margin:0px;
+    font-family: Helvetica,Arial;
+}
+#myTable {
+	width: 100%;
+}
+#topMenu {
+	width: 100%;
+}
+.hide {
+	width: 33%;
+	background-color: #333;
+	color: white;
+	height: 50px;
+}
+.show {
+	width: 33%;
+	background-color: red;
+	color: white;
+	height: 50px;
+}
+.amb {
+    width: 20%;
+	background-color: grey;
+	color:white;
+	height: 25px;
+}
+th:hover {
+    /*background-color: #111;*/
+    cursor: hand;
+}
+.clicked {
+	background-color: red;
+}
+table[id^='amb'] {
+	color: red;
+} 
+table[id^='amb'] th {
+	color: blue;
+}
+#dispatchDiv {
+    padding: 20px 20px 20px;
+    border-radius: 40px;
+    background-color:rgba(183, 166, 166, 1);
+}
+#dispatchTable {
+    width: 100%;
+}
+#dispatchTable td {
+    text-align: center;
+}
+#dispatchAmbList {
+    float: right;
+}
+#mapCall {
+    position: absolute;
+    right: 2px;
+    width: 500px;
+    height: 400px; 
+}
+#infoCall {
+    float: left;
+    width: 40%;
+}
+#callDiv {
+    width: 20%;
+    float: left;
+    margin-left: 2%;
+}
+#divAmb {
+    width: 30%;
+    top: 420px;
+    float: right;
+    position: relative;
+    right: -7%;
+}
+#divP {
+    width: 20%;
+    float: left;
+}
+img {
+    position: relative;
+    top: 3px;
+    margin-right: 5px;
+}
+button[id$="respond"] {
+    background: #ff0000;
+  background-image: -webkit-linear-gradient(top, #ff0000, #330f0f);
+  background-image: -moz-linear-gradient(top, #ff0000, #330f0f);
+  background-image: -ms-linear-gradient(top, #ff0000, #330f0f);
+  background-image: -o-linear-gradient(top, #ff0000, #330f0f);
+  background-image: linear-gradient(to bottom, #ff0000, #330f0f);
+  -webkit-border-radius: 60;
+  -moz-border-radius: 60;
+  border-radius: 60px;
+  font-family: Arial;
+  color: #ffffff;
+  font-size: 10px;
+  padding: 5px 15px 5px 15px;
+  text-decoration: none;
+  position: relative;
+  top: 2px;
+}
+
+button[id$="respond"]:hover {
+   background: #e01b1b;
+  background-image: -webkit-linear-gradient(top, #e01b1b, #f23333);
+  background-image: -moz-linear-gradient(top, #e01b1b, #f23333);
+  background-image: -ms-linear-gradient(top, #e01b1b, #f23333);
+  background-image: -o-linear-gradient(top, #e01b1b, #f23333);
+  background-image: linear-gradient(to bottom, #e01b1b, #f23333);
+  text-decoration: none;
+}

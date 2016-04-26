@@ -1,0 +1,161 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="ERModelStoreContainer" CdmEntityContainer="EREntities">
+    <EntitySetMapping Name="Ambulance">
+      <EntityTypeMapping TypeName="ERModel.Ambulance">
+        <MappingFragment StoreEntitySet="Ambulance">
+          <ScalarProperty Name="ambulanceID" ColumnName="ambulanceID" />
+          <ScalarProperty Name="licensePlate" ColumnName="licensePlate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="AmbulanceUser">
+      <EntityTypeMapping TypeName="ERModel.AmbulanceUser">
+        <MappingFragment StoreEntitySet="AmbulanceUser">
+          <ScalarProperty Name="ambulanceUserID" ColumnName="ambulanceUserID" />
+          <ScalarProperty Name="ssn" ColumnName="ssn" />
+          <ScalarProperty Name="firstName" ColumnName="firstName" />
+          <ScalarProperty Name="lastName" ColumnName="lastName" />
+          <ScalarProperty Name="role" ColumnName="role" />
+          <ScalarProperty Name="userID" ColumnName="userID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Department">
+      <EntityTypeMapping TypeName="ERModel.Department">
+        <MappingFragment StoreEntitySet="Department">
+          <ScalarProperty Name="departmentID" ColumnName="departmentID" />
+          <ScalarProperty Name="name" ColumnName="name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Disease">
+      <EntityTypeMapping TypeName="ERModel.Disease">
+        <MappingFragment StoreEntitySet="Disease">
+          <ScalarProperty Name="diseaseID" ColumnName="diseaseID" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="categoryID" ColumnName="categoryID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DiseaseCategory">
+      <EntityTypeMapping TypeName="ERModel.DiseaseCategory">
+        <MappingFragment StoreEntitySet="DiseaseCategory">
+          <ScalarProperty Name="categoryID" ColumnName="categoryID" />
+          <ScalarProperty Name="name" ColumnName="name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Doctor">
+      <EntityTypeMapping TypeName="ERModel.Doctor">
+        <MappingFragment StoreEntitySet="Doctor">
+          <ScalarProperty Name="doctorID" ColumnName="doctorID" />
+          <ScalarProperty Name="ssn" ColumnName="ssn" />
+          <ScalarProperty Name="firstName" ColumnName="firstName" />
+          <ScalarProperty Name="lastName" ColumnName="lastName" />
+          <ScalarProperty Name="role" ColumnName="role" />
+          <ScalarProperty Name="userID" ColumnName="userID" />
+          <ScalarProperty Name="departmentID" ColumnName="departmentID" />
+          <ScalarProperty Name="categoryID" ColumnName="categoryID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ER_User">
+      <EntityTypeMapping TypeName="ERModel.ER_User">
+        <MappingFragment StoreEntitySet="ER_User">
+          <ScalarProperty Name="erID" ColumnName="erID" />
+          <ScalarProperty Name="userID" ColumnName="userID" />
+          <ScalarProperty Name="ssn" ColumnName="ssn" />
+          <ScalarProperty Name="firstName" ColumnName="firstName" />
+          <ScalarProperty Name="lastName" ColumnName="lastName" />
+          <ScalarProperty Name="role" ColumnName="role" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Examination">
+      <EntityTypeMapping TypeName="ERModel.Examination">
+        <MappingFragment StoreEntitySet="Examination">
+          <ScalarProperty Name="examinationID" ColumnName="examinationID" />
+          <ScalarProperty Name="examinationDate" ColumnName="examinationDate" />
+          <ScalarProperty Name="doctorID" ColumnName="doctorID" />
+          <ScalarProperty Name="patientID" ColumnName="patientID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Medicine">
+      <EntityTypeMapping TypeName="ERModel.Medicine">
+        <MappingFragment StoreEntitySet="Medicine">
+          <ScalarProperty Name="medicineID" ColumnName="medicineID" />
+          <ScalarProperty Name="name" ColumnName="name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Patient">
+      <EntityTypeMapping TypeName="ERModel.Patient">
+        <MappingFragment StoreEntitySet="Patient">
+          <ScalarProperty Name="patientID" ColumnName="patientID" />
+          <ScalarProperty Name="ssn" ColumnName="ssn" />
+          <ScalarProperty Name="firstName" ColumnName="firstName" />
+          <ScalarProperty Name="lastName" ColumnName="lastName" />
+          <ScalarProperty Name="birthDate" ColumnName="birthDate" />
+          <ScalarProperty Name="patientState" ColumnName="patientState" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PatientAmbulance">
+      <EntityTypeMapping TypeName="ERModel.PatientAmbulance">
+        <MappingFragment StoreEntitySet="PatientAmbulance">
+          <ScalarProperty Name="patientID" ColumnName="patientID" />
+          <ScalarProperty Name="ambulanceID" ColumnName="ambulanceID" />
+          <ScalarProperty Name="dateOfEvent" ColumnName="dateOfEvent" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Surgery">
+      <EntityTypeMapping TypeName="ERModel.Surgery">
+        <MappingFragment StoreEntitySet="Surgery">
+          <ScalarProperty Name="surgeryID" ColumnName="surgeryID" />
+          <ScalarProperty Name="surgeryDate" ColumnName="surgeryDate" />
+          <ScalarProperty Name="info" ColumnName="info" />
+          <ScalarProperty Name="patientID" ColumnName="patientID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Treatment">
+      <EntityTypeMapping TypeName="ERModel.Treatment">
+        <MappingFragment StoreEntitySet="Treatment">
+          <ScalarProperty Name="treatmentID" ColumnName="treatmentID" />
+          <ScalarProperty Name="doctorID" ColumnName="doctorID" />
+          <ScalarProperty Name="patientID" ColumnName="patientID" />
+          <ScalarProperty Name="diseaseID" ColumnName="diseaseID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="UserMode">
+      <EntityTypeMapping TypeName="ERModel.UserMode">
+        <MappingFragment StoreEntitySet="UserMode">
+          <ScalarProperty Name="userID" ColumnName="userID" />
+          <ScalarProperty Name="username" ColumnName="username" />
+          <ScalarProperty Name="password" ColumnName="password" />
+          <ScalarProperty Name="role" ColumnName="role" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="MedicineTreatment" TypeName="ERModel.MedicineTreatment" StoreEntitySet="MedicineTreatment">
+      <EndProperty Name="Medicine">
+        <ScalarProperty Name="medicineID" ColumnName="medicineID" />
+      </EndProperty>
+      <EndProperty Name="Treatment">
+        <ScalarProperty Name="treatmentID" ColumnName="treatmentID" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="SurgeryDoctor" TypeName="ERModel.SurgeryDoctor" StoreEntitySet="SurgeryDoctor">
+      <EndProperty Name="Doctor">
+        <ScalarProperty Name="doctorID" ColumnName="doctorID" />
+      </EndProperty>
+      <EndProperty Name="Surgery">
+        <ScalarProperty Name="surgeryID" ColumnName="surgeryID" />
+      </EndProperty>
+    </AssociationSetMapping>
+  </EntityContainerMapping>
+</Mapping>
