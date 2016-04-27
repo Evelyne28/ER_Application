@@ -43,11 +43,11 @@
             <table id="infoTable">
                 <tr>
                     <th>Address</th>
-                    <td id="itAddress"> <input type="text" name="addressInput" id="addressInput"/></td>
+                    <td id="itAddress"> <textarea id="addressInput" name="addressInput" rows="4" cols="50"></textarea></td>
                 </tr>
                 <tr>
                     <th>Caller Location</th>
-                    <td id="itCLocation"> <input type="text" name="cLocationInput" id="cLocationInput"/> </td>
+                    <td id="itCLocation"> <textarea id="cLocationInput" name="cLocationInput" rows="4" cols="50"></textarea> </td>
                 </tr>
                 <tr>
                     <th>Phone</th>
@@ -59,15 +59,15 @@
                 </tr>
                 <tr>
                     <th>Patient Location</th>
-                    <td id="idPLocation"> <input type="text" name="pLocationInput" id="pLocationInput"/></td>
+                    <td id="idPLocation"> <textarea id="pLocationInput" name="pLocationInput" rows="4" cols="50"></textarea></td>
                 </tr>
                 <tr>
                     <th>Patient State</th>
-                    <td id="itPState"> <input type="text" name="pStateInput" id="pStateInput"/> </td>
+                    <td id="itPState"> <textarea id="pStateInput" name="pStateInput" rows="4" cols="50"></textarea> </td>
                 </tr>
                 <tr>
                     <th>Patient General Info</th>
-                    <td id="itPInfo"> <input type="text" name="pInfoInput" id="pInfoInput"/> </td>
+                    <td id="itPInfo"> <textarea id="pInfoInput" name="pInfoInput" rows="4" cols="50"></textarea> </td>
                 </tr>
             </table>
         </div>
@@ -152,6 +152,7 @@
     <!--Add script to update the page and send messages.-->
     <script type="text/javascript">
         var map;
+        var geocoder;
         function initialize() {
             var latlng = new google.maps.LatLng(46.765647, 23.587470);
             var myOptions = {
@@ -161,6 +162,7 @@
             };
             map = new google.maps.Map(document.getElementById("mapCall"),
                     myOptions);
+            geocoder = new google.maps.Geocoder();
 
             //var marker = new google.maps.Marker({
             //    position: latlng,
@@ -240,7 +242,9 @@
 
             chat.client.sendPosition = function (pos, number) {
                 var ll = pos.split(',');
-                var latlng = new google.maps.LatLng(parseFloat(ll[0]), parseFloat(ll[1]));
+                var lat = parseFloat(ll[0]);
+                var lng = parseFloat(ll[1]);
+                var latlng = new google.maps.LatLng(lat, lng);
                 var marker = new google.maps.Marker({
                     position: latlng,
                     map: map,
@@ -253,6 +257,32 @@
                 marker.addListener('click', function () {
                     infowindow.open(map, marker);
                 });
+
+                geocoder.geocode({
+                    'latLng': latlng
+                }, function (results, status) {
+                    //document.getElementById("addressInput").innerHTML = '' + (results[4].formatted_address); + ''
+                    console.log(results[4].formatted_addres);
+                    //Check result 0
+                    var result = results[0];
+                    //look for locality tag and administrative_area_level_1
+                    var city = "";
+                    var street = "";
+                    var streetNr = "";
+                    for (var i = 0, len = result.address_components.length; i < len; i++) {
+                        var ac = result.address_components[i];
+                        if (ac.types.indexOf("street_number") >= 0) streetNr = ac.long_name;
+                        if (ac.types.indexOf("route") >= 0) street = ac.long_name;
+                        if (ac.types.indexOf("locality") >= 0) city = ac.long_name;
+                    }
+                    console.log(pos);
+                    console.log(street + " " + streetNr + " " + city);
+                    //only report if we got Good Stuff
+                    if (city != '' && street != '' && streetNr != '') {
+                        $("#addressInput").val(street + " " + streetNr + " " + city);
+                    }
+                });
+                $("cPhoneInput").val(number);
                 
                 
                 //$('#img' + number).hide();
@@ -269,7 +299,15 @@
                 
                 $("button[id^='dispAmb']").click(function () {
                     alert("ba");
+                    //var address = $("#addressInput").val();
+                    //var cLocation = $("#cLocationInput").val();
+                    //var cPhone = $("#cPhoneInput").val();
+                    //var cName = $("#cNameInput").val();
+                    //var pLocation = $("#pLocationInput").val();
+                    //var pState = $("#pStateInput").val();
+                    //var pInfo = $("#pInfoInput").val();
                     chat.server.sendTo(username, "hello", "amb1");
+
                 });
 
                 chat.client.methodName = function (name, patient) {

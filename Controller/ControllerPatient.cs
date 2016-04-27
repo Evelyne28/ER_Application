@@ -21,6 +21,11 @@ namespace ER_application.Controller
             //repository.createPatient(p);
         }
 
+        public void createIncident(Incident i)
+        {
+            repository.createIncident(i);
+        }
+
         public List<Patient> readPatients()
         {
             return repository.readPatients();

@@ -10,6 +10,7 @@ namespace ER_application.Repository
     interface IRepositoryPatient
     {
         void createPatient(Patient p);
+        void createIncident(Incident i);
         List<Patient> readPatients();
         int getPatientID(String ssn);
         List<Incident> readIncidents();

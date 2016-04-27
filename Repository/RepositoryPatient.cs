@@ -20,6 +20,12 @@ namespace ER_application.Repository
             context.SaveChanges();
         }
 
+        public void createIncident(Incident i)
+        {
+            context.Incident.Add(i);
+            context.SaveChanges();
+        }
+
         public List<Patient> readPatients()
         {
             List<Patient> patients = new List<Patient>();

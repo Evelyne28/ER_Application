@@ -46,6 +46,13 @@ namespace ER_application.Web_Forms
             return ctrl.readIncidents().ToArray();
         }
 
+        [WebMethod]
+        public static void createIncident(string address, string cLocation, string cNumber, string cName,
+                                          string location, string pLocation, string pState, string pInfo, int resolved)
+        {
+            Incident i = new Incident(DateTime.Now, address, cLocation, cNumber, cName, location, pLocation, pState, pInfo, "", resolved);
+        }
+
         public void display1()
         {
             HtmlGenericControl ul = new HtmlGenericControl("ul");

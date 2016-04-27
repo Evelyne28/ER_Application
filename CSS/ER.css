@@ -85,6 +85,9 @@ img {
     top: 3px;
     margin-right: 5px;
 }
+#cPhoneInput, #cNameInput {
+    width: 99%;
+}
 button[id$="respond"] {
     background: #ff0000;
   background-image: -webkit-linear-gradient(top, #ff0000, #330f0f);

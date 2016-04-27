@@ -33,5 +33,21 @@ namespace ER_application.Models
         public Nullable<int> resolved { get; set; }
     
         public virtual ICollection<PatientAmbulance> PatientAmbulance { get; set; }
+
+        public Incident(DateTime d, string address, string cLocation, string cPhone, string cName, string locationGPS,
+                        string pLocation, string pState, string pInfo, string description, int resolved)
+        {
+            this.dateOfEvent = d;
+            this.address = address;
+            this.callerLocation = cLocation;
+            this.callerPhone = cPhone;
+            this.callerName = cName;
+            this.locationGPS = locationGPS;
+            this.patientLocation = pLocation;
+            this.patientState = pState;
+            this.patientInfo = pInfo;
+            this.description = description;
+            this.resolved = resolved;
+        }
     }
 }

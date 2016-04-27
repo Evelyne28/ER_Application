@@ -10,6 +10,7 @@ namespace ER_application.Controller
     public interface IControllerPatient
     {
         void createPatient(String firstName, String lastName, String ssn, DateTime birthDate);
+        void createIncident(Incident i);
         List<Patient> readPatients();
         int getPatientID(String ssn);
         List<Incident> readIncidents();
