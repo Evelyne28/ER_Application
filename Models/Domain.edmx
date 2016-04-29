@@ -41,11 +41,10 @@
           </Key>
           <Property Name="incidentID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="dateOfEvent" Type="datetime" />
-          <Property Name="address" Type="varchar" MaxLength="100" />
+          <Property Name="locationGPS" Type="varchar" MaxLength="100" />
           <Property Name="callerLocation" Type="varchar" MaxLength="100" />
           <Property Name="callerPhone" Type="varchar" MaxLength="20" />
           <Property Name="callerName" Type="varchar" MaxLength="45" />
-          <Property Name="locationGPS" Type="varchar" MaxLength="25" />
           <Property Name="patientLocation" Type="varchar" MaxLength="100" />
           <Property Name="patientState" Type="varchar" MaxLength="100" />
           <Property Name="patientInfo" Type="varchar" MaxLength="100" />
@@ -123,7 +122,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__PatientAm__ambul__65370702">
+        <Association Name="FK__PatientAm__ambul__756D6ECB">
           <End Role="Ambulance" Type="Self.Ambulance" Multiplicity="1" />
           <End Role="PatientAmbulance" Type="Self.PatientAmbulance" Multiplicity="*" />
           <ReferentialConstraint>
@@ -135,7 +134,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__PatientAm__incid__662B2B3B">
+        <Association Name="FK__PatientAm__incid__76619304">
           <End Role="Incident" Type="Self.Incident" Multiplicity="1" />
           <End Role="PatientAmbulance" Type="Self.PatientAmbulance" Multiplicity="*" />
           <ReferentialConstraint>
@@ -147,7 +146,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__PatientAm__patie__6442E2C9">
+        <Association Name="FK__PatientAm__patie__74794A92">
           <End Role="Patient" Type="Self.Patient" Multiplicity="1" />
           <End Role="PatientAmbulance" Type="Self.PatientAmbulance" Multiplicity="*" />
           <ReferentialConstraint>
@@ -176,15 +175,15 @@
             <End Role="UserMode" EntitySet="UserMode" />
             <End Role="ER_User" EntitySet="ER_User" />
           </AssociationSet>
-          <AssociationSet Name="FK__PatientAm__ambul__65370702" Association="Self.FK__PatientAm__ambul__65370702">
+          <AssociationSet Name="FK__PatientAm__ambul__756D6ECB" Association="Self.FK__PatientAm__ambul__756D6ECB">
             <End Role="Ambulance" EntitySet="Ambulance" />
             <End Role="PatientAmbulance" EntitySet="PatientAmbulance" />
           </AssociationSet>
-          <AssociationSet Name="FK__PatientAm__incid__662B2B3B" Association="Self.FK__PatientAm__incid__662B2B3B">
+          <AssociationSet Name="FK__PatientAm__incid__76619304" Association="Self.FK__PatientAm__incid__76619304">
             <End Role="Incident" EntitySet="Incident" />
             <End Role="PatientAmbulance" EntitySet="PatientAmbulance" />
           </AssociationSet>
-          <AssociationSet Name="FK__PatientAm__patie__6442E2C9" Association="Self.FK__PatientAm__patie__6442E2C9">
+          <AssociationSet Name="FK__PatientAm__patie__74794A92" Association="Self.FK__PatientAm__patie__74794A92">
             <End Role="Patient" EntitySet="Patient" />
             <End Role="PatientAmbulance" EntitySet="PatientAmbulance" />
           </AssociationSet>
@@ -201,7 +200,7 @@
           <Property Name="ambulanceID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="licensePlate" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="state" Type="Int32" />
-          <NavigationProperty Name="PatientAmbulance" Relationship="Self.FK__PatientAm__ambul__65370702" FromRole="Ambulance" ToRole="PatientAmbulance" />
+          <NavigationProperty Name="PatientAmbulance" Relationship="Self.FK__PatientAm__ambul__756D6ECB" FromRole="Ambulance" ToRole="PatientAmbulance" />
         </EntityType>
         <EntityType Name="AmbulanceUser">
           <Key>
@@ -233,17 +232,16 @@
           </Key>
           <Property Name="incidentID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="dateOfEvent" Type="DateTime" Precision="3" />
-          <Property Name="address" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="locationGPS" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="callerLocation" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="callerPhone" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="callerName" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
-          <Property Name="locationGPS" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
           <Property Name="patientLocation" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="patientState" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="patientInfo" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="description" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
           <Property Name="resolved" Type="Int32" />
-          <NavigationProperty Name="PatientAmbulance" Relationship="Self.FK__PatientAm__incid__662B2B3B" FromRole="Incident" ToRole="PatientAmbulance" />
+          <NavigationProperty Name="PatientAmbulance" Relationship="Self.FK__PatientAm__incid__76619304" FromRole="Incident" ToRole="PatientAmbulance" />
         </EntityType>
         <EntityType Name="Patient">
           <Key>
@@ -262,7 +260,7 @@
           <Property Name="country" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="phone" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="patientState" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="PatientAmbulance" Relationship="Self.FK__PatientAm__patie__6442E2C9" FromRole="Patient" ToRole="PatientAmbulance" />
+          <NavigationProperty Name="PatientAmbulance" Relationship="Self.FK__PatientAm__patie__74794A92" FromRole="Patient" ToRole="PatientAmbulance" />
         </EntityType>
         <EntityType Name="PatientAmbulance">
           <Key>
@@ -273,9 +271,9 @@
           <Property Name="patientID" Type="Int32" Nullable="false" />
           <Property Name="ambulanceID" Type="Int32" Nullable="false" />
           <Property Name="incidentID" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Ambulance" Relationship="Self.FK__PatientAm__ambul__65370702" FromRole="PatientAmbulance" ToRole="Ambulance" />
-          <NavigationProperty Name="Incident" Relationship="Self.FK__PatientAm__incid__662B2B3B" FromRole="PatientAmbulance" ToRole="Incident" />
-          <NavigationProperty Name="Patient" Relationship="Self.FK__PatientAm__patie__6442E2C9" FromRole="PatientAmbulance" ToRole="Patient" />
+          <NavigationProperty Name="Ambulance" Relationship="Self.FK__PatientAm__ambul__756D6ECB" FromRole="PatientAmbulance" ToRole="Ambulance" />
+          <NavigationProperty Name="Incident" Relationship="Self.FK__PatientAm__incid__76619304" FromRole="PatientAmbulance" ToRole="Incident" />
+          <NavigationProperty Name="Patient" Relationship="Self.FK__PatientAm__patie__74794A92" FromRole="PatientAmbulance" ToRole="Patient" />
         </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
@@ -298,7 +296,7 @@
           <NavigationProperty Name="AmbulanceUser" Relationship="Self.FK__Ambulance__userI__3D2915A8" FromRole="UserMode" ToRole="AmbulanceUser" />
           <NavigationProperty Name="ER_User" Relationship="Self.FK__ER_User__userID__3864608B" FromRole="UserMode" ToRole="ER_User" />
         </EntityType>
-        <Association Name="FK__PatientAm__ambul__65370702">
+        <Association Name="FK__PatientAm__ambul__756D6ECB">
           <End Role="Ambulance" Type="Self.Ambulance" Multiplicity="1" />
           <End Role="PatientAmbulance" Type="Self.PatientAmbulance" Multiplicity="*" />
           <ReferentialConstraint>
@@ -334,7 +332,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__PatientAm__incid__662B2B3B">
+        <Association Name="FK__PatientAm__incid__76619304">
           <End Role="Incident" Type="Self.Incident" Multiplicity="1" />
           <End Role="PatientAmbulance" Type="Self.PatientAmbulance" Multiplicity="*" />
           <ReferentialConstraint>
@@ -346,7 +344,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__PatientAm__patie__6442E2C9">
+        <Association Name="FK__PatientAm__patie__74794A92">
           <End Role="Patient" Type="Self.Patient" Multiplicity="1" />
           <End Role="PatientAmbulance" Type="Self.PatientAmbulance" Multiplicity="*" />
           <ReferentialConstraint>
@@ -367,7 +365,7 @@
           <EntitySet Name="PatientAmbulance" EntityType="Self.PatientAmbulance" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
           <EntitySet Name="UserMode" EntityType="Self.UserMode" />
-          <AssociationSet Name="FK__PatientAm__ambul__65370702" Association="Self.FK__PatientAm__ambul__65370702">
+          <AssociationSet Name="FK__PatientAm__ambul__756D6ECB" Association="Self.FK__PatientAm__ambul__756D6ECB">
             <End Role="Ambulance" EntitySet="Ambulance" />
             <End Role="PatientAmbulance" EntitySet="PatientAmbulance" />
           </AssociationSet>
@@ -379,11 +377,11 @@
             <End Role="UserMode" EntitySet="UserMode" />
             <End Role="ER_User" EntitySet="ER_User" />
           </AssociationSet>
-          <AssociationSet Name="FK__PatientAm__incid__662B2B3B" Association="Self.FK__PatientAm__incid__662B2B3B">
+          <AssociationSet Name="FK__PatientAm__incid__76619304" Association="Self.FK__PatientAm__incid__76619304">
             <End Role="Incident" EntitySet="Incident" />
             <End Role="PatientAmbulance" EntitySet="PatientAmbulance" />
           </AssociationSet>
-          <AssociationSet Name="FK__PatientAm__patie__6442E2C9" Association="Self.FK__PatientAm__patie__6442E2C9">
+          <AssociationSet Name="FK__PatientAm__patie__74794A92" Association="Self.FK__PatientAm__patie__74794A92">
             <End Role="Patient" EntitySet="Patient" />
             <End Role="PatientAmbulance" EntitySet="PatientAmbulance" />
           </AssociationSet>
@@ -432,11 +430,10 @@
               <MappingFragment StoreEntitySet="Incident">
                 <ScalarProperty Name="incidentID" ColumnName="incidentID" />
                 <ScalarProperty Name="dateOfEvent" ColumnName="dateOfEvent" />
-                <ScalarProperty Name="address" ColumnName="address" />
+                <ScalarProperty Name="locationGPS" ColumnName="locationGPS" />
                 <ScalarProperty Name="callerLocation" ColumnName="callerLocation" />
                 <ScalarProperty Name="callerPhone" ColumnName="callerPhone" />
                 <ScalarProperty Name="callerName" ColumnName="callerName" />
-                <ScalarProperty Name="locationGPS" ColumnName="locationGPS" />
                 <ScalarProperty Name="patientLocation" ColumnName="patientLocation" />
                 <ScalarProperty Name="patientState" ColumnName="patientState" />
                 <ScalarProperty Name="patientInfo" ColumnName="patientInfo" />

@@ -10,14 +10,14 @@ namespace ER_application.Web_Forms
 {
     public partial class Ambulance : System.Web.UI.Page
     {
-        public IControllerPatient controller;
+        public IControllerDispatcher controller;
         String ssn = "";
 
         protected void Page_Load(object sender, EventArgs e)
         {
             String username = Session["userName"].ToString();
             welcome.InnerHtml = "Welcome " + username;
-            controller = new ControllerPatient();
+            controller = new ControllerDispatcher();
         }
 
         protected void btn_Add_Click(object sender, EventArgs e)

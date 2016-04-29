@@ -180,12 +180,6 @@
     <Content Include="Web_Forms\Login.aspx" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ChatHub.cs" />
-    <Compile Include="Controller\ControllerUser.cs" />
-    <Compile Include="Controller\ControllerPatient.cs" />
-    <Compile Include="Controller\IControllerPatient.cs" />
-    <Compile Include="Controller\IControllerUser.cs" />
-    <Compile Include="Controller\ServerController.cs" />
     <Compile Include="Models\Ambulance.cs">
       <DependentUpon>Domain.tt</DependentUpon>
     </Compile>
@@ -225,12 +219,18 @@
     <Compile Include="Models\UserMode.cs">
       <DependentUpon>Domain.tt</DependentUpon>
     </Compile>
+    <Compile Include="Services\ChatHub.cs" />
+    <Compile Include="Controller\ControllerUser.cs" />
+    <Compile Include="Controller\ControllerDispatcher.cs" />
+    <Compile Include="Controller\IControllerDispatcher.cs" />
+    <Compile Include="Controller\IControllerUser.cs" />
+    <Compile Include="Controller\ServerController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Repository\IRepositoryPatient.cs" />
+    <Compile Include="Repository\IRepositoryDispatcher.cs" />
     <Compile Include="Repository\IRepositoryUser.cs" />
     <Compile Include="Repository\RepositoryUser.cs" />
-    <Compile Include="Repository\RepositoryPatient.cs" />
-    <Compile Include="ServerWorker.cs" />
+    <Compile Include="Repository\RepositoryDispatcher.cs" />
+    <Compile Include="Services\ServerWorker.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="Web_Forms\Ambulance.aspx.cs">
       <DependentUpon>Ambulance.aspx</DependentUpon>

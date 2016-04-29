@@ -40,9 +40,10 @@
             </ul>
         </div>--%>
         <div id="infoCall">
+            <input type="hidden" name="hiddenId" id="hiddenId"/>
             <table id="infoTable">
                 <tr>
-                    <th>Address</th>
+                    <th>Adresa GPS</th>
                     <td id="itAddress"> <textarea id="addressInput" name="addressInput" rows="4" cols="50"></textarea></td>
                 </tr>
                 <tr>
@@ -50,7 +51,7 @@
                     <td id="itCLocation"> <textarea id="cLocationInput" name="cLocationInput" rows="4" cols="50"></textarea> </td>
                 </tr>
                 <tr>
-                    <th>Phone</th>
+                    <th>Telefon</th>
                     <td id="itCPhone"> <input type="text" name="cPhoneInput" id="cPhoneInput"/></td>
                 </tr>
                 <tr>
@@ -58,16 +59,20 @@
                     <td id="itCName"> <input type="text" name="cNameInput" id="cNameInput"/></td>
                 </tr>
                 <tr>
-                    <th>Patient Location</th>
+                    <th>Locatie pacient</th>
                     <td id="idPLocation"> <textarea id="pLocationInput" name="pLocationInput" rows="4" cols="50"></textarea></td>
                 </tr>
                 <tr>
-                    <th>Patient State</th>
-                    <td id="itPState"> <textarea id="pStateInput" name="pStateInput" rows="4" cols="50"></textarea> </td>
+                    <th>Stare pacient</th>
+                    <td id="idPState"> <textarea id="pStateInput" name="pStateInput" rows="4" cols="50"></textarea> </td>
                 </tr>
                 <tr>
-                    <th>Patient General Info</th>
-                    <td id="itPInfo"> <textarea id="pInfoInput" name="pInfoInput" rows="4" cols="50"></textarea> </td>
+                    <th>Date pacient</th>
+                    <td id="idPInfo"> <textarea id="pInfoInput" name="pInfoInput" rows="4" cols="50"></textarea> </td>
+                </tr>
+                <tr>
+                    <th>Ce s-a intamplat</th>
+                    <td id="idDesc"> <textarea id="descInput" name="descInput" rows="4" cols="50"></textarea> </td>
                 </tr>
             </table>
         </div>
@@ -200,12 +205,15 @@
             };
 
             chat.client.showNumber = function (number) {
+                parts = number.split(';');
+                number = parts[0];
                 $("#callTable").append("<tr><th id=th" + number + "><img id=img" + number + " src='../Images/blink.gif'>" + number + "</th><td><button id='" + number + "respond'> Respond </button></td></tr>");
                 $('[id^=' + number + ']').click(function (ev) {
                     
                     chat.server.sendResponse("yes;" + number);
                     $("#infoCall").show();
-
+                    $("#hiddenId").val(parts[1]);
+                    console.log($("#hiddenId").val(parts[1]));
                     $("#img" + number).remove();
                     $('#th' + number).prepend('<img id="img"' + number + ' src="../Images/white.png" />');
                     $.ajax({
@@ -226,6 +234,28 @@
                             })
                             $("button[id^='dispAmb']").click(function (e) {
                                 alert("ba");
+                                var id = parts[1];
+                                var address = $("#addressInput").val();
+                                var cLocation = $("#cLocationInput").val();
+                                var cName = $("#cNameInput").val();
+                                var pLocation = $("#pLocationInput").val();
+                                var pState = $("#pStateInput").val();
+                                var pInfo = $("#pInfoInput").val();
+                                var description = $("#descInput").val();
+                                $.ajax({
+                                    type: "POST",
+                                    data: '{id:"' + id + '", gps:"' + address + '", cLocation:"' + cLocation + '", cName:"' + cName
+                                           + '", pLocation:"' + pLocation + '", pState:"' + pState + '", pInfo:"' + pInfo + '", description:"' + description + '"}',
+                                    url: "ER.aspx/updateIncident",
+                                    contentType: "application/json; charset=utf-8",
+                                    dataType: "json",
+                                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                                        alert(textStatus);
+                                    },
+                                    success: function (result) {
+                                        alert("success");
+                                    }
+                                });
                                 chat.server.sendTo(username, "hello", "amb1");
                                 e.preventDefault();
                             });
@@ -261,11 +291,7 @@
                 geocoder.geocode({
                     'latLng': latlng
                 }, function (results, status) {
-                    //document.getElementById("addressInput").innerHTML = '' + (results[4].formatted_address); + ''
-                    console.log(results[4].formatted_addres);
-                    //Check result 0
                     var result = results[0];
-                    //look for locality tag and administrative_area_level_1
                     var city = "";
                     var street = "";
                     var streetNr = "";
@@ -275,14 +301,12 @@
                         if (ac.types.indexOf("route") >= 0) street = ac.long_name;
                         if (ac.types.indexOf("locality") >= 0) city = ac.long_name;
                     }
-                    console.log(pos);
-                    console.log(street + " " + streetNr + " " + city);
-                    //only report if we got Good Stuff
                     if (city != '' && street != '' && streetNr != '') {
                         $("#addressInput").val(street + " " + streetNr + " " + city);
                     }
                 });
-                $("cPhoneInput").val(number);
+                var parts = number.split(';');
+                $("#cPhoneInput").val(parts[0]);
                 
                 
                 //$('#img' + number).hide();
@@ -299,13 +323,7 @@
                 
                 $("button[id^='dispAmb']").click(function () {
                     alert("ba");
-                    //var address = $("#addressInput").val();
-                    //var cLocation = $("#cLocationInput").val();
-                    //var cPhone = $("#cPhoneInput").val();
-                    //var cName = $("#cNameInput").val();
-                    //var pLocation = $("#pLocationInput").val();
-                    //var pState = $("#pStateInput").val();
-                    //var pInfo = $("#pInfoInput").val();
+                    
                     chat.server.sendTo(username, "hello", "amb1");
 
                 });

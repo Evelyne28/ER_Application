@@ -7,8 +7,9 @@ using System.Net.Sockets;
 using System.Threading;
 using System.Web;
 using Microsoft.AspNet.SignalR;
+using ER_application.Controller;
 
-namespace ER_application
+namespace ER_application.Services
 {
     public class ServerWorker
     {
@@ -32,10 +33,11 @@ namespace ER_application
             public ChatHub chat;
             public static string number { get; set; }
             public string response;
+            private IControllerDispatcher controller;
             public ClientWorker(TcpClient client)
             {
                 this.client = client;
-
+                this.controller = new ControllerDispatcher();
             }
 
             public void execute(ClientWorker cl)
@@ -47,9 +49,11 @@ namespace ER_application
                     Console.WriteLine("Conexiune acceptata: " + client);
                     String cePrimesc = Rd.ReadLine();
                     String number = cePrimesc;
+                    int id = controller.createIncident(DateTime.Now, number);
                     ServerWorker.singleTonServer.map.Add(number, cl);
                     cl.response = "";
                     var hub = GlobalHost.ConnectionManager.GetHubContext<ChatHub>();
+                    number = number + ";" + id.ToString();
                     hub.Clients.All.showNumber(number);
 
                     while (true)
@@ -108,7 +112,7 @@ namespace ER_application
 
         public void ExecuteConcurrentServer()
         {
-            IPAddress adresaLocala = IPAddress.Parse("192.168.13.110");
+            IPAddress adresaLocala = IPAddress.Parse("192.168.1.4");
             TcpListener server = new TcpListener(adresaLocala, 2012);
             try
             {

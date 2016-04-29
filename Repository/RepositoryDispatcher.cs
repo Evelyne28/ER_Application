@@ -6,11 +6,11 @@ using ER_application.Models;
 
 namespace ER_application.Repository
 {
-    public class RepositoryPatient : IRepositoryPatient
+    public class RepositoryDispatcher : IRepositoryDispatcher
     {
         EREntities context;
 
-        public RepositoryPatient() {
+        public RepositoryDispatcher() {
             context = new EREntities();
         }
 
@@ -20,10 +20,38 @@ namespace ER_application.Repository
             context.SaveChanges();
         }
 
-        public void createIncident(Incident i)
+        public int createIncident(Incident i)
         {
             context.Incident.Add(i);
             context.SaveChanges();
+            return i.incidentID;
+        }
+
+        public bool updateIncident(Incident incident)
+        {
+            try
+            {
+                Incident i = context.Incident.Find(incident.incidentID);
+                if (i != null)
+                {
+                    i.locationGPS = incident.locationGPS;
+                    i.callerLocation = incident.callerLocation;
+                    i.callerName = incident.callerName;
+                    i.patientLocation = incident.patientLocation;
+                    i.patientState = incident.patientState;
+                    i.patientInfo = incident.patientInfo;
+                    i.description = incident.description;
+                    i.resolved = incident.resolved;
+                    context.SaveChanges();
+                    return true;
+                }
+            }
+            catch (Exception ex)
+            {
+                string exception = ex.InnerException.ToString();
+            } 
+            return false;
+
         }
 
         public List<Patient> readPatients()

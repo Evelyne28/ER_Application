@@ -15,7 +15,7 @@ namespace ER_application.Web_Forms
 {
     public partial class ER : System.Web.UI.Page
     {
-        static IControllerPatient ctrl = new ControllerPatient();
+        static IControllerDispatcher ctrl = new ControllerDispatcher();
         bool serverExists = false;
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -47,10 +47,10 @@ namespace ER_application.Web_Forms
         }
 
         [WebMethod]
-        public static void createIncident(string address, string cLocation, string cNumber, string cName,
-                                          string location, string pLocation, string pState, string pInfo, int resolved)
+        public static void updateIncident(string id, string gps, string cLocation, string cName,
+                                          string pLocation, string pState, string pInfo, string description)
         {
-            Incident i = new Incident(DateTime.Now, address, cLocation, cNumber, cName, location, pLocation, pState, pInfo, "", resolved);
+            bool ok = ctrl.updateIncident(Convert.ToInt32(id), gps, cLocation, cName, pLocation, pState, pInfo, description, 0);
         }
 
         public void display1()

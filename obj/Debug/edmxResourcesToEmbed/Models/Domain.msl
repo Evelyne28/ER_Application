@@ -39,11 +39,10 @@
         <MappingFragment StoreEntitySet="Incident">
           <ScalarProperty Name="incidentID" ColumnName="incidentID" />
           <ScalarProperty Name="dateOfEvent" ColumnName="dateOfEvent" />
-          <ScalarProperty Name="address" ColumnName="address" />
+          <ScalarProperty Name="locationGPS" ColumnName="locationGPS" />
           <ScalarProperty Name="callerLocation" ColumnName="callerLocation" />
           <ScalarProperty Name="callerPhone" ColumnName="callerPhone" />
           <ScalarProperty Name="callerName" ColumnName="callerName" />
-          <ScalarProperty Name="locationGPS" ColumnName="locationGPS" />
           <ScalarProperty Name="patientLocation" ColumnName="patientLocation" />
           <ScalarProperty Name="patientState" ColumnName="patientState" />
           <ScalarProperty Name="patientInfo" ColumnName="patientInfo" />

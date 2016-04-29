@@ -7,13 +7,14 @@ using ER_application.Models;
 
 namespace ER_application.Repository
 {
-    interface IRepositoryPatient
+    interface IRepositoryDispatcher
     {
         void createPatient(Patient p);
-        void createIncident(Incident i);
+        int createIncident(Incident i);
         List<Patient> readPatients();
         int getPatientID(String ssn);
         List<Incident> readIncidents();
         List<Ambulance> readAmbulances();
+        bool updateIncident(Incident i);
     }
 }

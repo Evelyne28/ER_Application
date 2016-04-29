@@ -4,9 +4,8 @@ using System.Linq;
 using System.Web;
 using Microsoft.AspNet.SignalR;
 using ER_application.Models;
-using ER_application;
 
-namespace ER_application
+namespace ER_application.Services
 {
     public class ChatHub : Hub
     {

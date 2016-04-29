@@ -21,11 +21,10 @@ namespace ER_application.Models
     
         public int incidentID { get; set; }
         public Nullable<System.DateTime> dateOfEvent { get; set; }
-        public string address { get; set; }
+        public string locationGPS { get; set; }
         public string callerLocation { get; set; }
         public string callerPhone { get; set; }
         public string callerName { get; set; }
-        public string locationGPS { get; set; }
         public string patientLocation { get; set; }
         public string patientState { get; set; }
         public string patientInfo { get; set; }
@@ -34,20 +33,10 @@ namespace ER_application.Models
     
         public virtual ICollection<PatientAmbulance> PatientAmbulance { get; set; }
 
-        public Incident(DateTime d, string address, string cLocation, string cPhone, string cName, string locationGPS,
-                        string pLocation, string pState, string pInfo, string description, int resolved)
+        public Incident(DateTime d, String callerPhone)
         {
             this.dateOfEvent = d;
-            this.address = address;
-            this.callerLocation = cLocation;
-            this.callerPhone = cPhone;
-            this.callerName = cName;
-            this.locationGPS = locationGPS;
-            this.patientLocation = pLocation;
-            this.patientState = pState;
-            this.patientInfo = pInfo;
-            this.description = description;
-            this.resolved = resolved;
+            this.callerPhone = callerPhone;
         }
     }
 }
