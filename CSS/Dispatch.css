@@ -85,6 +85,10 @@ img {
     top: 3px;
     margin-right: 5px;
 }
+.buttonOpacity {
+    opacity: 0.5;
+     pointer-events: none;
+}
 #cPhoneInput, #cNameInput {
     width: 99%;
 }

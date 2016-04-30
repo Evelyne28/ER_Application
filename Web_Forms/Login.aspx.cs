@@ -46,7 +46,7 @@ namespace ER_application.Web_Forms
                 {
                     Session["userName"] = userName;
                     Session["userPassword"] = password;
-                    Response.Redirect("ER.aspx", false);
+                    Response.Redirect("Dispatch.aspx", false);
                 }
                 else if (role == 2)
                 {

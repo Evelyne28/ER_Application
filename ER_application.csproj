@@ -128,18 +128,20 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="CSS\Ambulance.css" />
-    <Content Include="CSS\ER.css" />
+    <Content Include="CSS\Dispatch.css" />
     <Content Include="CSS\Login.css" />
     <Content Include="Images\blink.gif" />
     <Content Include="Images\GreenCircle.png" />
     <Content Include="Images\Greenlight.gif" />
+    <Content Include="Images\OrangeCircle.png" />
+    <Content Include="Images\redC.png" />
     <Content Include="Images\RedCircle.png" />
     <Content Include="Images\white.png" />
     <Content Include="packages.config" />
     <Content Include="Scripts\Ambulance.js" />
     <Content Include="Scripts\createMarker.js" />
     <Content Include="Scripts\epoly.js" />
-    <Content Include="Scripts\ER.js" />
+    <Content Include="Scripts\Dispatch.js" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
     <EntityDeploy Include="Models\Domain.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
@@ -176,7 +178,7 @@
     <Content Include="Scripts\sample3.html" />
     <Content Include="Web.config" />
     <Content Include="Web_Forms\Ambulance.aspx" />
-    <Content Include="Web_Forms\ER.aspx" />
+    <Content Include="Web_Forms\Dispatch.aspx" />
     <Content Include="Web_Forms\Login.aspx" />
   </ItemGroup>
   <ItemGroup>
@@ -239,12 +241,12 @@
     <Compile Include="Web_Forms\Ambulance.aspx.designer.cs">
       <DependentUpon>Ambulance.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Web_Forms\ER.aspx.cs">
-      <DependentUpon>ER.aspx</DependentUpon>
+    <Compile Include="Web_Forms\Dispatch.aspx.cs">
+      <DependentUpon>Dispatch.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Web_Forms\ER.aspx.designer.cs">
-      <DependentUpon>ER.aspx</DependentUpon>
+    <Compile Include="Web_Forms\Dispatch.aspx.designer.cs">
+      <DependentUpon>Dispatch.aspx</DependentUpon>
     </Compile>
     <Compile Include="Web_Forms\Login.aspx.cs">
       <DependentUpon>Login.aspx</DependentUpon>

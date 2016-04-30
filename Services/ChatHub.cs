@@ -25,6 +25,11 @@ namespace ER_application.Services
             Clients.All.receive(name, message, toWho);
         }
 
+        public void sendBusySignal(string fromWho, string number)
+        {
+            Clients.All.receiveBusySignal(fromWho, number);
+        }
+
         public void sendResponse(string response)
         {
             String number = response.Split(';')[1];
