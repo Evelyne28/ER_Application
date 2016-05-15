@@ -21,7 +21,7 @@ namespace ER_application.Services
 
         private ServerWorker() 
         {
-            IPAddress adresaLocala = IPAddress.Parse("192.168.0.13");
+            IPAddress adresaLocala = IPAddress.Parse("127.0.0.1");
             //server = new TcpListener(adresaLocala, 2012);
             //server.Start();
         }
@@ -112,7 +112,7 @@ namespace ER_application.Services
 
         public void ExecuteConcurrentServer()
         {
-            IPAddress adresaLocala = IPAddress.Parse("192.168.1.4");
+            IPAddress adresaLocala = IPAddress.Parse("127.0.0.1");
             TcpListener server = new TcpListener(adresaLocala, 2012);
             try
             {

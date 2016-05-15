@@ -131,6 +131,7 @@
     <Content Include="CSS\Dispatch.css" />
     <Content Include="CSS\Login.css" />
     <Content Include="Images\blink.gif" />
+    <Content Include="Images\checked.png" />
     <Content Include="Images\GreenCircle.png" />
     <Content Include="Images\Greenlight.gif" />
     <Content Include="Images\OrangeCircle.png" />

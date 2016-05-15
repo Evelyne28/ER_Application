@@ -20,6 +20,11 @@ namespace ER_application.Services
             Clients.All.methodName(name, p);
         }
 
+        public void sendIncident(string toWho, Incident i)
+        {
+            Clients.All.receiveIncident(toWho, i);
+        }
+
         public void sendTo(string name, string message, string toWho)
         {
             Clients.All.receive(name, message, toWho);
@@ -28,6 +33,16 @@ namespace ER_application.Services
         public void sendBusySignal(string fromWho, string number)
         {
             Clients.All.receiveBusySignal(fromWho, number);
+        }
+
+        public void sendResolved(string number)
+        {
+            Clients.All.receiveResolved(number);
+        }
+
+        public void updateAmbulanceState(string name, string state)
+        {
+            Clients.All.updateAmbulance(name, state);
         }
 
         public void sendResponse(string response)
@@ -40,5 +55,9 @@ namespace ER_application.Services
         //{
         //    Clients.All.showNumber(number);
         //}
+
+        public void sendCoordinates(string toWho, string coordinates) {
+            Clients.All.receiveCoordinates(toWho, coordinates);
+        }
     }
 }

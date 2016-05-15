@@ -6,8 +6,8 @@
 <head runat="server">
     <title></title>
     <link rel="stylesheet" href="~/CSS/Ambulance.css"/>
-    <%--<script type="text/javascript" src="http://maps.google.com/maps/api/js"></script>--%>
-    <%--<script type="text/javascript" src="http://www.geocodezip.com/scripts/v3_epoly.js"></script>--%>
+    <script type="text/javascript" src="http://maps.google.com/maps/api/js"></script>
+    <script type="text/javascript" src="http://www.geocodezip.com/scripts/v3_epoly.js"></script>
     <script type="text/javascript" src="/Scripts/jquery-2.2.1.min.js"></script>
     
 
@@ -30,17 +30,37 @@
 	<div id="dispatchDiv">
 		<table id="dispatchTable">
 			<tr>
-				<th> Location </th>
-				<td id="loc"> locatia </td>
-			</tr>
-			<tr>
-				<th> Caller name </th>
-				<td> caller </td>
-			</tr>
-			<tr>
-				<th> Description </th>
-				<td> description </td>
-			</tr>
+                <th>Adresa GPS</th>
+                <td id="itAddress"> <textarea id="addressInput" name="addressInput" rows="4" cols="50"></textarea></td>
+            </tr>
+            <tr>
+                <th>Caller Location</th>
+                <td id="itCLocation"> <textarea id="cLocationInput" name="cLocationInput" rows="4" cols="50"></textarea> </td>
+            </tr>
+            <tr>
+                <th>Telefon</th>
+                <td id="itCPhone"> <input type="text" name="cPhoneInput" id="cPhoneInput"/></td>
+            </tr>
+            <tr>
+                <th>Caller name</th>
+                <td id="itCName"> <input type="text" name="cNameInput" id="cNameInput"/></td>
+            </tr>
+            <tr>
+                <th>Locatie pacient</th>
+                <td id="idPLocation"> <textarea id="pLocationInput" name="pLocationInput" rows="4" cols="50"></textarea></td>
+            </tr>
+            <tr>
+                <th>Stare pacient</th>
+                <td id="idPState"> <textarea id="pStateInput" name="pStateInput" rows="4" cols="50"></textarea> </td>
+            </tr>
+            <tr>
+                <th>Date pacient</th>
+                <td id="idPInfo"> <textarea id="pInfoInput" name="pInfoInput" rows="4" cols="50"></textarea> </td>
+            </tr>
+            <tr>
+                <th>Ce s-a intamplat</th>
+                <td id="idDesc"> <textarea id="descInput" name="descInput" rows="4" cols="50"></textarea> </td>
+            </tr>
 		</table>
 	</div>
 	<div id="patientDiv">
@@ -72,24 +92,10 @@
 				<td> Last name </td>
 			</tr>
 		</table>
+        
 		<button id="patientButton"> Send </button>
 	</div>
-    <asp:Button class="addPatient" ID="Add" runat="server" Text="Add patient" onclick="btn_Add_Click"></asp:Button><br/> 
-    <asp:Button class="updatePatient" ID="Update" runat="server" Text="Update patient"></asp:Button><br/>   
-
-    <div>
-        <div id="sendInfo">
-            <div class="container">
-                <input type="text" id="message" />
-                <input type="button" id="sendmessage" value="Send" />
-                <input type="hidden" id="displayname" />
-                <ul id="discussion"></ul>
-            </div>
-
-        </div>
-    
-    </div>
-                <div id="map_canvas" style="width:50%;height:500px;"></div>
+        <div id="mapCall"> </div>
 
     </form>
     <!--Script references. -->
@@ -105,7 +111,7 @@
     <script type="text/javascript">
 
 
-        var username = '<%= Session["userName"] %>';
+        //var username = '<%= Session["userName"] %>';
         //var myMarker = null;
         //var i = 0;
 
@@ -172,21 +178,21 @@
             //$('#patientState').focus();
             // Start the connection.
             $.connection.hub.start().done(function () {
-                $('#Update').click(function () {
+                //$('#Update').click(function () {
                     //chat.server.send(username, myMarker.toString());
                     //chat.server.send(username, myMarker.toString() + "_" + $('#patientState').val());
-                    patient = {
-                        firstName: "Jon",
-                        lastName: "Snow",
-                        ssn: "123",
-                        birthDate: "02/02/1999"
-                    };
+                    //patient = {
+                    //    firstName: "Jon",
+                    //    lastName: "Snow",
+                    //    ssn: "123",
+                    //    birthDate: "02/02/1999"
+                    //};
                     //alert("gheo");
-                    chat.server.update(username, patient);
+                    //chat.server.update(username, patient);
                     // Call the Send method on the hub.
                     // Clear text box and reset focus for next comment.
                     //$('#patientState').val('').focus();
-                });
+                //});
                 //$('#Add').click(function () {
                 //    //chat.server.send(username, myMarker.toString());
                 //    chat.server.send(username, myMarker.toString() + "_" + $('#firstName').val());

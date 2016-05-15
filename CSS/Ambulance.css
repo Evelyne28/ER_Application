@@ -36,4 +36,17 @@
 	background-color: red;
 }
 
+#dispatchTable {
+    float: left;
+    width: 40%;
+    margin-left: 5%;
+}
+
+#mapCall {
+    position: absolute;
+    right: 2px;
+    width: 500px;
+    height: 400px; 
+}
+
 

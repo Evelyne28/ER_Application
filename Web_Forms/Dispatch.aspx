@@ -34,7 +34,10 @@
         </div>
 
         <div id="infoCall">
-            <table id="infoTable">
+            <%--<table id="infoTable">
+                <tr>
+                    <td id="itPos"> <input type="hidden" name="cPos" id="cPos"/></td>
+                </tr>
                 <tr>
                     <th>Adresa GPS</th>
                     <td id="itAddress"> <textarea id="addressInput" name="addressInput" rows="4" cols="50"></textarea></td>
@@ -67,7 +70,7 @@
                     <th>Ce s-a intamplat</th>
                     <td id="idDesc"> <textarea id="descInput" name="descInput" rows="4" cols="50"></textarea> </td>
                 </tr>
-            </table>
+            </table>--%>
         </div>
         <div id="mapCall"> </div>
 
