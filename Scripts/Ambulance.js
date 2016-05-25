@@ -102,6 +102,7 @@ $(function () {
             success: function (data) {
 
                 $.each(data.d, function (index, item) {
+                    console.log(item);
                     if (index == 'birthDate') {
                         var objDate = ToJavaScriptDate(item);
                         $('#' + index + 'Input').val(objDate);
@@ -115,6 +116,7 @@ $(function () {
                 alert("Message: " + r.Message);
             }
         })
+
         ev.preventDefault();
         return;
     });

@@ -45,8 +45,14 @@ namespace ER_application.Web_Forms
         [WebMethod]
         public static Models.Patient GetPatient()
         {
-            Models.Patient p = controller.getRandomPatient();
-            return p;
+            return controller.getRandomPatient();
+        }
+
+        [WebMethod]
+        public static List<Allergy> getPatientAllergies(String ssn)
+        {
+            List<Allergy> allergies = controller.getPatientAllergies(ssn);
+            return allergies;
         }
     }
 }

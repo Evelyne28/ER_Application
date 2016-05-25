@@ -20,5 +20,10 @@ namespace ER_application.Controller
         {
             return repository.getRandomPatient();
         }
+
+        public List<Allergy> getPatientAllergies(String ssn)
+        {
+            return repository.getPatientAllergies(ssn);
+        }
     }
 }

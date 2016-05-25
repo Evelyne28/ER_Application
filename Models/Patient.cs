@@ -42,7 +42,7 @@ namespace ER_application.Models
 
 
         public Patient(int id, string ssn, string firstName, string lastName, string gender, string address, string phone,
-                              DateTime birthDate, int age, string city, string county, string country, string zipCode, string bloodType)
+                                     DateTime birthDate, int age, string city, string county, string country, string zipCode, string bloodType)
         {
             this.patientID = id;
             this.ssn = ssn;
@@ -59,7 +59,5 @@ namespace ER_application.Models
             this.zipCode = zipCode;
             this.bloodType = bloodType;
         }
-
-
     }
 }

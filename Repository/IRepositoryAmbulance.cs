@@ -11,5 +11,6 @@ namespace ER_application.Repository
     {
         //Patient findPatientById(int id);
         Patient getRandomPatient();
+        List<Allergy> getPatientAllergies(String ssn);
     }
 }

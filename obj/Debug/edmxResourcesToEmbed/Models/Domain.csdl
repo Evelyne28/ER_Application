@@ -37,7 +37,7 @@
     <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
     <Property Name="categoryID" Type="Int32" />
     <NavigationProperty Name="DiseaseCategory" Relationship="Self.FK__Disease__categor__0E391C95" FromRole="Disease" ToRole="DiseaseCategory" />
-    <NavigationProperty Name="PatientDisease" Relationship="Self.FK__PatientDise__dID__2610A626" FromRole="Disease" ToRole="PatientDisease" />
+    <NavigationProperty Name="PatientDisease" Relationship="Self.FK__PatientDise__dID__3B0BC30C" FromRole="Disease" ToRole="PatientDisease" />
   </EntityType>
   <EntityType Name="DiseaseCategory">
     <Key>
@@ -95,7 +95,7 @@
     <Property Name="zipCode" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
     <Property Name="bloodType" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
     <NavigationProperty Name="PatientAmbulance" Relationship="Self.FK__PatientAm__patie__13F1F5EB" FromRole="Patient" ToRole="PatientAmbulance" />
-    <NavigationProperty Name="PatientDisease" Relationship="Self.FK__PatientDise__pID__251C81ED" FromRole="Patient" ToRole="PatientDisease" />
+    <NavigationProperty Name="PatientDisease" Relationship="Self.FK__PatientDise__pID__3A179ED3" FromRole="Patient" ToRole="PatientDisease" />
     <NavigationProperty Name="Allergy" Relationship="Self.PatientAllergy" FromRole="Patient" ToRole="Allergy" />
   </EntityType>
   <EntityType Name="PatientAmbulance">
@@ -120,8 +120,8 @@
     <Property Name="dID" Type="Int32" Nullable="false" />
     <Property Name="diagnosedDate" Type="DateTime" Precision="3" />
     <Property Name="endDate" Type="DateTime" Precision="3" />
-    <NavigationProperty Name="Disease" Relationship="Self.FK__PatientDise__dID__2610A626" FromRole="PatientDisease" ToRole="Disease" />
-    <NavigationProperty Name="Patient" Relationship="Self.FK__PatientDise__pID__251C81ED" FromRole="PatientDisease" ToRole="Patient" />
+    <NavigationProperty Name="Disease" Relationship="Self.FK__PatientDise__dID__3B0BC30C" FromRole="PatientDisease" ToRole="Disease" />
+    <NavigationProperty Name="Patient" Relationship="Self.FK__PatientDise__pID__3A179ED3" FromRole="PatientDisease" ToRole="Patient" />
   </EntityType>
   <EntityType Name="sysdiagrams">
     <Key>
@@ -180,7 +180,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__PatientDise__dID__2610A626">
+  <Association Name="FK__PatientDise__dID__3B0BC30C">
     <End Role="Disease" Type="Self.Disease" Multiplicity="1" />
     <End Role="PatientDisease" Type="Self.PatientDisease" Multiplicity="*" />
     <ReferentialConstraint>
@@ -228,7 +228,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__PatientDise__pID__251C81ED">
+  <Association Name="FK__PatientDise__pID__3A179ED3">
     <End Role="Patient" Type="Self.Patient" Multiplicity="1" />
     <End Role="PatientDisease" Type="Self.PatientDisease" Multiplicity="*" />
     <ReferentialConstraint>
@@ -269,7 +269,7 @@
       <End Role="DiseaseCategory" EntitySet="DiseaseCategory" />
       <End Role="Disease" EntitySet="Disease" />
     </AssociationSet>
-    <AssociationSet Name="FK__PatientDise__dID__2610A626" Association="Self.FK__PatientDise__dID__2610A626">
+    <AssociationSet Name="FK__PatientDise__dID__3B0BC30C" Association="Self.FK__PatientDise__dID__3B0BC30C">
       <End Role="Disease" EntitySet="Disease" />
       <End Role="PatientDisease" EntitySet="PatientDisease" />
     </AssociationSet>
@@ -285,7 +285,7 @@
       <End Role="Patient" EntitySet="Patient" />
       <End Role="PatientAmbulance" EntitySet="PatientAmbulance" />
     </AssociationSet>
-    <AssociationSet Name="FK__PatientDise__pID__251C81ED" Association="Self.FK__PatientDise__pID__251C81ED">
+    <AssociationSet Name="FK__PatientDise__pID__3A179ED3" Association="Self.FK__PatientDise__pID__3A179ED3">
       <End Role="Patient" EntitySet="Patient" />
       <End Role="PatientDisease" EntitySet="PatientDisease" />
     </AssociationSet>

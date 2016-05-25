@@ -20,7 +20,10 @@ namespace ER_application.Repository
             patients = getPatients();
             Random r = new Random();
             int number = r.Next(patients.Count);
-            return patients.ElementAt(number);
+            Patient p = patients.ElementAt(number);
+            List<Allergy> allergies = getPatientAllergies(p.ssn);
+            p.Allergy = allergies;
+            return p;
         }
 
         //public Patient findPatientByID(int id) {
@@ -51,6 +54,15 @@ namespace ER_application.Repository
                 }
             }
             return patients;
+        }
+
+        public List<Allergy> getPatientAllergies(String ssn)
+        {
+            List<Allergy> allergies = new List<Allergy>();
+            var patient = context.Patient.Find(1);
+            var load = context.Entry(patient).Collection(b => b.Allergy).Query().ToList();
+            allergies = load;
+            return allergies;
         }
 
         

@@ -117,10 +117,20 @@
         <div id="divCard">
             <button id="buttonCard"> Scanează cardul </button>
         </div>
+        <div id="divAllergies">
+            <p id="pAllergy"> Alergii </p>
+            <ul id="ulAllergies"> </ul>
+        </div>
+
+        <div id="mHistory">
+
+        </div>
+        
+        
 		<%--<button id="patientButton"> Send </button>--%>
 	</div>
-        
         <div id="mapCall"> </div>
+        
 
     </form>
     <!--Script references. -->
