@@ -4,20 +4,28 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="141bd9d8d69f488da0e27d8203f78c0d" Name="Diagram1">
-        <EntityTypeShape EntityType="ERModel.Ambulance" Width="1.5" PointX="0.75" PointY="1.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERModel.AmbulanceUser" Width="1.5" PointX="5" PointY="5.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERModel.ER_User" Width="1.5" PointX="5" PointY="8.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERModel.Incident" Width="1.5" PointX="0.75" PointY="6.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERModel.Patient" Width="1.5" PointX="0.75" PointY="10.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERModel.PatientAmbulance" Width="1.5" PointX="3" PointY="0.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERModel.sysdiagrams" Width="1.5" PointX="5.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERModel.UserMode" Width="1.5" PointX="2.75" PointY="6.75" IsExpanded="true" />
-        <AssociationConnector Association="ERModel.FK__PatientAm__ambul__756D6ECB" ManuallyRouted="false" />
+      <Diagram DiagramId="09389c07158c4380ae4e96b25c0ebc23" Name="Diagram1">
+        <EntityTypeShape EntityType="ERModel.Allergy" Width="1.5" PointX="0.75" PointY="4" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERModel.Ambulance" Width="1.5" PointX="3" PointY="11.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERModel.AmbulanceUser" Width="1.5" PointX="8" PointY="7.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERModel.Disease" Width="1.5" PointX="3" PointY="8.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERModel.DiseaseCategory" Width="1.5" PointX="0.75" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERModel.ER_User" Width="1.5" PointX="8" PointY="10.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERModel.Incident" Width="1.5" PointX="3" PointY="13.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERModel.Patient" Width="1.5" PointX="3" PointY="2.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERModel.PatientAmbulance" Width="1.5" PointX="5.25" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERModel.PatientDisease" Width="1.5" PointX="5.25" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERModel.sysdiagrams" Width="1.5" PointX="7.75" PointY="2" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERModel.UserMode" Width="1.5" PointX="5.75" PointY="9" IsExpanded="true" />
+        <AssociationConnector Association="ERModel.FK__PatientAm__ambul__14E61A24" ManuallyRouted="false" />
         <AssociationConnector Association="ERModel.FK__Ambulance__userI__3D2915A8" ManuallyRouted="false" />
+        <AssociationConnector Association="ERModel.FK__Disease__categor__0E391C95" ManuallyRouted="false" />
+        <AssociationConnector Association="ERModel.FK__PatientDise__dID__2610A626" ManuallyRouted="false" />
         <AssociationConnector Association="ERModel.FK__ER_User__userID__3864608B" ManuallyRouted="false" />
-        <AssociationConnector Association="ERModel.FK__PatientAm__incid__76619304" ManuallyRouted="false" />
-        <AssociationConnector Association="ERModel.FK__PatientAm__patie__74794A92" ManuallyRouted="false" />
+        <AssociationConnector Association="ERModel.FK__PatientAm__incid__15DA3E5D" ManuallyRouted="false" />
+        <AssociationConnector Association="ERModel.FK__PatientAm__patie__13F1F5EB" ManuallyRouted="false" />
+        <AssociationConnector Association="ERModel.FK__PatientDise__pID__251C81ED" ManuallyRouted="false" />
+        <AssociationConnector Association="ERModel.PatientAllergy" ManuallyRouted="false" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

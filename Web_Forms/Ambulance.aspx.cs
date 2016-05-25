@@ -2,22 +2,24 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Services;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using ER_application.Controller;
+using ER_application.Models;
 
 namespace ER_application.Web_Forms
 {
     public partial class Ambulance : System.Web.UI.Page
     {
-        public IControllerDispatcher controller;
+        static IControllerAmbulance controller;
         String ssn = "";
 
         protected void Page_Load(object sender, EventArgs e)
         {
             String username = Session["userName"].ToString();
             welcome.InnerHtml = "Welcome " + username;
-            controller = new ControllerDispatcher();
+            controller = new ControllerAmbulance();
         }
 
         protected void btn_Add_Click(object sender, EventArgs e)
@@ -37,7 +39,14 @@ namespace ER_application.Web_Forms
             }
 
             DateTime date = DateTime.Now;
-            controller.createPatient(firstName, lastName, ssn, date);
+            //controller.createPatient(firstName, lastName, ssn, date);
+        }
+
+        [WebMethod]
+        public static Models.Patient GetPatient()
+        {
+            Models.Patient p = controller.getRandomPatient();
+            return p;
         }
     }
 }

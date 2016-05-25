@@ -25,12 +25,16 @@ namespace ER_application.Models
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<Allergy> Allergy { get; set; }
         public virtual DbSet<Ambulance> Ambulance { get; set; }
         public virtual DbSet<AmbulanceUser> AmbulanceUser { get; set; }
+        public virtual DbSet<Disease> Disease { get; set; }
+        public virtual DbSet<DiseaseCategory> DiseaseCategory { get; set; }
         public virtual DbSet<ER_User> ER_User { get; set; }
         public virtual DbSet<Incident> Incident { get; set; }
         public virtual DbSet<Patient> Patient { get; set; }
         public virtual DbSet<PatientAmbulance> PatientAmbulance { get; set; }
+        public virtual DbSet<PatientDisease> PatientDisease { get; set; }
         public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
         public virtual DbSet<UserMode> UserMode { get; set; }
     }

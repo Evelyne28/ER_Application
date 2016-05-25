@@ -183,10 +183,21 @@
     <Content Include="Web_Forms\Login.aspx" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controller\ControllerAmbulance.cs" />
+    <Compile Include="Controller\IControllerAmbulance.cs" />
+    <Compile Include="Models\Allergy.cs">
+      <DependentUpon>Domain.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Ambulance.cs">
       <DependentUpon>Domain.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\AmbulanceUser.cs">
+      <DependentUpon>Domain.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Disease.cs">
+      <DependentUpon>Domain.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DiseaseCategory.cs">
       <DependentUpon>Domain.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Domain.Context.cs">
@@ -216,12 +227,17 @@
     <Compile Include="Models\PatientAmbulance.cs">
       <DependentUpon>Domain.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\PatientDisease.cs">
+      <DependentUpon>Domain.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\sysdiagrams.cs">
       <DependentUpon>Domain.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\UserMode.cs">
       <DependentUpon>Domain.tt</DependentUpon>
     </Compile>
+    <Compile Include="Repository\IRepositoryAmbulance.cs" />
+    <Compile Include="Repository\RepositoryAmbulance.cs" />
     <Compile Include="Services\ChatHub.cs" />
     <Compile Include="Controller\ControllerUser.cs" />
     <Compile Include="Controller\ControllerDispatcher.cs" />

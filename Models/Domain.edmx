@@ -5,6 +5,13 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
       <Schema Namespace="ERModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Allergy">
+          <Key>
+            <PropertyRef Name="allergyID" />
+          </Key>
+          <Property Name="allergyID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="30" />
+        </EntityType>
         <EntityType Name="Ambulance">
           <Key>
             <PropertyRef Name="ambulanceID" />
@@ -23,6 +30,21 @@
           <Property Name="lastName" Type="varchar" MaxLength="30" />
           <Property Name="role" Type="int" />
           <Property Name="userID" Type="int" />
+        </EntityType>
+        <EntityType Name="Disease">
+          <Key>
+            <PropertyRef Name="diseaseID" />
+          </Key>
+          <Property Name="diseaseID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="50" />
+          <Property Name="categoryID" Type="int" />
+        </EntityType>
+        <EntityType Name="DiseaseCategory">
+          <Key>
+            <PropertyRef Name="categoryID" />
+          </Key>
+          <Property Name="categoryID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="ER_User">
           <Key>
@@ -59,15 +81,24 @@
           <Property Name="ssn" Type="varchar" MaxLength="45" />
           <Property Name="firstName" Type="varchar" MaxLength="45" />
           <Property Name="lastName" Type="varchar" MaxLength="45" />
+          <Property Name="gender" Type="varchar" MaxLength="10" />
+          <Property Name="address" Type="varchar" MaxLength="60" />
+          <Property Name="phone" Type="varchar" MaxLength="20" />
           <Property Name="birthDate" Type="datetime" />
           <Property Name="age" Type="int" />
-          <Property Name="gender" Type="varchar" MaxLength="10" />
-          <Property Name="bloodType" Type="varchar" MaxLength="10" />
-          <Property Name="address" Type="varchar" MaxLength="60" />
-          <Property Name="city" Type="varchar" MaxLength="20" />
+          <Property Name="city" Type="varchar" MaxLength="30" />
+          <Property Name="county" Type="varchar" MaxLength="20" />
           <Property Name="country" Type="varchar" MaxLength="20" />
-          <Property Name="phone" Type="varchar" MaxLength="20" />
-          <Property Name="patientState" Type="varchar" MaxLength="255" />
+          <Property Name="zipCode" Type="varchar" MaxLength="10" />
+          <Property Name="bloodType" Type="varchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="PatientAllergy">
+          <Key>
+            <PropertyRef Name="pID" />
+            <PropertyRef Name="aID" />
+          </Key>
+          <Property Name="pID" Type="int" Nullable="false" />
+          <Property Name="aID" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="PatientAmbulance">
           <Key>
@@ -78,6 +109,16 @@
           <Property Name="patientID" Type="int" Nullable="false" />
           <Property Name="ambulanceID" Type="int" Nullable="false" />
           <Property Name="incidentID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PatientDisease">
+          <Key>
+            <PropertyRef Name="pID" />
+            <PropertyRef Name="dID" />
+          </Key>
+          <Property Name="pID" Type="int" Nullable="false" />
+          <Property Name="dID" Type="int" Nullable="false" />
+          <Property Name="diagnosedDate" Type="datetime" />
+          <Property Name="endDate" Type="datetime" />
         </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
@@ -110,6 +151,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK__Disease__categor__0E391C95">
+          <End Role="DiseaseCategory" Type="Self.DiseaseCategory" Multiplicity="0..1" />
+          <End Role="Disease" Type="Self.Disease" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DiseaseCategory">
+              <PropertyRef Name="categoryID" />
+            </Principal>
+            <Dependent Role="Disease">
+              <PropertyRef Name="categoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK__ER_User__userID__3864608B">
           <End Role="UserMode" Type="Self.UserMode" Multiplicity="0..1" />
           <End Role="ER_User" Type="Self.ER_User" Multiplicity="*" />
@@ -122,7 +175,31 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__PatientAm__ambul__756D6ECB">
+        <Association Name="FK__PatientAlle__aID__29E1370A">
+          <End Role="Allergy" Type="Self.Allergy" Multiplicity="1" />
+          <End Role="PatientAllergy" Type="Self.PatientAllergy" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Allergy">
+              <PropertyRef Name="allergyID" />
+            </Principal>
+            <Dependent Role="PatientAllergy">
+              <PropertyRef Name="aID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__PatientAlle__pID__28ED12D1">
+          <End Role="Patient" Type="Self.Patient" Multiplicity="1" />
+          <End Role="PatientAllergy" Type="Self.PatientAllergy" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Patient">
+              <PropertyRef Name="patientID" />
+            </Principal>
+            <Dependent Role="PatientAllergy">
+              <PropertyRef Name="pID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__PatientAm__ambul__14E61A24">
           <End Role="Ambulance" Type="Self.Ambulance" Multiplicity="1" />
           <End Role="PatientAmbulance" Type="Self.PatientAmbulance" Multiplicity="*" />
           <ReferentialConstraint>
@@ -134,7 +211,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__PatientAm__incid__76619304">
+        <Association Name="FK__PatientAm__incid__15DA3E5D">
           <End Role="Incident" Type="Self.Incident" Multiplicity="1" />
           <End Role="PatientAmbulance" Type="Self.PatientAmbulance" Multiplicity="*" />
           <ReferentialConstraint>
@@ -146,7 +223,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__PatientAm__patie__74794A92">
+        <Association Name="FK__PatientAm__patie__13F1F5EB">
           <End Role="Patient" Type="Self.Patient" Multiplicity="1" />
           <End Role="PatientAmbulance" Type="Self.PatientAmbulance" Multiplicity="*" />
           <ReferentialConstraint>
@@ -158,34 +235,83 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK__PatientDise__dID__2610A626">
+          <End Role="Disease" Type="Self.Disease" Multiplicity="1" />
+          <End Role="PatientDisease" Type="Self.PatientDisease" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Disease">
+              <PropertyRef Name="diseaseID" />
+            </Principal>
+            <Dependent Role="PatientDisease">
+              <PropertyRef Name="dID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__PatientDise__pID__251C81ED">
+          <End Role="Patient" Type="Self.Patient" Multiplicity="1" />
+          <End Role="PatientDisease" Type="Self.PatientDisease" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Patient">
+              <PropertyRef Name="patientID" />
+            </Principal>
+            <Dependent Role="PatientDisease">
+              <PropertyRef Name="pID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="ERModelStoreContainer">
+          <EntitySet Name="Allergy" EntityType="Self.Allergy" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Ambulance" EntityType="Self.Ambulance" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AmbulanceUser" EntityType="Self.AmbulanceUser" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Disease" EntityType="Self.Disease" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DiseaseCategory" EntityType="Self.DiseaseCategory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ER_User" EntityType="Self.ER_User" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Incident" EntityType="Self.Incident" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Patient" EntityType="Self.Patient" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PatientAllergy" EntityType="Self.PatientAllergy" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PatientAmbulance" EntityType="Self.PatientAmbulance" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PatientDisease" EntityType="Self.PatientDisease" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserMode" EntityType="Self.UserMode" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK__Ambulance__userI__3D2915A8" Association="Self.FK__Ambulance__userI__3D2915A8">
             <End Role="UserMode" EntitySet="UserMode" />
             <End Role="AmbulanceUser" EntitySet="AmbulanceUser" />
           </AssociationSet>
+          <AssociationSet Name="FK__Disease__categor__0E391C95" Association="Self.FK__Disease__categor__0E391C95">
+            <End Role="DiseaseCategory" EntitySet="DiseaseCategory" />
+            <End Role="Disease" EntitySet="Disease" />
+          </AssociationSet>
           <AssociationSet Name="FK__ER_User__userID__3864608B" Association="Self.FK__ER_User__userID__3864608B">
             <End Role="UserMode" EntitySet="UserMode" />
             <End Role="ER_User" EntitySet="ER_User" />
           </AssociationSet>
-          <AssociationSet Name="FK__PatientAm__ambul__756D6ECB" Association="Self.FK__PatientAm__ambul__756D6ECB">
+          <AssociationSet Name="FK__PatientAlle__aID__29E1370A" Association="Self.FK__PatientAlle__aID__29E1370A">
+            <End Role="Allergy" EntitySet="Allergy" />
+            <End Role="PatientAllergy" EntitySet="PatientAllergy" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PatientAlle__pID__28ED12D1" Association="Self.FK__PatientAlle__pID__28ED12D1">
+            <End Role="Patient" EntitySet="Patient" />
+            <End Role="PatientAllergy" EntitySet="PatientAllergy" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PatientAm__ambul__14E61A24" Association="Self.FK__PatientAm__ambul__14E61A24">
             <End Role="Ambulance" EntitySet="Ambulance" />
             <End Role="PatientAmbulance" EntitySet="PatientAmbulance" />
           </AssociationSet>
-          <AssociationSet Name="FK__PatientAm__incid__76619304" Association="Self.FK__PatientAm__incid__76619304">
+          <AssociationSet Name="FK__PatientAm__incid__15DA3E5D" Association="Self.FK__PatientAm__incid__15DA3E5D">
             <End Role="Incident" EntitySet="Incident" />
             <End Role="PatientAmbulance" EntitySet="PatientAmbulance" />
           </AssociationSet>
-          <AssociationSet Name="FK__PatientAm__patie__74794A92" Association="Self.FK__PatientAm__patie__74794A92">
+          <AssociationSet Name="FK__PatientAm__patie__13F1F5EB" Association="Self.FK__PatientAm__patie__13F1F5EB">
             <End Role="Patient" EntitySet="Patient" />
             <End Role="PatientAmbulance" EntitySet="PatientAmbulance" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PatientDise__dID__2610A626" Association="Self.FK__PatientDise__dID__2610A626">
+            <End Role="Disease" EntitySet="Disease" />
+            <End Role="PatientDisease" EntitySet="PatientDisease" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PatientDise__pID__251C81ED" Association="Self.FK__PatientDise__pID__251C81ED">
+            <End Role="Patient" EntitySet="Patient" />
+            <End Role="PatientDisease" EntitySet="PatientDisease" />
           </AssociationSet>
         </EntityContainer>
       </Schema>
@@ -193,6 +319,14 @@
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="ERModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Allergy">
+          <Key>
+            <PropertyRef Name="allergyID" />
+          </Key>
+          <Property Name="allergyID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Patient" Relationship="Self.PatientAllergy" FromRole="Allergy" ToRole="Patient" />
+        </EntityType>
         <EntityType Name="Ambulance">
           <Key>
             <PropertyRef Name="ambulanceID" />
@@ -200,7 +334,7 @@
           <Property Name="ambulanceID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="licensePlate" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="state" Type="Int32" />
-          <NavigationProperty Name="PatientAmbulance" Relationship="Self.FK__PatientAm__ambul__756D6ECB" FromRole="Ambulance" ToRole="PatientAmbulance" />
+          <NavigationProperty Name="PatientAmbulance" Relationship="Self.FK__PatientAm__ambul__14E61A24" FromRole="Ambulance" ToRole="PatientAmbulance" />
         </EntityType>
         <EntityType Name="AmbulanceUser">
           <Key>
@@ -213,6 +347,24 @@
           <Property Name="role" Type="Int32" />
           <Property Name="userID" Type="Int32" />
           <NavigationProperty Name="UserMode" Relationship="Self.FK__Ambulance__userI__3D2915A8" FromRole="AmbulanceUser" ToRole="UserMode" />
+        </EntityType>
+        <EntityType Name="Disease">
+          <Key>
+            <PropertyRef Name="diseaseID" />
+          </Key>
+          <Property Name="diseaseID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="categoryID" Type="Int32" />
+          <NavigationProperty Name="DiseaseCategory" Relationship="Self.FK__Disease__categor__0E391C95" FromRole="Disease" ToRole="DiseaseCategory" />
+          <NavigationProperty Name="PatientDisease" Relationship="Self.FK__PatientDise__dID__2610A626" FromRole="Disease" ToRole="PatientDisease" />
+        </EntityType>
+        <EntityType Name="DiseaseCategory">
+          <Key>
+            <PropertyRef Name="categoryID" />
+          </Key>
+          <Property Name="categoryID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Disease" Relationship="Self.FK__Disease__categor__0E391C95" FromRole="DiseaseCategory" ToRole="Disease" />
         </EntityType>
         <EntityType Name="ER_User">
           <Key>
@@ -241,7 +393,7 @@
           <Property Name="patientInfo" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="description" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
           <Property Name="resolved" Type="Int32" />
-          <NavigationProperty Name="PatientAmbulance" Relationship="Self.FK__PatientAm__incid__76619304" FromRole="Incident" ToRole="PatientAmbulance" />
+          <NavigationProperty Name="PatientAmbulance" Relationship="Self.FK__PatientAm__incid__15DA3E5D" FromRole="Incident" ToRole="PatientAmbulance" />
         </EntityType>
         <EntityType Name="Patient">
           <Key>
@@ -251,16 +403,19 @@
           <Property Name="ssn" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
           <Property Name="firstName" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
           <Property Name="lastName" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="gender" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="address" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
+          <Property Name="phone" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="birthDate" Type="DateTime" Precision="3" />
           <Property Name="age" Type="Int32" />
-          <Property Name="gender" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="bloodType" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="address" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
-          <Property Name="city" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="city" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="county" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="country" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="phone" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="patientState" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="PatientAmbulance" Relationship="Self.FK__PatientAm__patie__74794A92" FromRole="Patient" ToRole="PatientAmbulance" />
+          <Property Name="zipCode" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="bloodType" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="PatientAmbulance" Relationship="Self.FK__PatientAm__patie__13F1F5EB" FromRole="Patient" ToRole="PatientAmbulance" />
+          <NavigationProperty Name="PatientDisease" Relationship="Self.FK__PatientDise__pID__251C81ED" FromRole="Patient" ToRole="PatientDisease" />
+          <NavigationProperty Name="Allergy" Relationship="Self.PatientAllergy" FromRole="Patient" ToRole="Allergy" />
         </EntityType>
         <EntityType Name="PatientAmbulance">
           <Key>
@@ -271,9 +426,21 @@
           <Property Name="patientID" Type="Int32" Nullable="false" />
           <Property Name="ambulanceID" Type="Int32" Nullable="false" />
           <Property Name="incidentID" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Ambulance" Relationship="Self.FK__PatientAm__ambul__756D6ECB" FromRole="PatientAmbulance" ToRole="Ambulance" />
-          <NavigationProperty Name="Incident" Relationship="Self.FK__PatientAm__incid__76619304" FromRole="PatientAmbulance" ToRole="Incident" />
-          <NavigationProperty Name="Patient" Relationship="Self.FK__PatientAm__patie__74794A92" FromRole="PatientAmbulance" ToRole="Patient" />
+          <NavigationProperty Name="Ambulance" Relationship="Self.FK__PatientAm__ambul__14E61A24" FromRole="PatientAmbulance" ToRole="Ambulance" />
+          <NavigationProperty Name="Incident" Relationship="Self.FK__PatientAm__incid__15DA3E5D" FromRole="PatientAmbulance" ToRole="Incident" />
+          <NavigationProperty Name="Patient" Relationship="Self.FK__PatientAm__patie__13F1F5EB" FromRole="PatientAmbulance" ToRole="Patient" />
+        </EntityType>
+        <EntityType Name="PatientDisease">
+          <Key>
+            <PropertyRef Name="pID" />
+            <PropertyRef Name="dID" />
+          </Key>
+          <Property Name="pID" Type="Int32" Nullable="false" />
+          <Property Name="dID" Type="Int32" Nullable="false" />
+          <Property Name="diagnosedDate" Type="DateTime" Precision="3" />
+          <Property Name="endDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Disease" Relationship="Self.FK__PatientDise__dID__2610A626" FromRole="PatientDisease" ToRole="Disease" />
+          <NavigationProperty Name="Patient" Relationship="Self.FK__PatientDise__pID__251C81ED" FromRole="PatientDisease" ToRole="Patient" />
         </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
@@ -296,7 +463,7 @@
           <NavigationProperty Name="AmbulanceUser" Relationship="Self.FK__Ambulance__userI__3D2915A8" FromRole="UserMode" ToRole="AmbulanceUser" />
           <NavigationProperty Name="ER_User" Relationship="Self.FK__ER_User__userID__3864608B" FromRole="UserMode" ToRole="ER_User" />
         </EntityType>
-        <Association Name="FK__PatientAm__ambul__756D6ECB">
+        <Association Name="FK__PatientAm__ambul__14E61A24">
           <End Role="Ambulance" Type="Self.Ambulance" Multiplicity="1" />
           <End Role="PatientAmbulance" Type="Self.PatientAmbulance" Multiplicity="*" />
           <ReferentialConstraint>
@@ -320,6 +487,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK__Disease__categor__0E391C95">
+          <End Role="DiseaseCategory" Type="Self.DiseaseCategory" Multiplicity="0..1" />
+          <End Role="Disease" Type="Self.Disease" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DiseaseCategory">
+              <PropertyRef Name="categoryID" />
+            </Principal>
+            <Dependent Role="Disease">
+              <PropertyRef Name="categoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__PatientDise__dID__2610A626">
+          <End Role="Disease" Type="Self.Disease" Multiplicity="1" />
+          <End Role="PatientDisease" Type="Self.PatientDisease" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Disease">
+              <PropertyRef Name="diseaseID" />
+            </Principal>
+            <Dependent Role="PatientDisease">
+              <PropertyRef Name="dID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK__ER_User__userID__3864608B">
           <End Role="UserMode" Type="Self.UserMode" Multiplicity="0..1" />
           <End Role="ER_User" Type="Self.ER_User" Multiplicity="*" />
@@ -332,7 +523,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__PatientAm__incid__76619304">
+        <Association Name="FK__PatientAm__incid__15DA3E5D">
           <End Role="Incident" Type="Self.Incident" Multiplicity="1" />
           <End Role="PatientAmbulance" Type="Self.PatientAmbulance" Multiplicity="*" />
           <ReferentialConstraint>
@@ -344,7 +535,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__PatientAm__patie__74794A92">
+        <Association Name="FK__PatientAm__patie__13F1F5EB">
           <End Role="Patient" Type="Self.Patient" Multiplicity="1" />
           <End Role="PatientAmbulance" Type="Self.PatientAmbulance" Multiplicity="*" />
           <ReferentialConstraint>
@@ -356,16 +547,36 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK__PatientDise__pID__251C81ED">
+          <End Role="Patient" Type="Self.Patient" Multiplicity="1" />
+          <End Role="PatientDisease" Type="Self.PatientDisease" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Patient">
+              <PropertyRef Name="patientID" />
+            </Principal>
+            <Dependent Role="PatientDisease">
+              <PropertyRef Name="pID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="PatientAllergy">
+          <End Role="Allergy" Type="Self.Allergy" Multiplicity="*" />
+          <End Role="Patient" Type="Self.Patient" Multiplicity="*" />
+        </Association>
         <EntityContainer Name="EREntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Allergy" EntityType="Self.Allergy" />
           <EntitySet Name="Ambulance" EntityType="Self.Ambulance" />
           <EntitySet Name="AmbulanceUser" EntityType="Self.AmbulanceUser" />
+          <EntitySet Name="Disease" EntityType="Self.Disease" />
+          <EntitySet Name="DiseaseCategory" EntityType="Self.DiseaseCategory" />
           <EntitySet Name="ER_User" EntityType="Self.ER_User" />
           <EntitySet Name="Incident" EntityType="Self.Incident" />
           <EntitySet Name="Patient" EntityType="Self.Patient" />
           <EntitySet Name="PatientAmbulance" EntityType="Self.PatientAmbulance" />
+          <EntitySet Name="PatientDisease" EntityType="Self.PatientDisease" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
           <EntitySet Name="UserMode" EntityType="Self.UserMode" />
-          <AssociationSet Name="FK__PatientAm__ambul__756D6ECB" Association="Self.FK__PatientAm__ambul__756D6ECB">
+          <AssociationSet Name="FK__PatientAm__ambul__14E61A24" Association="Self.FK__PatientAm__ambul__14E61A24">
             <End Role="Ambulance" EntitySet="Ambulance" />
             <End Role="PatientAmbulance" EntitySet="PatientAmbulance" />
           </AssociationSet>
@@ -373,17 +584,33 @@
             <End Role="UserMode" EntitySet="UserMode" />
             <End Role="AmbulanceUser" EntitySet="AmbulanceUser" />
           </AssociationSet>
+          <AssociationSet Name="FK__Disease__categor__0E391C95" Association="Self.FK__Disease__categor__0E391C95">
+            <End Role="DiseaseCategory" EntitySet="DiseaseCategory" />
+            <End Role="Disease" EntitySet="Disease" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PatientDise__dID__2610A626" Association="Self.FK__PatientDise__dID__2610A626">
+            <End Role="Disease" EntitySet="Disease" />
+            <End Role="PatientDisease" EntitySet="PatientDisease" />
+          </AssociationSet>
           <AssociationSet Name="FK__ER_User__userID__3864608B" Association="Self.FK__ER_User__userID__3864608B">
             <End Role="UserMode" EntitySet="UserMode" />
             <End Role="ER_User" EntitySet="ER_User" />
           </AssociationSet>
-          <AssociationSet Name="FK__PatientAm__incid__76619304" Association="Self.FK__PatientAm__incid__76619304">
+          <AssociationSet Name="FK__PatientAm__incid__15DA3E5D" Association="Self.FK__PatientAm__incid__15DA3E5D">
             <End Role="Incident" EntitySet="Incident" />
             <End Role="PatientAmbulance" EntitySet="PatientAmbulance" />
           </AssociationSet>
-          <AssociationSet Name="FK__PatientAm__patie__74794A92" Association="Self.FK__PatientAm__patie__74794A92">
+          <AssociationSet Name="FK__PatientAm__patie__13F1F5EB" Association="Self.FK__PatientAm__patie__13F1F5EB">
             <End Role="Patient" EntitySet="Patient" />
             <End Role="PatientAmbulance" EntitySet="PatientAmbulance" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PatientDise__pID__251C81ED" Association="Self.FK__PatientDise__pID__251C81ED">
+            <End Role="Patient" EntitySet="Patient" />
+            <End Role="PatientDisease" EntitySet="PatientDisease" />
+          </AssociationSet>
+          <AssociationSet Name="PatientAllergy" Association="Self.PatientAllergy">
+            <End Role="Allergy" EntitySet="Allergy" />
+            <End Role="Patient" EntitySet="Patient" />
           </AssociationSet>
         </EntityContainer>
       </Schema>
@@ -392,6 +619,14 @@
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="ERModelStoreContainer" CdmEntityContainer="EREntities">
+          <EntitySetMapping Name="Allergy">
+            <EntityTypeMapping TypeName="ERModel.Allergy">
+              <MappingFragment StoreEntitySet="Allergy">
+                <ScalarProperty Name="allergyID" ColumnName="allergyID" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Ambulance">
             <EntityTypeMapping TypeName="ERModel.Ambulance">
               <MappingFragment StoreEntitySet="Ambulance">
@@ -410,6 +645,23 @@
                 <ScalarProperty Name="lastName" ColumnName="lastName" />
                 <ScalarProperty Name="role" ColumnName="role" />
                 <ScalarProperty Name="userID" ColumnName="userID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Disease">
+            <EntityTypeMapping TypeName="ERModel.Disease">
+              <MappingFragment StoreEntitySet="Disease">
+                <ScalarProperty Name="diseaseID" ColumnName="diseaseID" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="categoryID" ColumnName="categoryID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DiseaseCategory">
+            <EntityTypeMapping TypeName="ERModel.DiseaseCategory">
+              <MappingFragment StoreEntitySet="DiseaseCategory">
+                <ScalarProperty Name="categoryID" ColumnName="categoryID" />
+                <ScalarProperty Name="name" ColumnName="name" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -449,15 +701,16 @@
                 <ScalarProperty Name="ssn" ColumnName="ssn" />
                 <ScalarProperty Name="firstName" ColumnName="firstName" />
                 <ScalarProperty Name="lastName" ColumnName="lastName" />
+                <ScalarProperty Name="gender" ColumnName="gender" />
+                <ScalarProperty Name="address" ColumnName="address" />
+                <ScalarProperty Name="phone" ColumnName="phone" />
                 <ScalarProperty Name="birthDate" ColumnName="birthDate" />
                 <ScalarProperty Name="age" ColumnName="age" />
-                <ScalarProperty Name="gender" ColumnName="gender" />
-                <ScalarProperty Name="bloodType" ColumnName="bloodType" />
-                <ScalarProperty Name="address" ColumnName="address" />
                 <ScalarProperty Name="city" ColumnName="city" />
+                <ScalarProperty Name="county" ColumnName="county" />
                 <ScalarProperty Name="country" ColumnName="country" />
-                <ScalarProperty Name="phone" ColumnName="phone" />
-                <ScalarProperty Name="patientState" ColumnName="patientState" />
+                <ScalarProperty Name="zipCode" ColumnName="zipCode" />
+                <ScalarProperty Name="bloodType" ColumnName="bloodType" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -467,6 +720,16 @@
                 <ScalarProperty Name="patientID" ColumnName="patientID" />
                 <ScalarProperty Name="ambulanceID" ColumnName="ambulanceID" />
                 <ScalarProperty Name="incidentID" ColumnName="incidentID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PatientDisease">
+            <EntityTypeMapping TypeName="ERModel.PatientDisease">
+              <MappingFragment StoreEntitySet="PatientDisease">
+                <ScalarProperty Name="pID" ColumnName="pID" />
+                <ScalarProperty Name="dID" ColumnName="dID" />
+                <ScalarProperty Name="diagnosedDate" ColumnName="diagnosedDate" />
+                <ScalarProperty Name="endDate" ColumnName="endDate" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -491,6 +754,14 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <AssociationSetMapping Name="PatientAllergy" TypeName="ERModel.PatientAllergy" StoreEntitySet="PatientAllergy">
+            <EndProperty Name="Allergy">
+              <ScalarProperty Name="allergyID" ColumnName="aID" />
+            </EndProperty>
+            <EndProperty Name="Patient">
+              <ScalarProperty Name="patientID" ColumnName="pID" />
+            </EndProperty>
+          </AssociationSetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

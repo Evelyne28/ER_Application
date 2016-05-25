@@ -15,6 +15,16 @@ function initialize() {
     geocoder = new google.maps.Geocoder();
 }
 
+function ToJavaScriptDate(value) {
+    var pattern = /Date\(([^)]+)\)/;
+    var results = pattern.exec(value);
+    var dt = new Date(parseFloat(results[1]));
+    var monthNames = ["January", "February", "March", "April", "May", "June",
+                      "July", "August", "September", "October", "November", "December"];
+    var monthName = (monthNames[dt.getMonth()]);
+    return (dt.getDate()) + " " + monthName + " " + dt.getFullYear();
+}
+
 google.maps.event.addDomListener(window, "load", initialize);
 
 $(function () {
@@ -47,7 +57,7 @@ $(function () {
             }
         }, 400);
         if (toWho == username) {
-            $("#addressInput").val(incident.locationGPS);
+            $("#addressGPSInput").val(incident.locationGPS);
             $("#cLocationInput").val(incident.callerLocation);
             $("#cPhoneInput").val(incident.callerPhone);
             $("#cNameInput").val(incident.callerName);
@@ -79,4 +89,40 @@ $(function () {
             });
         }
     }
-})
+
+    $(document).on('click', '#buttonCard', function (ev) {
+        ev.preventDefault();
+        $.ajax({
+            type: "POST",
+            data: "{}",
+            url: "Ambulance.aspx/GetPatient",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            async: true,
+            success: function (data) {
+
+                $.each(data.d, function (index, item) {
+                    if (index == 'birthDate') {
+                        var objDate = ToJavaScriptDate(item);
+                        $('#' + index + 'Input').val(objDate);
+                    }
+                    else
+                        $('#' + index + 'Input').val(item);
+                })
+            },
+            failure: function (response) {
+                var r = jQuery.parseJSON(response.responseText);
+                alert("Message: " + r.Message);
+            }
+        })
+        ev.preventDefault();
+        return;
+    });
+
+    jQuery(function () {
+        return $("body").on("click", ".search_camera_btn", function () {
+            alert("Ready to enter start");
+            return IW2.get_camera_list();
+        });
+    });
+});

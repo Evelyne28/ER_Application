@@ -1,6 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
   <EntityContainerMapping StorageEntityContainer="ERModelStoreContainer" CdmEntityContainer="EREntities">
+    <EntitySetMapping Name="Allergy">
+      <EntityTypeMapping TypeName="ERModel.Allergy">
+        <MappingFragment StoreEntitySet="Allergy">
+          <ScalarProperty Name="allergyID" ColumnName="allergyID" />
+          <ScalarProperty Name="name" ColumnName="name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="Ambulance">
       <EntityTypeMapping TypeName="ERModel.Ambulance">
         <MappingFragment StoreEntitySet="Ambulance">
@@ -19,6 +27,23 @@
           <ScalarProperty Name="lastName" ColumnName="lastName" />
           <ScalarProperty Name="role" ColumnName="role" />
           <ScalarProperty Name="userID" ColumnName="userID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Disease">
+      <EntityTypeMapping TypeName="ERModel.Disease">
+        <MappingFragment StoreEntitySet="Disease">
+          <ScalarProperty Name="diseaseID" ColumnName="diseaseID" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="categoryID" ColumnName="categoryID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DiseaseCategory">
+      <EntityTypeMapping TypeName="ERModel.DiseaseCategory">
+        <MappingFragment StoreEntitySet="DiseaseCategory">
+          <ScalarProperty Name="categoryID" ColumnName="categoryID" />
+          <ScalarProperty Name="name" ColumnName="name" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -58,15 +83,16 @@
           <ScalarProperty Name="ssn" ColumnName="ssn" />
           <ScalarProperty Name="firstName" ColumnName="firstName" />
           <ScalarProperty Name="lastName" ColumnName="lastName" />
+          <ScalarProperty Name="gender" ColumnName="gender" />
+          <ScalarProperty Name="address" ColumnName="address" />
+          <ScalarProperty Name="phone" ColumnName="phone" />
           <ScalarProperty Name="birthDate" ColumnName="birthDate" />
           <ScalarProperty Name="age" ColumnName="age" />
-          <ScalarProperty Name="gender" ColumnName="gender" />
-          <ScalarProperty Name="bloodType" ColumnName="bloodType" />
-          <ScalarProperty Name="address" ColumnName="address" />
           <ScalarProperty Name="city" ColumnName="city" />
+          <ScalarProperty Name="county" ColumnName="county" />
           <ScalarProperty Name="country" ColumnName="country" />
-          <ScalarProperty Name="phone" ColumnName="phone" />
-          <ScalarProperty Name="patientState" ColumnName="patientState" />
+          <ScalarProperty Name="zipCode" ColumnName="zipCode" />
+          <ScalarProperty Name="bloodType" ColumnName="bloodType" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -76,6 +102,16 @@
           <ScalarProperty Name="patientID" ColumnName="patientID" />
           <ScalarProperty Name="ambulanceID" ColumnName="ambulanceID" />
           <ScalarProperty Name="incidentID" ColumnName="incidentID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PatientDisease">
+      <EntityTypeMapping TypeName="ERModel.PatientDisease">
+        <MappingFragment StoreEntitySet="PatientDisease">
+          <ScalarProperty Name="pID" ColumnName="pID" />
+          <ScalarProperty Name="dID" ColumnName="dID" />
+          <ScalarProperty Name="diagnosedDate" ColumnName="diagnosedDate" />
+          <ScalarProperty Name="endDate" ColumnName="endDate" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -100,5 +136,13 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <AssociationSetMapping Name="PatientAllergy" TypeName="ERModel.PatientAllergy" StoreEntitySet="PatientAllergy">
+      <EndProperty Name="Allergy">
+        <ScalarProperty Name="allergyID" ColumnName="aID" />
+      </EndProperty>
+      <EndProperty Name="Patient">
+        <ScalarProperty Name="patientID" ColumnName="pID" />
+      </EndProperty>
+    </AssociationSetMapping>
   </EntityContainerMapping>
 </Mapping>

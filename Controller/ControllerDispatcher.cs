@@ -62,6 +62,5 @@ namespace ER_application.Controller
             i.resolved = resolved;
             return repository.updateIncident(i);
         }
-
     }
 }

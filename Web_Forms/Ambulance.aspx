@@ -31,7 +31,7 @@
 		<table id="dispatchTable">
 			<tr>
                 <th>Adresa GPS</th>
-                <td id="itAddress"> <textarea id="addressInput" name="addressInput" rows="4" cols="50"></textarea></td>
+                <td id="itAddress"> <textarea id="addressGPSInput" name="addressGPSInput" rows="4" cols="50"></textarea></td>
             </tr>
             <tr>
                 <th>Caller Location</th>
@@ -66,35 +66,60 @@
 	<div id="patientDiv">
 		<table id="patientTable">
 			<tr>
-				<th> First name </th>
-				<td> First name </td>
-				<th> Last name </th>
-				<td> Last name </td>
+				<th> Nume </th>
+				<td> <input type="text" name="lastNameInput" id="lastNameInput"/> </td>
 			</tr>
-			<tr>
-				<th> Birthdate </th>
-				<td> Birthdate </td>
-				<th> Age </th>
-				<td> Age </td>
-			</tr>
-			<tr>
-				<th> Gender </th>
-				<td> Gender </td>
-				<th> Blood type </th>
-				<td> Blood type </td>
-			</tr>
-			<tr>
-				<th> Last name </th>
-				<td> Last name </td>
-			</tr>
-			<tr>
-				<th> Last name </th>
-				<td> Last name </td>
-			</tr>
+            <tr>
+                <th> Prenume </th>
+                <td> <input type="text" name="firstNameInput" id="firstNameInput"/> </td>
+            </tr>
+            <tr>
+                <th> CNP </th>
+                <td> <input type="text" name="ssnInput" id="ssnInput"/> </td>
+            </tr>
+            <tr>
+                <th> Sex </th>
+                <td> <input type="text" name="genderInput" id="genderInput"/> </td>
+            </tr>
+            <tr>
+                <th> Adresa </th>
+                <td> <input type="text" name="addressInput" id="addressInput"/> </td>
+            </tr>
+            <tr>
+                <th> Telefon </th>
+                <td> <input type="text" name="phoneInput" id="phoneInput"/> </td>
+            </tr>
+            <tr>
+                <th> Data nasterii </th>
+                <td> <input type="text" name="birthDateInput" id="birthDateInput"/> </td>
+            </tr>
+            <tr> 
+                <th> Varsta </th>
+                <td> <input type="text" name="ageInput" id="ageInput"/> </td>
+            </tr>
+            <tr> 
+                <th> Oras </th>
+                <td> <input type="text" name="cityInput" id="cityInput"/> </td>
+            </tr>
+            <tr>
+                <th> Judet </th>
+                <td> <input type="text" name="countyInput" id="countyInput"/> </td>
+            </tr>
+            <tr>
+                <th> Cod postal </th>
+                <td> <input type="text" name="zipCodeInput" id="zipCodeInput"/> </td>
+            </tr>
+            <tr>
+                <th> Grupa sangvina </th>
+                <td> <input type="text" name="bloodTypeInput" id="bloodTypeInput"/> </td>
+            </tr>
 		</table>
-        
-		<button id="patientButton"> Send </button>
+        <div id="divCard">
+            <button id="buttonCard"> Scanează cardul </button>
+        </div>
+		<%--<button id="patientButton"> Send </button>--%>
 	</div>
+        
         <div id="mapCall"> </div>
 
     </form>

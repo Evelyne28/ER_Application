@@ -24,29 +24,40 @@
 	background-color: red;
 }
 #patientDiv {
-	padding: 20px 20px 20px;
+	/*padding: 20px 20px 20px;
     border-radius: 40px;
-    background-color:rgba(0, 0, 0, 0.6);
+    background-color:rgba(0, 0, 0, 0.6);*/
+    display: block;
+width: 50%;
+float: left;
+margin-top: 3%;
 }
 #patientTable {
 	width: 50%;
-	margin-left: 25%;
+    margin-left: 18%;
+    float: left;
 }
 .red {
 	background-color: red;
 }
-
 #dispatchTable {
     float: left;
     width: 40%;
     margin-left: 5%;
 }
-
 #mapCall {
     position: absolute;
     right: 2px;
     width: 500px;
     height: 400px; 
+}
+#divCard {
+    float: left; 
+    width: 10%;
+}
+#buttonCard {
+    width: 200%;
+    height: 60px;
 }
 
 
