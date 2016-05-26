@@ -129,11 +129,18 @@
             <p id="pHistory"> Istoric medical </p>
             <ul id="ulHistory"> </ul>
         </div>
-        
-        
-		<%--<button id="patientButton"> Send </button>--%>
 	</div>
-        <div id="mapCall"> </div>
+    <div id="problemDiv">
+	    <div id="injuryPb">
+            <p id="pInjury">Presenting problem</p>
+		    <ul id="ulInjuries"></ul>
+		</div>
+        <div id="mechanism">
+            <p id="pMechanism"> Mechanism of injury</p>
+            <ul id="ulMechanism"></ul>
+        </div>
+	</div>
+    <div id="mapCall"> </div>
         
 
     </form>

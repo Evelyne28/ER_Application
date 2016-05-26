@@ -14,6 +14,25 @@ namespace ER_application.Repository
             context = new EREntities();
         }
 
+        public List<T> getList<T>(T value)
+        {
+            List<T> patients = new List<T>();
+            context.Configuration.ProxyCreationEnabled = false;
+            var load = from a in context.Set<T> select a;
+            if (load != null)
+            {
+                try
+                {
+                    patients = load.ToList();
+                }
+                catch (Exception ex)
+                {
+                    string exx = ex.InnerException.ToString();
+                }
+            }
+            return patients;
+        }
+
         public Patient getRandomPatient()
         {
             List<Patient> patients = new List<Patient>();
@@ -81,6 +100,25 @@ namespace ER_application.Repository
                 }
             }
             return diseases;
+        }
+
+        public List<Injury> getInjuries()
+        {
+            List<Injury> injuries = new List<Injury>();
+            context.Configuration.ProxyCreationEnabled = false;
+            var load = from a in context.Injury select a;
+            if (load != null)
+            {
+                try
+                {
+                    injuries = load.ToList();
+                }
+                catch (Exception ex)
+                {
+                    string exx = ex.InnerException.ToString();
+                }
+            }
+            return injuries;
         }
 
         public List<Allergy> getPatientAllergies(int id)

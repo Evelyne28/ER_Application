@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="ERModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="ERModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Allergy">
           <Key>
             <PropertyRef Name="allergyID" />
@@ -74,6 +74,13 @@
           <Property Name="description" Type="varchar" MaxLength="200" />
           <Property Name="resolved" Type="int" />
         </EntityType>
+        <EntityType Name="Injury">
+          <Key>
+            <PropertyRef Name="injuryID" />
+          </Key>
+          <Property Name="injuryID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="50" />
+        </EntityType>
         <EntityType Name="Patient">
           <Key>
             <PropertyRef Name="patientID" />
@@ -120,6 +127,14 @@
           <Property Name="dID" Type="int" Nullable="false" />
           <Property Name="diagnosedDate" Type="datetime" />
           <Property Name="endDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="PatientInjury">
+          <Key>
+            <PropertyRef Name="pID" />
+            <PropertyRef Name="iID" />
+          </Key>
+          <Property Name="pID" Type="int" Nullable="false" />
+          <Property Name="iID" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
@@ -260,6 +275,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK__PatientInju__iID__40C49C62">
+          <End Role="Injury" Type="Self.Injury" Multiplicity="1" />
+          <End Role="PatientInjury" Type="Self.PatientInjury" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Injury">
+              <PropertyRef Name="injuryID" />
+            </Principal>
+            <Dependent Role="PatientInjury">
+              <PropertyRef Name="iID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__PatientInju__pID__3FD07829">
+          <End Role="Patient" Type="Self.Patient" Multiplicity="1" />
+          <End Role="PatientInjury" Type="Self.PatientInjury" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Patient">
+              <PropertyRef Name="patientID" />
+            </Principal>
+            <Dependent Role="PatientInjury">
+              <PropertyRef Name="pID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="ERModelStoreContainer">
           <EntitySet Name="Allergy" EntityType="Self.Allergy" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Ambulance" EntityType="Self.Ambulance" Schema="dbo" store:Type="Tables" />
@@ -268,10 +307,12 @@
           <EntitySet Name="DiseaseCategory" EntityType="Self.DiseaseCategory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ER_User" EntityType="Self.ER_User" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Incident" EntityType="Self.Incident" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Injury" EntityType="Self.Injury" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Patient" EntityType="Self.Patient" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PatientAllergy" EntityType="Self.PatientAllergy" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PatientAmbulance" EntityType="Self.PatientAmbulance" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PatientDisease" EntityType="Self.PatientDisease" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PatientInjury" EntityType="Self.PatientInjury" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserMode" EntityType="Self.UserMode" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK__Ambulance__userI__3D2915A8" Association="Self.FK__Ambulance__userI__3D2915A8">
@@ -314,8 +355,17 @@
             <End Role="Patient" EntitySet="Patient" />
             <End Role="PatientDisease" EntitySet="PatientDisease" />
           </AssociationSet>
+          <AssociationSet Name="FK__PatientInju__iID__40C49C62" Association="Self.FK__PatientInju__iID__40C49C62">
+            <End Role="Injury" EntitySet="Injury" />
+            <End Role="PatientInjury" EntitySet="PatientInjury" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PatientInju__pID__3FD07829" Association="Self.FK__PatientInju__pID__3FD07829">
+            <End Role="Patient" EntitySet="Patient" />
+            <End Role="PatientInjury" EntitySet="PatientInjury" />
+          </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="ERModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -355,9 +405,9 @@
           <Property Name="diseaseID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="categoryID" Type="Int32" />
+          <Property Name="history" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="DiseaseCategory" Relationship="Self.FK__Disease__categor__0E391C95" FromRole="Disease" ToRole="DiseaseCategory" />
           <NavigationProperty Name="PatientDisease" Relationship="Self.FK__PatientDise__dID__3B0BC30C" FromRole="Disease" ToRole="PatientDisease" />
-          <Property Name="history" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="DiseaseCategory">
           <Key>
@@ -396,6 +446,14 @@
           <Property Name="resolved" Type="Int32" />
           <NavigationProperty Name="PatientAmbulance" Relationship="Self.FK__PatientAm__incid__15DA3E5D" FromRole="Incident" ToRole="PatientAmbulance" />
         </EntityType>
+        <EntityType Name="Injury">
+          <Key>
+            <PropertyRef Name="injuryID" />
+          </Key>
+          <Property Name="injuryID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Patient" Relationship="Self.PatientInjury" FromRole="Injury" ToRole="Patient" />
+        </EntityType>
         <EntityType Name="Patient">
           <Key>
             <PropertyRef Name="patientID" />
@@ -417,6 +475,7 @@
           <NavigationProperty Name="PatientAmbulance" Relationship="Self.FK__PatientAm__patie__13F1F5EB" FromRole="Patient" ToRole="PatientAmbulance" />
           <NavigationProperty Name="PatientDisease" Relationship="Self.FK__PatientDise__pID__3A179ED3" FromRole="Patient" ToRole="PatientDisease" />
           <NavigationProperty Name="Allergy" Relationship="Self.PatientAllergy" FromRole="Patient" ToRole="Allergy" />
+          <NavigationProperty Name="Injury" Relationship="Self.PatientInjury" FromRole="Patient" ToRole="Injury" />
         </EntityType>
         <EntityType Name="PatientAmbulance">
           <Key>
@@ -564,6 +623,10 @@
           <End Role="Allergy" Type="Self.Allergy" Multiplicity="*" />
           <End Role="Patient" Type="Self.Patient" Multiplicity="*" />
         </Association>
+        <Association Name="PatientInjury">
+          <End Role="Injury" Type="Self.Injury" Multiplicity="*" />
+          <End Role="Patient" Type="Self.Patient" Multiplicity="*" />
+        </Association>
         <EntityContainer Name="EREntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Allergy" EntityType="Self.Allergy" />
           <EntitySet Name="Ambulance" EntityType="Self.Ambulance" />
@@ -572,6 +635,7 @@
           <EntitySet Name="DiseaseCategory" EntityType="Self.DiseaseCategory" />
           <EntitySet Name="ER_User" EntityType="Self.ER_User" />
           <EntitySet Name="Incident" EntityType="Self.Incident" />
+          <EntitySet Name="Injury" EntityType="Self.Injury" />
           <EntitySet Name="Patient" EntityType="Self.Patient" />
           <EntitySet Name="PatientAmbulance" EntityType="Self.PatientAmbulance" />
           <EntitySet Name="PatientDisease" EntityType="Self.PatientDisease" />
@@ -613,6 +677,10 @@
             <End Role="Allergy" EntitySet="Allergy" />
             <End Role="Patient" EntitySet="Patient" />
           </AssociationSet>
+          <AssociationSet Name="PatientInjury" Association="Self.PatientInjury">
+            <End Role="Injury" EntitySet="Injury" />
+            <End Role="Patient" EntitySet="Patient" />
+          </AssociationSet>
         </EntityContainer>
       </Schema>
     </edmx:ConceptualModels>
@@ -652,10 +720,10 @@
           <EntitySetMapping Name="Disease">
             <EntityTypeMapping TypeName="ERModel.Disease">
               <MappingFragment StoreEntitySet="Disease">
-                <ScalarProperty Name="history" ColumnName="history" />
                 <ScalarProperty Name="diseaseID" ColumnName="diseaseID" />
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="categoryID" ColumnName="categoryID" />
+                <ScalarProperty Name="history" ColumnName="history" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -693,6 +761,14 @@
                 <ScalarProperty Name="patientInfo" ColumnName="patientInfo" />
                 <ScalarProperty Name="description" ColumnName="description" />
                 <ScalarProperty Name="resolved" ColumnName="resolved" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Injury">
+            <EntityTypeMapping TypeName="ERModel.Injury">
+              <MappingFragment StoreEntitySet="Injury">
+                <ScalarProperty Name="injuryID" ColumnName="injuryID" />
+                <ScalarProperty Name="name" ColumnName="name" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -759,6 +835,14 @@
           <AssociationSetMapping Name="PatientAllergy" TypeName="ERModel.PatientAllergy" StoreEntitySet="PatientAllergy">
             <EndProperty Name="Allergy">
               <ScalarProperty Name="allergyID" ColumnName="aID" />
+            </EndProperty>
+            <EndProperty Name="Patient">
+              <ScalarProperty Name="patientID" ColumnName="pID" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="PatientInjury" TypeName="ERModel.PatientInjury" StoreEntitySet="PatientInjury">
+            <EndProperty Name="Injury">
+              <ScalarProperty Name="injuryID" ColumnName="iID" />
             </EndProperty>
             <EndProperty Name="Patient">
               <ScalarProperty Name="patientID" ColumnName="pID" />

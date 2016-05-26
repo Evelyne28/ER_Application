@@ -16,7 +16,6 @@ namespace ER_application.Web_Forms
     public partial class ER : System.Web.UI.Page
     {
         static IControllerDispatcher ctrl = new ControllerDispatcher();
-        bool serverExists = false;
         protected void Page_Load(object sender, EventArgs e)
         {
             String username = Session["userName"].ToString();

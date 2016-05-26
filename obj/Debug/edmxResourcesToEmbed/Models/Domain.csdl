@@ -36,9 +36,9 @@
     <Property Name="diseaseID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
     <Property Name="categoryID" Type="Int32" />
+    <Property Name="history" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
     <NavigationProperty Name="DiseaseCategory" Relationship="Self.FK__Disease__categor__0E391C95" FromRole="Disease" ToRole="DiseaseCategory" />
     <NavigationProperty Name="PatientDisease" Relationship="Self.FK__PatientDise__dID__3B0BC30C" FromRole="Disease" ToRole="PatientDisease" />
-    <Property Name="history" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
   </EntityType>
   <EntityType Name="DiseaseCategory">
     <Key>
@@ -77,6 +77,14 @@
     <Property Name="resolved" Type="Int32" />
     <NavigationProperty Name="PatientAmbulance" Relationship="Self.FK__PatientAm__incid__15DA3E5D" FromRole="Incident" ToRole="PatientAmbulance" />
   </EntityType>
+  <EntityType Name="Injury">
+    <Key>
+      <PropertyRef Name="injuryID" />
+    </Key>
+    <Property Name="injuryID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Patient" Relationship="Self.PatientInjury" FromRole="Injury" ToRole="Patient" />
+  </EntityType>
   <EntityType Name="Patient">
     <Key>
       <PropertyRef Name="patientID" />
@@ -98,6 +106,7 @@
     <NavigationProperty Name="PatientAmbulance" Relationship="Self.FK__PatientAm__patie__13F1F5EB" FromRole="Patient" ToRole="PatientAmbulance" />
     <NavigationProperty Name="PatientDisease" Relationship="Self.FK__PatientDise__pID__3A179ED3" FromRole="Patient" ToRole="PatientDisease" />
     <NavigationProperty Name="Allergy" Relationship="Self.PatientAllergy" FromRole="Patient" ToRole="Allergy" />
+    <NavigationProperty Name="Injury" Relationship="Self.PatientInjury" FromRole="Patient" ToRole="Injury" />
   </EntityType>
   <EntityType Name="PatientAmbulance">
     <Key>
@@ -245,6 +254,10 @@
     <End Role="Allergy" Type="Self.Allergy" Multiplicity="*" />
     <End Role="Patient" Type="Self.Patient" Multiplicity="*" />
   </Association>
+  <Association Name="PatientInjury">
+    <End Role="Injury" Type="Self.Injury" Multiplicity="*" />
+    <End Role="Patient" Type="Self.Patient" Multiplicity="*" />
+  </Association>
   <EntityContainer Name="EREntities" annotation:LazyLoadingEnabled="true">
     <EntitySet Name="Allergy" EntityType="Self.Allergy" />
     <EntitySet Name="Ambulance" EntityType="Self.Ambulance" />
@@ -253,6 +266,7 @@
     <EntitySet Name="DiseaseCategory" EntityType="Self.DiseaseCategory" />
     <EntitySet Name="ER_User" EntityType="Self.ER_User" />
     <EntitySet Name="Incident" EntityType="Self.Incident" />
+    <EntitySet Name="Injury" EntityType="Self.Injury" />
     <EntitySet Name="Patient" EntityType="Self.Patient" />
     <EntitySet Name="PatientAmbulance" EntityType="Self.PatientAmbulance" />
     <EntitySet Name="PatientDisease" EntityType="Self.PatientDisease" />
@@ -292,6 +306,10 @@
     </AssociationSet>
     <AssociationSet Name="PatientAllergy" Association="Self.PatientAllergy">
       <End Role="Allergy" EntitySet="Allergy" />
+      <End Role="Patient" EntitySet="Patient" />
+    </AssociationSet>
+    <AssociationSet Name="PatientInjury" Association="Self.PatientInjury">
+      <End Role="Injury" EntitySet="Injury" />
       <End Role="Patient" EntitySet="Patient" />
     </AssociationSet>
   </EntityContainer>

@@ -70,5 +70,12 @@ namespace ER_application.Web_Forms
             List<Disease> d = controller.getMedicalHistory();
             return d;
         }
+
+        [WebMethod]
+        public static List<Injury> GetInjuries()
+        {
+            List<Injury> d = controller.getInjuries();
+            return d;
+        }
     }
 }

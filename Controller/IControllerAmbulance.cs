@@ -13,5 +13,6 @@ namespace ER_application.Controller
         List<String> getPatientDiseases(int id);
         List<Allergy> getAllergies();
         List<Disease> getMedicalHistory();
+        List<Injury> getInjuries();
     }
 }

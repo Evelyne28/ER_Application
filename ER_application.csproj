@@ -222,6 +222,9 @@
     <Compile Include="Models\Incident.cs">
       <DependentUpon>Domain.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Injury.cs">
+      <DependentUpon>Domain.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Patient.cs">
       <DependentUpon>Domain.tt</DependentUpon>
     </Compile>
@@ -237,6 +240,8 @@
     <Compile Include="Models\UserMode.cs">
       <DependentUpon>Domain.tt</DependentUpon>
     </Compile>
+    <Compile Include="Repository\GenericRepository.cs" />
+    <Compile Include="Repository\IGenericRepository.cs" />
     <Compile Include="Repository\IRepositoryAmbulance.cs" />
     <Compile Include="Repository\RepositoryAmbulance.cs" />
     <Compile Include="Services\ChatHub.cs" />

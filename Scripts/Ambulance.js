@@ -25,7 +25,29 @@ function ToJavaScriptDate(value) {
     return (dt.getDate()) + " " + monthName + " " + dt.getFullYear();
 }
 
-function ajaxOnLoad() {
+function menuAdministration(value) {
+    var items = ["dispatch", "patient", "problem", "vital", "interventions"];
+    if (value == 'dispatch') {
+        $("#mapCall").css({ opacity: 1, zoom: 1 });
+        document.getElementById('mapCall').style.width = '40%';
+    }
+    else {
+        $("#mapCall").css({ opacity: 0, zoom: 0 });
+        document.getElementById('mapCall').style.width = '10%';
+    }
+    for (var i = 0; i < items.length; i++) {
+        if (items[i] == value) {
+            $('#' + items[i] + 'Menu').addClass('red');
+            $('#' + items[i] + 'Div').show();
+        }
+        else {
+            $('#' + items[i] + 'Menu').removeClass('red');
+            $('#' + items[i] + 'Div').hide();
+        }
+    }
+}
+
+function ajaxPatient() {
     $.ajax({ //Get all allergies
         type: "POST",
         data: "{}",
@@ -36,7 +58,6 @@ function ajaxOnLoad() {
         success: function (data) {
 
             $.each(data.d, function (i, item) {
-                console.log(item);
                 var liAllergy = "<li><input type='checkbox' name='pAllergies' value='" + item.name + "' id='chkA" + item.name + "'>" + item.name + "</li>";
                 $('#ulAllergies').append(liAllergy);
             })
@@ -57,7 +78,6 @@ function ajaxOnLoad() {
         success: function (data) {
 
             $.each(data.d, function (i, item) {
-                console.log(item);
                 var liDisease = "<li><input type='checkbox' name='pDisease' value='" + item.name + "' id='chkD" + item.name + "'>" + item.name + "</li>";
                 $('#ulHistory').append(liDisease);
             })
@@ -69,10 +89,30 @@ function ajaxOnLoad() {
     })
 }
 
+function ajaxProblem() {
+    $.ajax({ //Get all injuries
+        type: "POST",
+        data: "{}",
+        url: "Ambulance.aspx/GetInjuries",
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        async: true,
+        success: function (data) {
+            $.each(data.d, function (i, item) {
+                var liInjury = "<li><input type='checkbox' name='pInjury' value='" + item.name + "' id='chkI" + item.name + "'>" + item.name + "</li>";
+                $('#ulInjuries').append(liInjury);
+            })
+        },
+        failure: function (response) {
+            var r = jQuery.parseJSON(response.responseText);
+            alert("Message: " + r.Message);
+        }
+    })
+}
+
 google.maps.event.addDomListener(window, "load", initialize);
 
-$(function () {
-    
+$(function () {   
     var chat = $.connection.chatHub;
     var username = $('#welcome').text();
     var parts = username.split(' ');
@@ -81,24 +121,19 @@ $(function () {
     $("#patientDiv").hide();
 
     $('#dispatchMenu').on('click', function () {
-        $('#patientMenu').removeClass('red');
-        $('#dispatchMenu').addClass('red');
-        $('#dispatchDiv').show();
-        $('#patientDiv').hide();
-        $("#mapCall").css({ opacity: 1, zoom: 1 });
-        document.getElementById('mapCall').style.width = '40%';
+        menuAdministration('dispatch');
     });
     $('#patientMenu').on('click', function () {
-        $('#dispatchMenu').removeClass('red');
-        $('#patientMenu').addClass('red');
-        $('#patientDiv').show();
-        $('#dispatchDiv').hide();
-        $("#mapCall").css({ opacity: 0, zoom: 0 });
-        document.getElementById('mapCall').style.width = '10%';
+        menuAdministration('patient');
         if ($('#ulAllergies li').length == 0 && $('#ulHistory li').length == 0)
-            ajaxOnLoad();
-        
+            ajaxPatient();
     });
+    $('#problemMenu').on('click', function () {
+        menuAdministration('problem');
+        if ($('#ulInjuries li').length == 0)
+            ajaxProblem();
+    });
+
     chat.client.receiveIncident = function (toWho, incident) {
         setInterval(function () {
             var color = $("#dispatchMenu").css("background-color");
@@ -157,7 +192,6 @@ $(function () {
             success: function (data) {
 
                 $.each(data.d, function (index, item) {
-                    console.log(item);
                     if (index == 'birthDate') {
                         var objDate = ToJavaScriptDate(item);
                         $('#' + index + 'Input').val(objDate);

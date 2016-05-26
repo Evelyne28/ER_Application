@@ -19,6 +19,7 @@ namespace ER_application.Models
             this.PatientAmbulance = new HashSet<PatientAmbulance>();
             this.PatientDisease = new HashSet<PatientDisease>();
             this.Allergy = new HashSet<Allergy>();
+            this.Injury = new HashSet<Injury>();
         }
     
         public int patientID { get; set; }
@@ -39,9 +40,10 @@ namespace ER_application.Models
         public virtual ICollection<PatientAmbulance> PatientAmbulance { get; set; }
         public virtual ICollection<PatientDisease> PatientDisease { get; set; }
         public virtual ICollection<Allergy> Allergy { get; set; }
+        public virtual ICollection<Injury> Injury { get; set; }
 
         public Patient(int id, string ssn, string firstName, string lastName, string gender, string address, string phone,
-                             DateTime birthDate, int age, string city, string county, string country, string zipCode, string bloodType)
+                                     DateTime birthDate, int age, string city, string county, string country, string zipCode, string bloodType)
         {
             this.patientID = id;
             this.ssn = ssn;

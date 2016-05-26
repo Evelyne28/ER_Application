@@ -35,5 +35,10 @@ namespace ER_application.Controller
         {
             return repository.getMedicalHistory();
         }
+
+        public List<Injury> getInjuries()
+        {
+            return repository.getInjuries();
+        }
     }
 }

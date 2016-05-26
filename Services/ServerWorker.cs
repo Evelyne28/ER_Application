@@ -13,7 +13,6 @@ namespace ER_application.Services
 {
     public class ServerWorker
     {
-        private TcpListener server;
         public volatile static ServerWorker singleTonServer;
         private static object lockingObject = new object();
         public Dictionary<string, ClientWorker> map = new Dictionary<string, ClientWorker>();

@@ -175,9 +175,6 @@ margin-top: 3%;*/
     -moz-column-gap: 35px; /* Firefox */
     column-gap: 35px;
 }
-#ulAllergies li {
-    margin-bottom: 2%;
-}
 #mHistory {
     width: 70%;
     height: 250px;
@@ -192,11 +189,24 @@ margin-top: 3%;*/
     -moz-column-gap: 35px; /* Firefox */
     column-gap: 35px;
 }
-#ulHistory li {
+#ulHistory li, #ulAllergies li, #ulInjuries li {
     margin-bottom: 2%;
 }
-#pAllergy {
+#pAllergy, #pInjury, #pHistory {
     font-weight: bold;
 }
-
+#injuryPb {
+    width: 70%;
+    height: 250px;
+    float: left;
+    margin-top: 3%;
+    margin-left: 1%;
+}
+#ulInjuries {
+    width: 100%;
+    -moz-column-count: 4; /* Firefox */
+    column-count: 4;
+    -moz-column-gap: 35px; /* Firefox */
+    column-gap: 35px;
+}
 

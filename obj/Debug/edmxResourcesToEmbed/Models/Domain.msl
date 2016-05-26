@@ -33,10 +33,10 @@
     <EntitySetMapping Name="Disease">
       <EntityTypeMapping TypeName="ERModel.Disease">
         <MappingFragment StoreEntitySet="Disease">
-          <ScalarProperty Name="history" ColumnName="history" />
           <ScalarProperty Name="diseaseID" ColumnName="diseaseID" />
           <ScalarProperty Name="name" ColumnName="name" />
           <ScalarProperty Name="categoryID" ColumnName="categoryID" />
+          <ScalarProperty Name="history" ColumnName="history" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -74,6 +74,14 @@
           <ScalarProperty Name="patientInfo" ColumnName="patientInfo" />
           <ScalarProperty Name="description" ColumnName="description" />
           <ScalarProperty Name="resolved" ColumnName="resolved" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Injury">
+      <EntityTypeMapping TypeName="ERModel.Injury">
+        <MappingFragment StoreEntitySet="Injury">
+          <ScalarProperty Name="injuryID" ColumnName="injuryID" />
+          <ScalarProperty Name="name" ColumnName="name" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -140,6 +148,14 @@
     <AssociationSetMapping Name="PatientAllergy" TypeName="ERModel.PatientAllergy" StoreEntitySet="PatientAllergy">
       <EndProperty Name="Allergy">
         <ScalarProperty Name="allergyID" ColumnName="aID" />
+      </EndProperty>
+      <EndProperty Name="Patient">
+        <ScalarProperty Name="patientID" ColumnName="pID" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="PatientInjury" TypeName="ERModel.PatientInjury" StoreEntitySet="PatientInjury">
+      <EndProperty Name="Injury">
+        <ScalarProperty Name="injuryID" ColumnName="iID" />
       </EndProperty>
       <EndProperty Name="Patient">
         <ScalarProperty Name="patientID" ColumnName="pID" />

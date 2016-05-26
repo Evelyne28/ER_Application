@@ -69,6 +69,13 @@
     <Property Name="description" Type="varchar" MaxLength="200" />
     <Property Name="resolved" Type="int" />
   </EntityType>
+  <EntityType Name="Injury">
+    <Key>
+      <PropertyRef Name="injuryID" />
+    </Key>
+    <Property Name="injuryID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="name" Type="varchar" MaxLength="50" />
+  </EntityType>
   <EntityType Name="Patient">
     <Key>
       <PropertyRef Name="patientID" />
@@ -115,6 +122,14 @@
     <Property Name="dID" Type="int" Nullable="false" />
     <Property Name="diagnosedDate" Type="datetime" />
     <Property Name="endDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="PatientInjury">
+    <Key>
+      <PropertyRef Name="pID" />
+      <PropertyRef Name="iID" />
+    </Key>
+    <Property Name="pID" Type="int" Nullable="false" />
+    <Property Name="iID" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="sysdiagrams">
     <Key>
@@ -255,6 +270,30 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK__PatientInju__iID__40C49C62">
+    <End Role="Injury" Type="Self.Injury" Multiplicity="1" />
+    <End Role="PatientInjury" Type="Self.PatientInjury" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Injury">
+        <PropertyRef Name="injuryID" />
+      </Principal>
+      <Dependent Role="PatientInjury">
+        <PropertyRef Name="iID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__PatientInju__pID__3FD07829">
+    <End Role="Patient" Type="Self.Patient" Multiplicity="1" />
+    <End Role="PatientInjury" Type="Self.PatientInjury" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Patient">
+        <PropertyRef Name="patientID" />
+      </Principal>
+      <Dependent Role="PatientInjury">
+        <PropertyRef Name="pID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <EntityContainer Name="ERModelStoreContainer">
     <EntitySet Name="Allergy" EntityType="Self.Allergy" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Ambulance" EntityType="Self.Ambulance" Schema="dbo" store:Type="Tables" />
@@ -263,10 +302,12 @@
     <EntitySet Name="DiseaseCategory" EntityType="Self.DiseaseCategory" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="ER_User" EntityType="Self.ER_User" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Incident" EntityType="Self.Incident" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Injury" EntityType="Self.Injury" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Patient" EntityType="Self.Patient" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="PatientAllergy" EntityType="Self.PatientAllergy" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="PatientAmbulance" EntityType="Self.PatientAmbulance" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="PatientDisease" EntityType="Self.PatientDisease" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PatientInjury" EntityType="Self.PatientInjury" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="UserMode" EntityType="Self.UserMode" Schema="dbo" store:Type="Tables" />
     <AssociationSet Name="FK__Ambulance__userI__3D2915A8" Association="Self.FK__Ambulance__userI__3D2915A8">
@@ -308,6 +349,14 @@
     <AssociationSet Name="FK__PatientDise__pID__3A179ED3" Association="Self.FK__PatientDise__pID__3A179ED3">
       <End Role="Patient" EntitySet="Patient" />
       <End Role="PatientDisease" EntitySet="PatientDisease" />
+    </AssociationSet>
+    <AssociationSet Name="FK__PatientInju__iID__40C49C62" Association="Self.FK__PatientInju__iID__40C49C62">
+      <End Role="Injury" EntitySet="Injury" />
+      <End Role="PatientInjury" EntitySet="PatientInjury" />
+    </AssociationSet>
+    <AssociationSet Name="FK__PatientInju__pID__3FD07829" Association="Self.FK__PatientInju__pID__3FD07829">
+      <End Role="Patient" EntitySet="Patient" />
+      <End Role="PatientInjury" EntitySet="PatientInjury" />
     </AssociationSet>
   </EntityContainer>
 </Schema>
