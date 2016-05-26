@@ -65,6 +65,9 @@
 	</div>
 	<div id="patientDiv">
 		<table id="patientTable">
+            <tr>
+                <td> <input type="hidden" name="patientIDInput" id="patientIDInput"/> </td>
+            </tr>
 			<tr>
 				<th> Nume </th>
 				<td> <input type="text" name="lastNameInput" id="lastNameInput"/> </td>
@@ -114,16 +117,17 @@
                 <td> <input type="text" name="bloodTypeInput" id="bloodTypeInput"/> </td>
             </tr>
 		</table>
-        <div id="divCard">
-            <button id="buttonCard"> Scanează cardul </button>
-        </div>
         <div id="divAllergies">
             <p id="pAllergy"> Alergii </p>
             <ul id="ulAllergies"> </ul>
         </div>
-
+        <div id="divCard">
+            <button id="buttonCard"> Scanează cardul </button>
+        </div>
+        
         <div id="mHistory">
-
+            <p id="pHistory"> Istoric medical </p>
+            <ul id="ulHistory"> </ul>
         </div>
         
         

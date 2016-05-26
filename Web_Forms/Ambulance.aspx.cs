@@ -42,17 +42,33 @@ namespace ER_application.Web_Forms
             //controller.createPatient(firstName, lastName, ssn, date);
         }
 
-        [WebMethod]
+        [WebMethod(EnableSession = true)]
         public static Models.Patient GetPatient()
         {
-            return controller.getRandomPatient();
+            Patient p = controller.getRandomPatient();
+            HttpContext.Current.Session["patientID"] = p.patientID.ToString();
+            return p;
         }
 
         [WebMethod]
-        public static List<Allergy> getPatientAllergies(String ssn)
+        public static List<String> GetPatientDiseases(int patientID)
         {
-            List<Allergy> allergies = controller.getPatientAllergies(ssn);
-            return allergies;
+            List<String> d = controller.getPatientDiseases(patientID);
+            return d;
+        }
+
+        [WebMethod]
+        public static List<Allergy> GetAllergies()
+        {
+            List<Allergy> d = controller.getAllergies();
+            return d;
+        }
+
+        [WebMethod]
+        public static List<Disease> GetMedicalHistory()
+        {
+            List<Disease> d = controller.getMedicalHistory();
+            return d;
         }
     }
 }

@@ -9,8 +9,9 @@ namespace ER_application.Repository
 {
     interface IRepositoryAmbulance
     {
-        //Patient findPatientById(int id);
         Patient getRandomPatient();
-        List<Allergy> getPatientAllergies(String ssn);
+        List<String> getPatientDiseases(int id);
+        List<Allergy> getAllergies();
+        List<Disease> getMedicalHistory();
     }
 }

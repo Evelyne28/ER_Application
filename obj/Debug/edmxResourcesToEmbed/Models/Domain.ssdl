@@ -33,6 +33,7 @@
     <Property Name="diseaseID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="name" Type="varchar" MaxLength="50" />
     <Property Name="categoryID" Type="int" />
+    <Property Name="history" Type="varchar" MaxLength="5" />
   </EntityType>
   <EntityType Name="DiseaseCategory">
     <Key>

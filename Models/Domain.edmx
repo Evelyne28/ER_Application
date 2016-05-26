@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="ERModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="ERModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Allergy">
           <Key>
             <PropertyRef Name="allergyID" />
@@ -38,6 +38,7 @@
           <Property Name="diseaseID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="name" Type="varchar" MaxLength="50" />
           <Property Name="categoryID" Type="int" />
+          <Property Name="history" Type="varchar" MaxLength="5" />
         </EntityType>
         <EntityType Name="DiseaseCategory">
           <Key>
@@ -314,8 +315,7 @@
             <End Role="PatientDisease" EntitySet="PatientDisease" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="ERModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -357,6 +357,7 @@
           <Property Name="categoryID" Type="Int32" />
           <NavigationProperty Name="DiseaseCategory" Relationship="Self.FK__Disease__categor__0E391C95" FromRole="Disease" ToRole="DiseaseCategory" />
           <NavigationProperty Name="PatientDisease" Relationship="Self.FK__PatientDise__dID__3B0BC30C" FromRole="Disease" ToRole="PatientDisease" />
+          <Property Name="history" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="DiseaseCategory">
           <Key>
@@ -651,6 +652,7 @@
           <EntitySetMapping Name="Disease">
             <EntityTypeMapping TypeName="ERModel.Disease">
               <MappingFragment StoreEntitySet="Disease">
+                <ScalarProperty Name="history" ColumnName="history" />
                 <ScalarProperty Name="diseaseID" ColumnName="diseaseID" />
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="categoryID" ColumnName="categoryID" />

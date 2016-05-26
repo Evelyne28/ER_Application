@@ -22,6 +22,7 @@ namespace ER_application.Models
         public int diseaseID { get; set; }
         public string name { get; set; }
         public Nullable<int> categoryID { get; set; }
+        public string history { get; set; }
     
         public virtual DiseaseCategory DiseaseCategory { get; set; }
         public virtual ICollection<PatientDisease> PatientDisease { get; set; }

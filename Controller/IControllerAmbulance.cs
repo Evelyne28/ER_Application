@@ -10,6 +10,8 @@ namespace ER_application.Controller
     interface IControllerAmbulance
     {
         Patient getRandomPatient();
-        List<Allergy> getPatientAllergies(String ssn);
+        List<String> getPatientDiseases(int id);
+        List<Allergy> getAllergies();
+        List<Disease> getMedicalHistory();
     }
 }

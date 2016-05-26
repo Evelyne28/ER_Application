@@ -21,9 +21,19 @@ namespace ER_application.Controller
             return repository.getRandomPatient();
         }
 
-        public List<Allergy> getPatientAllergies(String ssn)
+        public List<String> getPatientDiseases(int id)
         {
-            return repository.getPatientAllergies(ssn);
+            return repository.getPatientDiseases(id);
+        }
+
+        public List<Allergy> getAllergies()
+        {
+            return repository.getAllergies();
+        }
+
+        public List<Disease> getMedicalHistory()
+        {
+            return repository.getMedicalHistory();
         }
     }
 }

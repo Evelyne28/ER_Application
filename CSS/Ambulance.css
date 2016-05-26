@@ -132,11 +132,11 @@ width: 50%;
 float: left;
 margin-top: 3%;*/
     display: block;
-    width: 55%;
+    width: 80%;
     margin-top: 1%;
 }
 #patientTable {
-	width: 75%;
+	width: 40%;
     float: left;
 }
 .red {
@@ -157,26 +157,43 @@ margin-top: 3%;*/
 #divCard {
     float: left;
     width: 10%;
-    margin-top: 20%;
+    margin-top: 7%;
+    margin-left: 5%;
 }
 #buttonCard {
     width: 200%;
     height: 60px;
 }
 #divAllergies {
-    width: 40%;
+    width: 45%;
     height: 250px;
     float: left;
-    margin-top: 3%;
-    margin-left: 15%;
-    overflow-y:scroll;
+}
+#ulAllergies {
+    -moz-column-count: 2; /* Firefox */
+    column-count: 2;
+    -moz-column-gap: 35px; /* Firefox */
+    column-gap: 35px;
+}
+#ulAllergies li {
+    margin-bottom: 2%;
 }
 #mHistory {
-    width: 40%;
+    width: 70%;
     height: 250px;
     float: left;
     margin-top: 3%;
-    margin-left: 5%;
+    margin-left: 1%;
+}
+#ulHistory {
+    width: 100%;
+    -moz-column-count: 3; /* Firefox */
+    column-count: 3;
+    -moz-column-gap: 35px; /* Firefox */
+    column-gap: 35px;
+}
+#ulHistory li {
+    margin-bottom: 2%;
 }
 #pAllergy {
     font-weight: bold;

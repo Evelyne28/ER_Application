@@ -38,6 +38,7 @@
     <Property Name="categoryID" Type="Int32" />
     <NavigationProperty Name="DiseaseCategory" Relationship="Self.FK__Disease__categor__0E391C95" FromRole="Disease" ToRole="DiseaseCategory" />
     <NavigationProperty Name="PatientDisease" Relationship="Self.FK__PatientDise__dID__3B0BC30C" FromRole="Disease" ToRole="PatientDisease" />
+    <Property Name="history" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
   </EntityType>
   <EntityType Name="DiseaseCategory">
     <Key>

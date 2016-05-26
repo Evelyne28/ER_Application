@@ -33,6 +33,7 @@
     <EntitySetMapping Name="Disease">
       <EntityTypeMapping TypeName="ERModel.Disease">
         <MappingFragment StoreEntitySet="Disease">
+          <ScalarProperty Name="history" ColumnName="history" />
           <ScalarProperty Name="diseaseID" ColumnName="diseaseID" />
           <ScalarProperty Name="name" ColumnName="name" />
           <ScalarProperty Name="categoryID" ColumnName="categoryID" />

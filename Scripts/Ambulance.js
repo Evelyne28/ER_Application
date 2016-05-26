@@ -25,13 +25,59 @@ function ToJavaScriptDate(value) {
     return (dt.getDate()) + " " + monthName + " " + dt.getFullYear();
 }
 
+function ajaxOnLoad() {
+    $.ajax({ //Get all allergies
+        type: "POST",
+        data: "{}",
+        url: "Ambulance.aspx/GetAllergies",
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        async: true,
+        success: function (data) {
+
+            $.each(data.d, function (i, item) {
+                console.log(item);
+                var liAllergy = "<li><input type='checkbox' name='pAllergies' value='" + item.name + "' id='chkA" + item.name + "'>" + item.name + "</li>";
+                $('#ulAllergies').append(liAllergy);
+            })
+        },
+        failure: function (response) {
+            var r = jQuery.parseJSON(response.responseText);
+            alert("Message: " + r.Message);
+        }
+    })
+
+    $.ajax({ //Get all diseases
+        type: "POST",
+        data: "{}",
+        url: "Ambulance.aspx/GetMedicalHistory",
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        async: true,
+        success: function (data) {
+
+            $.each(data.d, function (i, item) {
+                console.log(item);
+                var liDisease = "<li><input type='checkbox' name='pDisease' value='" + item.name + "' id='chkD" + item.name + "'>" + item.name + "</li>";
+                $('#ulHistory').append(liDisease);
+            })
+        },
+        failure: function (response) {
+            var r = jQuery.parseJSON(response.responseText);
+            alert("Message: " + r.Message);
+        }
+    })
+}
+
 google.maps.event.addDomListener(window, "load", initialize);
 
 $(function () {
+    
     var chat = $.connection.chatHub;
     var username = $('#welcome').text();
     var parts = username.split(' ');
     username = parts[1];
+    //ajaxOnLoad();
     $("#patientDiv").hide();
 
     $('#dispatchMenu').on('click', function () {
@@ -39,12 +85,19 @@ $(function () {
         $('#dispatchMenu').addClass('red');
         $('#dispatchDiv').show();
         $('#patientDiv').hide();
+        $("#mapCall").css({ opacity: 1, zoom: 1 });
+        document.getElementById('mapCall').style.width = '40%';
     });
     $('#patientMenu').on('click', function () {
         $('#dispatchMenu').removeClass('red');
         $('#patientMenu').addClass('red');
         $('#patientDiv').show();
         $('#dispatchDiv').hide();
+        $("#mapCall").css({ opacity: 0, zoom: 0 });
+        document.getElementById('mapCall').style.width = '10%';
+        if ($('#ulAllergies li').length == 0 && $('#ulHistory li').length == 0)
+            ajaxOnLoad();
+        
     });
     chat.client.receiveIncident = function (toWho, incident) {
         setInterval(function () {
@@ -90,9 +143,11 @@ $(function () {
         }
     }
 
+    //Scan card
     $(document).on('click', '#buttonCard', function (ev) {
+        $('input:checkbox').removeAttr('checked');
         ev.preventDefault();
-        $.ajax({
+        $.ajax({ //Get patient from DB
             type: "POST",
             data: "{}",
             url: "Ambulance.aspx/GetPatient",
@@ -107,8 +162,32 @@ $(function () {
                         var objDate = ToJavaScriptDate(item);
                         $('#' + index + 'Input').val(objDate);
                     }
+                    else if (index == 'Allergy') {
+                        $.each(item, function (i) {
+                            $('#chkA' + item[i].name).prop('checked', true);
+                        })
+                    }
                     else
-                        $('#' + index + 'Input').val(item);
+                        $('#' + index + 'Input').val(item);   
+                })
+                var pID = $('#patientIDInput').val();
+                $.ajax({ //Get his medical history
+                    type: "POST",
+                    data: JSON.stringify({ patientID: pID }),
+                    url: "Ambulance.aspx/GetPatientDiseases",
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    async: true,
+                    success: function (data) {
+
+                        $.each(data.d, function (i, item) {
+                            $('#chkD' + item).prop('checked', true);
+                        })
+                    },
+                    failure: function (response) {
+                        var r = jQuery.parseJSON(response.responseText);
+                        alert("Message: " + r.Message);
+                    }
                 })
             },
             failure: function (response) {
@@ -116,7 +195,7 @@ $(function () {
                 alert("Message: " + r.Message);
             }
         })
-
+ 
         ev.preventDefault();
         return;
     });
