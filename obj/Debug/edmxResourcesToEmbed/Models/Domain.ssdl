@@ -76,6 +76,21 @@
     <Property Name="injuryID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="name" Type="varchar" MaxLength="50" />
   </EntityType>
+  <EntityType Name="InjuryMechanism">
+    <Key>
+      <PropertyRef Name="imID" />
+    </Key>
+    <Property Name="imID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="paID" Type="int" />
+    <Property Name="mecID" Type="int" />
+  </EntityType>
+  <EntityType Name="Mechanism">
+    <Key>
+      <PropertyRef Name="mechanismID" />
+    </Key>
+    <Property Name="mechanismID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="name" Type="varchar" MaxLength="30" />
+  </EntityType>
   <EntityType Name="Patient">
     <Key>
       <PropertyRef Name="patientID" />
@@ -105,13 +120,12 @@
   </EntityType>
   <EntityType Name="PatientAmbulance">
     <Key>
-      <PropertyRef Name="patientID" />
-      <PropertyRef Name="ambulanceID" />
-      <PropertyRef Name="incidentID" />
+      <PropertyRef Name="paID" />
     </Key>
-    <Property Name="patientID" Type="int" Nullable="false" />
-    <Property Name="ambulanceID" Type="int" Nullable="false" />
-    <Property Name="incidentID" Type="int" Nullable="false" />
+    <Property Name="paID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="patientID" Type="int" />
+    <Property Name="ambulanceID" Type="int" />
+    <Property Name="incidentID" Type="int" />
   </EntityType>
   <EntityType Name="PatientDisease">
     <Key>
@@ -125,11 +139,19 @@
   </EntityType>
   <EntityType Name="PatientInjury">
     <Key>
-      <PropertyRef Name="pID" />
-      <PropertyRef Name="iID" />
+      <PropertyRef Name="piID" />
     </Key>
-    <Property Name="pID" Type="int" Nullable="false" />
-    <Property Name="iID" Type="int" Nullable="false" />
+    <Property Name="piID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="paID" Type="int" />
+    <Property Name="injID" Type="int" />
+  </EntityType>
+  <EntityType Name="PatientVital">
+    <Key>
+      <PropertyRef Name="pvID" />
+    </Key>
+    <Property Name="pvID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="paID" Type="int" />
+    <Property Name="vID" Type="int" />
   </EntityType>
   <EntityType Name="sysdiagrams">
     <Key>
@@ -149,6 +171,22 @@
     <Property Name="username" Type="varchar" MaxLength="30" />
     <Property Name="password" Type="varchar" MaxLength="30" />
     <Property Name="role" Type="int" />
+  </EntityType>
+  <EntityType Name="VitalSign">
+    <Key>
+      <PropertyRef Name="vitalID" />
+    </Key>
+    <Property Name="vitalID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="vitalTime" Type="datetime" />
+    <Property Name="consciousnessType" Type="varchar" MaxLength="20" />
+    <Property Name="respirationRate" Type="int" />
+    <Property Name="respirationType" Type="varchar" MaxLength="20" />
+    <Property Name="pulseRate" Type="int" />
+    <Property Name="pulseType" Type="varchar" MaxLength="20" />
+    <Property Name="pulseBP" Type="varchar" MaxLength="10" />
+    <Property Name="rightPupilType" Type="varchar" MaxLength="20" />
+    <Property Name="leftPupilType" Type="varchar" MaxLength="20" />
+    <Property Name="skinType" Type="varchar" MaxLength="30" />
   </EntityType>
   <Association Name="FK__Ambulance__userI__3D2915A8">
     <End Role="UserMode" Type="Self.UserMode" Multiplicity="0..1" />
@@ -186,6 +224,30 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK__InjuryMec__mecID__6ABAD62E">
+    <End Role="Mechanism" Type="Self.Mechanism" Multiplicity="0..1" />
+    <End Role="InjuryMechanism" Type="Self.InjuryMechanism" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Mechanism">
+        <PropertyRef Name="mechanismID" />
+      </Principal>
+      <Dependent Role="InjuryMechanism">
+        <PropertyRef Name="mecID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__InjuryMech__paID__69C6B1F5">
+    <End Role="PatientAmbulance" Type="Self.PatientAmbulance" Multiplicity="0..1" />
+    <End Role="InjuryMechanism" Type="Self.InjuryMechanism" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PatientAmbulance">
+        <PropertyRef Name="paID" />
+      </Principal>
+      <Dependent Role="InjuryMechanism">
+        <PropertyRef Name="paID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK__PatientAlle__aID__373B3228">
     <End Role="Allergy" Type="Self.Allergy" Multiplicity="1" />
     <End Role="PatientAllergy" Type="Self.PatientAllergy" Multiplicity="*" />
@@ -210,8 +272,8 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__PatientAm__ambul__14E61A24">
-    <End Role="Ambulance" Type="Self.Ambulance" Multiplicity="1" />
+  <Association Name="FK__PatientAm__ambul__52E34C9D">
+    <End Role="Ambulance" Type="Self.Ambulance" Multiplicity="0..1" />
     <End Role="PatientAmbulance" Type="Self.PatientAmbulance" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Ambulance">
@@ -222,8 +284,8 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__PatientAm__incid__15DA3E5D">
-    <End Role="Incident" Type="Self.Incident" Multiplicity="1" />
+  <Association Name="FK__PatientAm__incid__53D770D6">
+    <End Role="Incident" Type="Self.Incident" Multiplicity="0..1" />
     <End Role="PatientAmbulance" Type="Self.PatientAmbulance" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Incident">
@@ -234,8 +296,8 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__PatientAm__patie__13F1F5EB">
-    <End Role="Patient" Type="Self.Patient" Multiplicity="1" />
+  <Association Name="FK__PatientAm__patie__51EF2864">
+    <End Role="Patient" Type="Self.Patient" Multiplicity="0..1" />
     <End Role="PatientAmbulance" Type="Self.PatientAmbulance" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Patient">
@@ -270,27 +332,51 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__PatientInju__iID__40C49C62">
-    <End Role="Injury" Type="Self.Injury" Multiplicity="1" />
+  <Association Name="FK__PatientIn__injID__57A801BA">
+    <End Role="Injury" Type="Self.Injury" Multiplicity="0..1" />
     <End Role="PatientInjury" Type="Self.PatientInjury" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Injury">
         <PropertyRef Name="injuryID" />
       </Principal>
       <Dependent Role="PatientInjury">
-        <PropertyRef Name="iID" />
+        <PropertyRef Name="injID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__PatientInju__pID__3FD07829">
-    <End Role="Patient" Type="Self.Patient" Multiplicity="1" />
+  <Association Name="FK__PatientInj__paID__56B3DD81">
+    <End Role="PatientAmbulance" Type="Self.PatientAmbulance" Multiplicity="0..1" />
     <End Role="PatientInjury" Type="Self.PatientInjury" Multiplicity="*" />
     <ReferentialConstraint>
-      <Principal Role="Patient">
-        <PropertyRef Name="patientID" />
+      <Principal Role="PatientAmbulance">
+        <PropertyRef Name="paID" />
       </Principal>
       <Dependent Role="PatientInjury">
-        <PropertyRef Name="pID" />
+        <PropertyRef Name="paID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__PatientVit__paID__640DD89F">
+    <End Role="PatientAmbulance" Type="Self.PatientAmbulance" Multiplicity="0..1" />
+    <End Role="PatientVital" Type="Self.PatientVital" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PatientAmbulance">
+        <PropertyRef Name="paID" />
+      </Principal>
+      <Dependent Role="PatientVital">
+        <PropertyRef Name="paID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__PatientVita__vID__6501FCD8">
+    <End Role="VitalSign" Type="Self.VitalSign" Multiplicity="0..1" />
+    <End Role="PatientVital" Type="Self.PatientVital" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="VitalSign">
+        <PropertyRef Name="vitalID" />
+      </Principal>
+      <Dependent Role="PatientVital">
+        <PropertyRef Name="vID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -303,13 +389,17 @@
     <EntitySet Name="ER_User" EntityType="Self.ER_User" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Incident" EntityType="Self.Incident" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Injury" EntityType="Self.Injury" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="InjuryMechanism" EntityType="Self.InjuryMechanism" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Mechanism" EntityType="Self.Mechanism" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Patient" EntityType="Self.Patient" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="PatientAllergy" EntityType="Self.PatientAllergy" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="PatientAmbulance" EntityType="Self.PatientAmbulance" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="PatientDisease" EntityType="Self.PatientDisease" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="PatientInjury" EntityType="Self.PatientInjury" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PatientVital" EntityType="Self.PatientVital" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="UserMode" EntityType="Self.UserMode" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="VitalSign" EntityType="Self.VitalSign" Schema="dbo" store:Type="Tables" />
     <AssociationSet Name="FK__Ambulance__userI__3D2915A8" Association="Self.FK__Ambulance__userI__3D2915A8">
       <End Role="UserMode" EntitySet="UserMode" />
       <End Role="AmbulanceUser" EntitySet="AmbulanceUser" />
@@ -322,6 +412,14 @@
       <End Role="UserMode" EntitySet="UserMode" />
       <End Role="ER_User" EntitySet="ER_User" />
     </AssociationSet>
+    <AssociationSet Name="FK__InjuryMec__mecID__6ABAD62E" Association="Self.FK__InjuryMec__mecID__6ABAD62E">
+      <End Role="Mechanism" EntitySet="Mechanism" />
+      <End Role="InjuryMechanism" EntitySet="InjuryMechanism" />
+    </AssociationSet>
+    <AssociationSet Name="FK__InjuryMech__paID__69C6B1F5" Association="Self.FK__InjuryMech__paID__69C6B1F5">
+      <End Role="PatientAmbulance" EntitySet="PatientAmbulance" />
+      <End Role="InjuryMechanism" EntitySet="InjuryMechanism" />
+    </AssociationSet>
     <AssociationSet Name="FK__PatientAlle__aID__373B3228" Association="Self.FK__PatientAlle__aID__373B3228">
       <End Role="Allergy" EntitySet="Allergy" />
       <End Role="PatientAllergy" EntitySet="PatientAllergy" />
@@ -330,15 +428,15 @@
       <End Role="Patient" EntitySet="Patient" />
       <End Role="PatientAllergy" EntitySet="PatientAllergy" />
     </AssociationSet>
-    <AssociationSet Name="FK__PatientAm__ambul__14E61A24" Association="Self.FK__PatientAm__ambul__14E61A24">
+    <AssociationSet Name="FK__PatientAm__ambul__52E34C9D" Association="Self.FK__PatientAm__ambul__52E34C9D">
       <End Role="Ambulance" EntitySet="Ambulance" />
       <End Role="PatientAmbulance" EntitySet="PatientAmbulance" />
     </AssociationSet>
-    <AssociationSet Name="FK__PatientAm__incid__15DA3E5D" Association="Self.FK__PatientAm__incid__15DA3E5D">
+    <AssociationSet Name="FK__PatientAm__incid__53D770D6" Association="Self.FK__PatientAm__incid__53D770D6">
       <End Role="Incident" EntitySet="Incident" />
       <End Role="PatientAmbulance" EntitySet="PatientAmbulance" />
     </AssociationSet>
-    <AssociationSet Name="FK__PatientAm__patie__13F1F5EB" Association="Self.FK__PatientAm__patie__13F1F5EB">
+    <AssociationSet Name="FK__PatientAm__patie__51EF2864" Association="Self.FK__PatientAm__patie__51EF2864">
       <End Role="Patient" EntitySet="Patient" />
       <End Role="PatientAmbulance" EntitySet="PatientAmbulance" />
     </AssociationSet>
@@ -350,13 +448,21 @@
       <End Role="Patient" EntitySet="Patient" />
       <End Role="PatientDisease" EntitySet="PatientDisease" />
     </AssociationSet>
-    <AssociationSet Name="FK__PatientInju__iID__40C49C62" Association="Self.FK__PatientInju__iID__40C49C62">
+    <AssociationSet Name="FK__PatientIn__injID__57A801BA" Association="Self.FK__PatientIn__injID__57A801BA">
       <End Role="Injury" EntitySet="Injury" />
       <End Role="PatientInjury" EntitySet="PatientInjury" />
     </AssociationSet>
-    <AssociationSet Name="FK__PatientInju__pID__3FD07829" Association="Self.FK__PatientInju__pID__3FD07829">
-      <End Role="Patient" EntitySet="Patient" />
+    <AssociationSet Name="FK__PatientInj__paID__56B3DD81" Association="Self.FK__PatientInj__paID__56B3DD81">
+      <End Role="PatientAmbulance" EntitySet="PatientAmbulance" />
       <End Role="PatientInjury" EntitySet="PatientInjury" />
+    </AssociationSet>
+    <AssociationSet Name="FK__PatientVit__paID__640DD89F" Association="Self.FK__PatientVit__paID__640DD89F">
+      <End Role="PatientAmbulance" EntitySet="PatientAmbulance" />
+      <End Role="PatientVital" EntitySet="PatientVital" />
+    </AssociationSet>
+    <AssociationSet Name="FK__PatientVita__vID__6501FCD8" Association="Self.FK__PatientVita__vID__6501FCD8">
+      <End Role="VitalSign" EntitySet="VitalSign" />
+      <End Role="PatientVital" EntitySet="PatientVital" />
     </AssociationSet>
   </EntityContainer>
 </Schema>

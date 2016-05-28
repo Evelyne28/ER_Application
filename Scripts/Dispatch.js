@@ -108,6 +108,7 @@ $(function () {
                         //    }
                         //});
                         incident = {
+                            incidentID: parts[1],
                             posInc: $("#" + number + "cPos").val(),
                             locationGPS: $("#" + number + "addressInput").val(),
                             callerLocation: $("#" + number + "cLocationInput").val(),

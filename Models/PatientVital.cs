@@ -12,21 +12,13 @@ namespace ER_application.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Allergy
+    public partial class PatientVital
     {
-        public Allergy()
-        {
-            this.Patient = new HashSet<Patient>();
-        }
+        public int pvID { get; set; }
+        public Nullable<int> paID { get; set; }
+        public Nullable<int> vID { get; set; }
     
-        public int allergyID { get; set; }
-        public string name { get; set; }
-    
-        public virtual ICollection<Patient> Patient { get; set; }
-
-        public Allergy(String name)
-        {
-            this.name = name;
-        }
+        public virtual PatientAmbulance PatientAmbulance { get; set; }
+        public virtual VitalSign VitalSign { get; set; }
     }
 }

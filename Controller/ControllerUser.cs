@@ -4,6 +4,8 @@ using System.Linq;
 using System.Web;
 using ER_application.Repository;
 using ER_application.Models;
+using ER_application.Controller.Interfaces;
+using ER_application.Repository.Interfaces;
 
 namespace ER_application.Controller
 {

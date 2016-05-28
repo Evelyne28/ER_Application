@@ -38,5 +38,6 @@ namespace ER_application.Models
             this.dateOfEvent = d;
             this.callerPhone = callerPhone;
         }
+
     }
 }

@@ -7,6 +7,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using ER_application.Controller;
 using ER_application.Models;
+using ER_application.Controller.Interfaces;
 
 namespace ER_application.Web_Forms
 {
@@ -76,6 +77,38 @@ namespace ER_application.Web_Forms
         {
             List<Injury> d = controller.getInjuries();
             return d;
+        }
+
+        [WebMethod]
+        public static List<Mechanism> GetMechanisms()
+        {
+            List<Mechanism> d = controller.getMechanisms();
+            return d;
+        }
+
+        [WebMethod]
+        public static String AddPatient(Patient patient, PatientAmbulance pa)
+        {
+            int idP = controller.addPatient(patient);
+            pa.patientID = idP;
+            int idPA = controller.addPatientAmbulance(pa);
+            return idP + ";" + idPA;
+        }
+
+        [WebMethod]
+        public static int AddPatientAmbulance(PatientAmbulance pa)
+        {
+            int idPA = controller.addPatientAmbulance(pa);
+            return idPA;
+        }
+
+        [WebMethod(EnableSession = true)]
+        public static void SetSession(String pID, String iID, String aID, String paID)
+        {
+            HttpContext.Current.Session["patientID"] = pID;
+            HttpContext.Current.Session["incidentID"] = iID;
+            HttpContext.Current.Session["ambulanceID"] = aID;
+            HttpContext.Current.Session["paID"] = paID;
         }
     }
 }

@@ -8,6 +8,7 @@ using System.Threading;
 using System.Web;
 using Microsoft.AspNet.SignalR;
 using ER_application.Controller;
+using ER_application.Controller.Interfaces;
 
 namespace ER_application.Services
 {

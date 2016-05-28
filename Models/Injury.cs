@@ -16,12 +16,12 @@ namespace ER_application.Models
     {
         public Injury()
         {
-            this.Patient = new HashSet<Patient>();
+            this.PatientInjury = new HashSet<PatientInjury>();
         }
     
         public int injuryID { get; set; }
         public string name { get; set; }
     
-        public virtual ICollection<Patient> Patient { get; set; }
+        public virtual ICollection<PatientInjury> PatientInjury { get; set; }
     }
 }

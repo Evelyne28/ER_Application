@@ -47,69 +47,6 @@ function menuAdministration(value) {
     }
 }
 
-function ajaxPatient() {
-    $.ajax({ //Get all allergies
-        type: "POST",
-        data: "{}",
-        url: "Ambulance.aspx/GetAllergies",
-        contentType: "application/json; charset=utf-8",
-        dataType: "json",
-        async: true,
-        success: function (data) {
-
-            $.each(data.d, function (i, item) {
-                var liAllergy = "<li><input type='checkbox' name='pAllergies' value='" + item.name + "' id='chkA" + item.name + "'>" + item.name + "</li>";
-                $('#ulAllergies').append(liAllergy);
-            })
-        },
-        failure: function (response) {
-            var r = jQuery.parseJSON(response.responseText);
-            alert("Message: " + r.Message);
-        }
-    })
-
-    $.ajax({ //Get all diseases
-        type: "POST",
-        data: "{}",
-        url: "Ambulance.aspx/GetMedicalHistory",
-        contentType: "application/json; charset=utf-8",
-        dataType: "json",
-        async: true,
-        success: function (data) {
-
-            $.each(data.d, function (i, item) {
-                var liDisease = "<li><input type='checkbox' name='pDisease' value='" + item.name + "' id='chkD" + item.name + "'>" + item.name + "</li>";
-                $('#ulHistory').append(liDisease);
-            })
-        },
-        failure: function (response) {
-            var r = jQuery.parseJSON(response.responseText);
-            alert("Message: " + r.Message);
-        }
-    })
-}
-
-function ajaxProblem() {
-    $.ajax({ //Get all injuries
-        type: "POST",
-        data: "{}",
-        url: "Ambulance.aspx/GetInjuries",
-        contentType: "application/json; charset=utf-8",
-        dataType: "json",
-        async: true,
-        success: function (data) {
-            $.each(data.d, function (i, item) {
-                var liInjury = "<li><input type='checkbox' name='pInjury' value='" + item.name + "' id='chkI" + item.name + "'>" + item.name + "</li>";
-                $('#ulInjuries').append(liInjury);
-            })
-        },
-        failure: function (response) {
-            var r = jQuery.parseJSON(response.responseText);
-            alert("Message: " + r.Message);
-        }
-    })
-}
-
 google.maps.event.addDomListener(window, "load", initialize);
 
 $(function () {   
@@ -119,6 +56,7 @@ $(function () {
     username = parts[1];
     //ajaxOnLoad();
     $("#patientDiv").hide();
+    $("#problemDiv").hide();
 
     $('#dispatchMenu').on('click', function () {
         menuAdministration('dispatch');
@@ -130,7 +68,7 @@ $(function () {
     });
     $('#problemMenu').on('click', function () {
         menuAdministration('problem');
-        if ($('#ulInjuries li').length == 0)
+        if ($('#ulInjuries li').length == 0 && $('#ulMechanism li').length == 0)
             ajaxProblem();
     });
 
@@ -145,6 +83,7 @@ $(function () {
             }
         }, 400);
         if (toWho == username) {
+            $("#cIncidentID").val(incident.incidentID);
             $("#addressGPSInput").val(incident.locationGPS);
             $("#cLocationInput").val(incident.callerLocation);
             $("#cPhoneInput").val(incident.callerPhone);
@@ -178,66 +117,25 @@ $(function () {
         }
     }
 
+    //Add patient
+    $(document).on('click', '#btnAddPatient', function (ev) {
+        ajaxAddPatient();
+        ajaxSetSession();
+        ev.preventDefault();
+    });
+
     //Scan card
     $(document).on('click', '#buttonCard', function (ev) {
-        $('input:checkbox').removeAttr('checked');
-        ev.preventDefault();
-        $.ajax({ //Get patient from DB
-            type: "POST",
-            data: "{}",
-            url: "Ambulance.aspx/GetPatient",
-            contentType: "application/json; charset=utf-8",
-            dataType: "json",
-            async: true,
-            success: function (data) {
-
-                $.each(data.d, function (index, item) {
-                    if (index == 'birthDate') {
-                        var objDate = ToJavaScriptDate(item);
-                        $('#' + index + 'Input').val(objDate);
-                    }
-                    else if (index == 'Allergy') {
-                        $.each(item, function (i) {
-                            $('#chkA' + item[i].name).prop('checked', true);
-                        })
-                    }
-                    else
-                        $('#' + index + 'Input').val(item);   
-                })
-                var pID = $('#patientIDInput').val();
-                $.ajax({ //Get his medical history
-                    type: "POST",
-                    data: JSON.stringify({ patientID: pID }),
-                    url: "Ambulance.aspx/GetPatientDiseases",
-                    contentType: "application/json; charset=utf-8",
-                    dataType: "json",
-                    async: true,
-                    success: function (data) {
-
-                        $.each(data.d, function (i, item) {
-                            $('#chkD' + item).prop('checked', true);
-                        })
-                    },
-                    failure: function (response) {
-                        var r = jQuery.parseJSON(response.responseText);
-                        alert("Message: " + r.Message);
-                    }
-                })
-            },
-            failure: function (response) {
-                var r = jQuery.parseJSON(response.responseText);
-                alert("Message: " + r.Message);
-            }
-        })
- 
+        ajaxScanCard();
+        ajaxAddPatientAmbulance();
         ev.preventDefault();
         return;
     });
 
-    jQuery(function () {
-        return $("body").on("click", ".search_camera_btn", function () {
-            alert("Ready to enter start");
-            return IW2.get_camera_list();
-        });
-    });
+    //jQuery(function () {
+    //    return $("body").on("click", ".search_camera_btn", function () {
+    //        alert("Ready to enter start");
+    //        return IW2.get_camera_list();
+    //    });
+    //});
 });

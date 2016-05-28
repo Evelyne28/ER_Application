@@ -4,6 +4,8 @@ using System.Linq;
 using System.Web;
 using ER_application.Repository;
 using ER_application.Models;
+using ER_application.Controller.Interfaces;
+using ER_application.Repository.Interfaces;
 
 namespace ER_application.Controller
 {
@@ -14,6 +16,21 @@ namespace ER_application.Controller
         public ControllerAmbulance() 
         {
             this.repository = new RepositoryAmbulance();
+        }
+
+        public int addPatient(Patient p)
+        {
+            return repository.addPatient(p);
+        }
+
+        public int addAllergy(Allergy a)
+        {
+            return repository.addAllergy(a);
+        }
+
+        public int addPatientAmbulance(PatientAmbulance pa) 
+        {
+            return repository.addPatientAmbulance(pa);
         }
 
         public Patient getRandomPatient()
@@ -40,5 +57,11 @@ namespace ER_application.Controller
         {
             return repository.getInjuries();
         }
+
+        public List<Mechanism> getMechanisms()
+        {
+            return repository.getMechanisms();
+        }
+
     }
 }

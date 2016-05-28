@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using ER_application.Models;
+using ER_application.Repository.Interfaces;
 
 namespace ER_application.Repository
 {
@@ -101,6 +102,7 @@ namespace ER_application.Repository
 
         public List<Ambulance> readAmbulances()
         {
+            context.Configuration.ProxyCreationEnabled = false;
             List<Ambulance> ambulances = new List<Ambulance>();
             var load = from a in context.Ambulance select a;
             if (load != null)

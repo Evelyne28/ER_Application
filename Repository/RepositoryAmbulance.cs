@@ -3,34 +3,37 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using ER_application.Models;
+using ER_application.Repository.Interfaces;
 
 namespace ER_application.Repository
 {
     public class RepositoryAmbulance : IRepositoryAmbulance
     {
-        EREntities context;
-
+        public EREntities context;
+        
         public RepositoryAmbulance() {
             context = new EREntities();
         }
 
-        public List<T> getList<T>(T value)
+        public int addPatient(Patient p)
         {
-            List<T> patients = new List<T>();
-            context.Configuration.ProxyCreationEnabled = false;
-            var load = from a in context.Set<T> select a;
-            if (load != null)
-            {
-                try
-                {
-                    patients = load.ToList();
-                }
-                catch (Exception ex)
-                {
-                    string exx = ex.InnerException.ToString();
-                }
-            }
-            return patients;
+            IGenericRepository<Patient> repoPatient = new GenericRepository<Patient>(context);
+            repoPatient.Add(p);
+            return p.patientID;
+        }
+
+        public int addAllergy(Allergy a)
+        {
+            context.Allergy.Add(a);
+            context.SaveChanges();
+            return a.allergyID;
+        }
+
+        public int addPatientAmbulance(PatientAmbulance pa)
+        {
+            context.PatientAmbulance.Add(pa);
+            context.SaveChanges();
+            return pa.paID;
         }
 
         public Patient getRandomPatient()
@@ -47,46 +50,32 @@ namespace ER_application.Repository
 
         public List<Patient> getPatients()
         {
-            List<Patient> patients = new List<Patient>();
-            context.Configuration.ProxyCreationEnabled = false;
-            var load = from a in context.Patient select a;
-            if (load != null)
-            {
-                try
-                {
-                    patients = load.ToList();
-                }
-                catch (Exception ex)
-                {
-                    string exx = ex.InnerException.ToString();
-                }
-            }
-            return patients;
+            IGenericRepository<Patient> repoPatient = new GenericRepository<Patient>(context);
+            return repoPatient.GetAll().Cast<Patient>().ToList();
         }
 
         public List<Allergy> getAllergies()
         {
-            List<Allergy> allergies = new List<Allergy>();
-            context.Configuration.ProxyCreationEnabled = false;
-            var load = from a in context.Allergy select a;
-            if (load != null)
-            {
-                try
-                {
-                    allergies = load.ToList();
-                }
-                catch (Exception ex)
-                {
-                    string exx = ex.InnerException.ToString();
-                }
-            }
-            return allergies;
+            IGenericRepository<Allergy> repoAllergy = new GenericRepository<Allergy>(context);
+            return repoAllergy.GetAll().Cast<Allergy>().ToList();
+        }
+
+        public List<Injury> getInjuries()
+        {
+            IGenericRepository<Injury> repoInjury = new GenericRepository<Injury>(context);
+            return repoInjury.GetAll().Cast<Injury>().ToList();
+        }
+
+        public List<Mechanism> getMechanisms()
+        {
+            IGenericRepository<Mechanism> repoMechanism = new GenericRepository<Mechanism>(context);
+            return repoMechanism.GetAll().Cast<Mechanism>().ToList();
         }
 
         public List<Disease> getMedicalHistory()
         {
-            List<Disease> diseases = new List<Disease>();
             context.Configuration.ProxyCreationEnabled = false;
+            List<Disease> diseases = new List<Disease>();
             var load = from a in context.Disease where a.history.Equals("yes") select a;
             if (load != null)
             {
@@ -100,25 +89,6 @@ namespace ER_application.Repository
                 }
             }
             return diseases;
-        }
-
-        public List<Injury> getInjuries()
-        {
-            List<Injury> injuries = new List<Injury>();
-            context.Configuration.ProxyCreationEnabled = false;
-            var load = from a in context.Injury select a;
-            if (load != null)
-            {
-                try
-                {
-                    injuries = load.ToList();
-                }
-                catch (Exception ex)
-                {
-                    string exx = ex.InnerException.ToString();
-                }
-            }
-            return injuries;
         }
 
         public List<Allergy> getPatientAllergies(int id)

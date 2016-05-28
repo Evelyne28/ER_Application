@@ -14,12 +14,23 @@ namespace ER_application.Models
     
     public partial class PatientAmbulance
     {
-        public int patientID { get; set; }
-        public int ambulanceID { get; set; }
-        public int incidentID { get; set; }
+        public PatientAmbulance()
+        {
+            this.InjuryMechanism = new HashSet<InjuryMechanism>();
+            this.PatientInjury = new HashSet<PatientInjury>();
+            this.PatientVital = new HashSet<PatientVital>();
+        }
+    
+        public int paID { get; set; }
+        public Nullable<int> patientID { get; set; }
+        public Nullable<int> ambulanceID { get; set; }
+        public Nullable<int> incidentID { get; set; }
     
         public virtual Ambulance Ambulance { get; set; }
         public virtual Incident Incident { get; set; }
+        public virtual ICollection<InjuryMechanism> InjuryMechanism { get; set; }
         public virtual Patient Patient { get; set; }
+        public virtual ICollection<PatientInjury> PatientInjury { get; set; }
+        public virtual ICollection<PatientVital> PatientVital { get; set; }
     }
 }

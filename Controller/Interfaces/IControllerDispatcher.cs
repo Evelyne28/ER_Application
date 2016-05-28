@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ER_application.Models;
 
-namespace ER_application.Controller
+namespace ER_application.Controller.Interfaces
 {
     public interface IControllerDispatcher
     {

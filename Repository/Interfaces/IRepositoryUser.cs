@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ER_application.Repository
+namespace ER_application.Repository.Interfaces
 {
     interface IRepositoryUser
     {

@@ -85,6 +85,23 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="InjuryMechanism">
+      <EntityTypeMapping TypeName="ERModel.InjuryMechanism">
+        <MappingFragment StoreEntitySet="InjuryMechanism">
+          <ScalarProperty Name="imID" ColumnName="imID" />
+          <ScalarProperty Name="paID" ColumnName="paID" />
+          <ScalarProperty Name="mecID" ColumnName="mecID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Mechanism">
+      <EntityTypeMapping TypeName="ERModel.Mechanism">
+        <MappingFragment StoreEntitySet="Mechanism">
+          <ScalarProperty Name="mechanismID" ColumnName="mechanismID" />
+          <ScalarProperty Name="name" ColumnName="name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="Patient">
       <EntityTypeMapping TypeName="ERModel.Patient">
         <MappingFragment StoreEntitySet="Patient">
@@ -108,6 +125,7 @@
     <EntitySetMapping Name="PatientAmbulance">
       <EntityTypeMapping TypeName="ERModel.PatientAmbulance">
         <MappingFragment StoreEntitySet="PatientAmbulance">
+          <ScalarProperty Name="paID" ColumnName="paID" />
           <ScalarProperty Name="patientID" ColumnName="patientID" />
           <ScalarProperty Name="ambulanceID" ColumnName="ambulanceID" />
           <ScalarProperty Name="incidentID" ColumnName="incidentID" />
@@ -121,6 +139,24 @@
           <ScalarProperty Name="dID" ColumnName="dID" />
           <ScalarProperty Name="diagnosedDate" ColumnName="diagnosedDate" />
           <ScalarProperty Name="endDate" ColumnName="endDate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PatientInjury">
+      <EntityTypeMapping TypeName="ERModel.PatientInjury">
+        <MappingFragment StoreEntitySet="PatientInjury">
+          <ScalarProperty Name="piID" ColumnName="piID" />
+          <ScalarProperty Name="paID" ColumnName="paID" />
+          <ScalarProperty Name="injID" ColumnName="injID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PatientVital">
+      <EntityTypeMapping TypeName="ERModel.PatientVital">
+        <MappingFragment StoreEntitySet="PatientVital">
+          <ScalarProperty Name="pvID" ColumnName="pvID" />
+          <ScalarProperty Name="paID" ColumnName="paID" />
+          <ScalarProperty Name="vID" ColumnName="vID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -145,17 +181,26 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="VitalSign">
+      <EntityTypeMapping TypeName="ERModel.VitalSign">
+        <MappingFragment StoreEntitySet="VitalSign">
+          <ScalarProperty Name="vitalID" ColumnName="vitalID" />
+          <ScalarProperty Name="vitalTime" ColumnName="vitalTime" />
+          <ScalarProperty Name="consciousnessType" ColumnName="consciousnessType" />
+          <ScalarProperty Name="respirationRate" ColumnName="respirationRate" />
+          <ScalarProperty Name="respirationType" ColumnName="respirationType" />
+          <ScalarProperty Name="pulseRate" ColumnName="pulseRate" />
+          <ScalarProperty Name="pulseType" ColumnName="pulseType" />
+          <ScalarProperty Name="pulseBP" ColumnName="pulseBP" />
+          <ScalarProperty Name="rightPupilType" ColumnName="rightPupilType" />
+          <ScalarProperty Name="leftPupilType" ColumnName="leftPupilType" />
+          <ScalarProperty Name="skinType" ColumnName="skinType" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <AssociationSetMapping Name="PatientAllergy" TypeName="ERModel.PatientAllergy" StoreEntitySet="PatientAllergy">
       <EndProperty Name="Allergy">
         <ScalarProperty Name="allergyID" ColumnName="aID" />
-      </EndProperty>
-      <EndProperty Name="Patient">
-        <ScalarProperty Name="patientID" ColumnName="pID" />
-      </EndProperty>
-    </AssociationSetMapping>
-    <AssociationSetMapping Name="PatientInjury" TypeName="ERModel.PatientInjury" StoreEntitySet="PatientInjury">
-      <EndProperty Name="Injury">
-        <ScalarProperty Name="injuryID" ColumnName="iID" />
       </EndProperty>
       <EndProperty Name="Patient">
         <ScalarProperty Name="patientID" ColumnName="pID" />

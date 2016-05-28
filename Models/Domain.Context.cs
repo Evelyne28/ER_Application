@@ -33,10 +33,15 @@ namespace ER_application.Models
         public virtual DbSet<ER_User> ER_User { get; set; }
         public virtual DbSet<Incident> Incident { get; set; }
         public virtual DbSet<Injury> Injury { get; set; }
+        public virtual DbSet<InjuryMechanism> InjuryMechanism { get; set; }
+        public virtual DbSet<Mechanism> Mechanism { get; set; }
         public virtual DbSet<Patient> Patient { get; set; }
         public virtual DbSet<PatientAmbulance> PatientAmbulance { get; set; }
         public virtual DbSet<PatientDisease> PatientDisease { get; set; }
+        public virtual DbSet<PatientInjury> PatientInjury { get; set; }
+        public virtual DbSet<PatientVital> PatientVital { get; set; }
         public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
         public virtual DbSet<UserMode> UserMode { get; set; }
+        public virtual DbSet<VitalSign> VitalSign { get; set; }
     }
 }

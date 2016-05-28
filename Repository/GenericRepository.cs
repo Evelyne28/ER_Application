@@ -6,6 +6,7 @@ using System.Linq.Expressions;
 using System.Threading.Tasks;
 using System.Data.Entity;
 using ER_application.Models;
+using ER_application.Repository.Interfaces;
 
 namespace ER_application.Repository
 {
@@ -20,6 +21,7 @@ namespace ER_application.Repository
 
         public ICollection<T> GetAll()
         {
+            context.Configuration.ProxyCreationEnabled = false;
             return context.Set<T>().ToList();
         }
 
@@ -38,9 +40,29 @@ namespace ER_application.Repository
         //    return await context.Set<T>().FindAsync(id);
         //}
 
-        //public T Find(Expression<Func<T, bool>> match)
+        public T Find(Expression<Func<T, bool>> match)
+        {
+            return context.Set<T>().SingleOrDefault(match);
+        }
+
+        //public IList<T> GetList(Func<T, bool> where, params Expression<Func<T, object>>[] navigationProperties)
         //{
-        //    return context.Set<T>().SingleOrDefault(match);
+        //    List<T> list;
+        //    context.Configuration.ProxyCreationEnabled = false;
+        //    using (context)
+        //    {
+        //        IQueryable<T> dbQuery = context.Set<T>();
+
+        //        //Apply eager loading
+        //        foreach (Expression<Func<T, object>> navigationProperty in navigationProperties)
+        //            dbQuery = dbQuery.Include<T, object>(navigationProperty);
+
+        //        list = dbQuery
+        //            .AsNoTracking()
+        //            .Where(where)
+        //            .ToList<T>();
+        //    }
+        //    return list;
         //}
 
         //public async Task<TObject> FindAsync(Expression<Func<TObject, bool>> match)

@@ -29,6 +29,12 @@
 	</table>
 	<div id="dispatchDiv">
 		<table id="dispatchTable">
+            <tr>
+                <td><input type="hidden" name="cPAID" id="cPAID"/></td>
+            </tr>
+            <tr>
+                <td><input type="hidden" name="cIncidentID" id="cIncidentID"/></td>
+            </tr>
 			<tr>
                 <th>Adresa GPS</th>
                 <td id="itAddress"> <textarea id="addressGPSInput" name="addressGPSInput" rows="4" cols="50"></textarea></td>
@@ -121,6 +127,9 @@
             <p id="pAllergy"> Alergii </p>
             <ul id="ulAllergies"> </ul>
         </div>
+        <div id="addPatient">
+            <button id="btnAddPatient"> Adauga pacient </button>
+        </div>
         <div id="divCard">
             <button id="buttonCard"> Scanează cardul </button>
         </div>
@@ -135,6 +144,10 @@
             <p id="pInjury">Presenting problem</p>
 		    <ul id="ulInjuries"></ul>
 		</div>
+        <div id="divMgm">
+            <button id="btnSave"> Salveaza</button>
+            <button id="btnSendMgm"> Trimite </button>
+        </div>
         <div id="mechanism">
             <p id="pMechanism"> Mechanism of injury</p>
             <ul id="ulMechanism"></ul>
@@ -153,6 +166,7 @@
     <script src="/signalr/hubs"></script>
     <script src='<%: ResolveClientUrl("~/signalr/hubs") %>'></script>
     <script src="/Scripts/Ambulance.js" "></script>
+    <script src="/Scripts/AmbulanceFunctions.js" "></script>
     <!--Add script to update the page and send messages.-->
     <script type="text/javascript">
 

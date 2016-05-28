@@ -141,6 +141,7 @@
     <Content Include="Images\white.png" />
     <Content Include="packages.config" />
     <Content Include="Scripts\Ambulance.js" />
+    <Content Include="Scripts\AmbulanceFunctions.js" />
     <Content Include="Scripts\createMarker.js" />
     <Content Include="Scripts\epoly.js" />
     <Content Include="Scripts\Dispatch.js" />
@@ -185,7 +186,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controller\ControllerAmbulance.cs" />
-    <Compile Include="Controller\IControllerAmbulance.cs" />
+    <Compile Include="Controller\Interfaces\IControllerAmbulance.cs" />
     <Compile Include="Models\Allergy.cs">
       <DependentUpon>Domain.tt</DependentUpon>
     </Compile>
@@ -225,6 +226,12 @@
     <Compile Include="Models\Injury.cs">
       <DependentUpon>Domain.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\InjuryMechanism.cs">
+      <DependentUpon>Domain.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Mechanism.cs">
+      <DependentUpon>Domain.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Patient.cs">
       <DependentUpon>Domain.tt</DependentUpon>
     </Compile>
@@ -234,25 +241,34 @@
     <Compile Include="Models\PatientDisease.cs">
       <DependentUpon>Domain.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\PatientInjury.cs">
+      <DependentUpon>Domain.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\PatientVital.cs">
+      <DependentUpon>Domain.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\sysdiagrams.cs">
       <DependentUpon>Domain.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\UserMode.cs">
       <DependentUpon>Domain.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\VitalSign.cs">
+      <DependentUpon>Domain.tt</DependentUpon>
+    </Compile>
     <Compile Include="Repository\GenericRepository.cs" />
-    <Compile Include="Repository\IGenericRepository.cs" />
-    <Compile Include="Repository\IRepositoryAmbulance.cs" />
+    <Compile Include="Repository\Interfaces\IGenericRepository.cs" />
+    <Compile Include="Repository\Interfaces\IRepositoryAmbulance.cs" />
     <Compile Include="Repository\RepositoryAmbulance.cs" />
     <Compile Include="Services\ChatHub.cs" />
     <Compile Include="Controller\ControllerUser.cs" />
     <Compile Include="Controller\ControllerDispatcher.cs" />
-    <Compile Include="Controller\IControllerDispatcher.cs" />
-    <Compile Include="Controller\IControllerUser.cs" />
+    <Compile Include="Controller\Interfaces\IControllerDispatcher.cs" />
+    <Compile Include="Controller\Interfaces\IControllerUser.cs" />
     <Compile Include="Controller\ServerController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Repository\IRepositoryDispatcher.cs" />
-    <Compile Include="Repository\IRepositoryUser.cs" />
+    <Compile Include="Repository\Interfaces\IRepositoryDispatcher.cs" />
+    <Compile Include="Repository\Interfaces\IRepositoryUser.cs" />
     <Compile Include="Repository\RepositoryUser.cs" />
     <Compile Include="Repository\RepositoryDispatcher.cs" />
     <Compile Include="Services\ServerWorker.cs" />
