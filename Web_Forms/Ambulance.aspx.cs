@@ -52,9 +52,9 @@ namespace ER_application.Web_Forms
         }
 
         [WebMethod]
-        public static List<String> GetPatientDiseases(int patientID)
+        public static List<int> GetPatientDiseases(int patientID)
         {
-            List<String> d = controller.getPatientDiseases(patientID);
+            List<int> d = controller.getPatientDiseases(patientID);
             return d;
         }
 
@@ -100,6 +100,22 @@ namespace ER_application.Web_Forms
         {
             int idPA = controller.addPatientAmbulance(pa);
             return idPA;
+        }
+
+        [WebMethod(EnableSession = true)]
+        public static void AddPatientInjury(List<String> injuriesList)
+        {
+            String paID = HttpContext.Current.Session["paID"].ToString();
+            int id = Convert.ToInt32(paID);
+            controller.addPatientInjury(injuriesList, id);
+        }
+
+        [WebMethod]
+        public static void AddVitalSigns(List<VitalSign> vitalSigns)
+        {
+            String paID = HttpContext.Current.Session["paID"].ToString();
+            int id = Convert.ToInt32(paID);
+            controller.addVitalSigns(vitalSigns, id);
         }
 
         [WebMethod(EnableSession = true)]

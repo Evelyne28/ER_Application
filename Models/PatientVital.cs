@@ -20,5 +20,11 @@ namespace ER_application.Models
     
         public virtual PatientAmbulance PatientAmbulance { get; set; }
         public virtual VitalSign VitalSign { get; set; }
+
+        public PatientVital(int paID, int vID)
+        {
+            this.paID = paID;
+            this.vID = vID;
+        }
     }
 }

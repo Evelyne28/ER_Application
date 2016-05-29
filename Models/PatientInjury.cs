@@ -20,5 +20,13 @@ namespace ER_application.Models
     
         public virtual Injury Injury { get; set; }
         public virtual PatientAmbulance PatientAmbulance { get; set; }
+
+        public PatientInjury(int paID, int injID)
+        {
+            this.paID = paID;
+            this.injID = injID;
+        }
+
+        public PatientInjury() { }
     }
 }

@@ -10,13 +10,16 @@ namespace ER_application.Controller.Interfaces
     interface IControllerAmbulance
     {
         int addPatient(Patient p);
-        int addAllergy(Allergy a);
+        //int addAllergy(Allergy a);
         int addPatientAmbulance(PatientAmbulance pa);
+        void addVitalSigns(List<VitalSign> vitalSigns, int paID);
+        void addPatientInjury(List<String> injuryList, int paID);
         Patient getRandomPatient();
-        List<String> getPatientDiseases(int id);
+        List<int> getPatientDiseases(int id);
         List<Allergy> getAllergies();
         List<Disease> getMedicalHistory();
         List<Injury> getInjuries();
         List<Mechanism> getMechanisms();
+        List<VitalSign> getVitalSigns();
     }
 }

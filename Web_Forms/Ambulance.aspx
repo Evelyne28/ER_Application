@@ -153,6 +153,20 @@
             <ul id="ulMechanism"></ul>
         </div>
 	</div>
+    <div id="vitalDiv">
+        <button id="addVital"> Adauga  </button>
+        <button id="saveVitals"> Salveaza  </button>
+        <table id="vitalTable">
+            <tr id="vitalHeader">
+                <th> Time </th>
+                <th> Nivel de constiinta </th>
+                <th> Respiratie </th>
+                <th> Puls </th>
+                <th> Left / Right</th>
+                <th> Piele </th>
+            </tr>
+        </table>
+    </div>
     <div id="mapCall"> </div>
         
 
@@ -170,54 +184,6 @@
     <!--Add script to update the page and send messages.-->
     <script type="text/javascript">
 
-
-        //var username = '<%= Session["userName"] %>';
-        //var myMarker = null;
-        //var i = 0;
-
-        //var marker = null;
-        //infowindow = new google.maps.InfoWindow(
-        //  {
-        //      size: new google.maps.Size(150, 50)
-        //  });
-
-        //var myOptions = {
-        //    zoom: 10,
-        //    mapTypeId: google.maps.MapTypeId.ROADMAP
-        //}
-        //map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
-
-        //address = 'Strada Hermann Oberth 5, Cluj-Napoca'
-        //geocoder = new google.maps.Geocoder();
-        //geocoder.geocode({ 'address': address }, function (results, status) {
-        //    map.fitBounds(results[0].geometry.viewport);
-        //});
-
-        //google.maps.event.addListener(map, 'click', function () {
-        //    infowindow.close();
-        //});
-
-        //google.maps.event.addListener(map, 'click', function (event) {
-        //        if (marker) {
-        //            marker.setPosition(event.latLng);
-        //        } else {
-        //            marker = new google.maps.Marker({
-        //                position: event.latLng,
-        //                map: map
-        //            });
-        //        }
-        //        myMarker = event.latLng;
-        //    //placeMarker(event.latLng);
-        //    alert(myMarker.toString());
-        //    //var chat = $.connection.chatHub;
-        //    //$.connection.hub.start().done(function () {
-        //    //    //Call the Send method on the hub.
-        //      //  chat.server.send(username, event.latLng);
-        //    //    //Clear text box and reset focus for next comment.
-        //        //$('#patientState').val('').focus();
-        //    //});
-        //});
-
         $(function () {
 
             // Declare a proxy to reference the hub.
@@ -232,34 +198,8 @@
                 //alert(message);
                 //$('#loc').html(message);
             };
-            // Get the user name and store it to prepend to messages.
-            //$('#displayname').val(prompt('Enter your name:', ''));
-            // Set initial focus to message input box.
-            //$('#patientState').focus();
-            // Start the connection.
+          
             $.connection.hub.start().done(function () {
-                //$('#Update').click(function () {
-                    //chat.server.send(username, myMarker.toString());
-                    //chat.server.send(username, myMarker.toString() + "_" + $('#patientState').val());
-                    //patient = {
-                    //    firstName: "Jon",
-                    //    lastName: "Snow",
-                    //    ssn: "123",
-                    //    birthDate: "02/02/1999"
-                    //};
-                    //alert("gheo");
-                    //chat.server.update(username, patient);
-                    // Call the Send method on the hub.
-                    // Clear text box and reset focus for next comment.
-                    //$('#patientState').val('').focus();
-                //});
-                //$('#Add').click(function () {
-                //    //chat.server.send(username, myMarker.toString());
-                //    chat.server.send(username, myMarker.toString() + "_" + $('#firstName').val());
-                //    // Call the Send method on the hub.
-                //    // Clear text box and reset focus for next comment.
-                //    $('#firstName').val('').focus();
-                //});
                 chat.client.receive = function (name, message, toWho) {
                     if (toWho == username) {
                         alert(name + " " + message + " " + toWho);
@@ -270,166 +210,7 @@
                 };
             });
         });
-       // initialize();
-        //function initialize() {
-
-        //    var marker = null;
-        //    infowindow = new google.maps.InfoWindow(
-        //      {
-        //          size: new google.maps.Size(150, 50)
-        //      });
-
-        //    var myOptions = {
-        //        zoom: 10,
-        //        mapTypeId: google.maps.MapTypeId.ROADMAP
-        //    }
-        //    map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
-
-        //    address = 'Strada Hermann Oberth 5, Cluj-Napoca'
-        //    geocoder = new google.maps.Geocoder();
-        //    geocoder.geocode({ 'address': address }, function (results, status) {
-        //        map.fitBounds(results[0].geometry.viewport);
-        //    });
-
-        //    google.maps.event.addListener(map, 'click', function () {
-        //        infowindow.close();
-        //    });
-        //}
-
-        //var marker;
-
-        //function placeMarker(location) {
-        //    if (marker) {
-        //        marker.setPosition(location);
-        //    } else {
-        //        marker = new google.maps.Marker({
-        //            position: location,
-        //            map: map
-        //        });
-        //    }
-        //}
-
-        //google.maps.event.addListener(map, 'click', function (event) {
-        //    placeMarker(event.latLng);
-        //    alert(event.latLng);
-        //    var chat = $.connection.chatHub;
-        //    $.connection.hub.start().done(function () {
-        //        //Call the Send method on the hub.
-        //        chat.server.send("amb1", event.latLng);
-        //        //Clear text box and reset focus for next comment.
-        //        //$('#patientState').val('').focus();
-        //    });
-        //});
-
-       
-        //$(document).ready(function () {
-       
-        //Add.Attributes.Add("onclick", " this.disabled = true; " + ClientScript.GetPostBackEventReference(btnSave, null) + ";");
-
-        //document.getElementById("Update").disabled = true;
-        
-        //$('#Add').click(function () {
-        //    document.getElementById("Add").disabled = true;
-        //    document.getElementById("Update").disabled = false;
-        //});
-
-            //});
-  
-
-        //--------------------------------------------------------------
-
-
-        //function start(a) {
-        //    return function () {
-        //        $('#myTable > tbody:last-child').append('<tr class="' + a + '-tr"><th class="menu" id="' + a + '-menu1">Menu 1 </th>' +
-        //            '<td><table id="' + a + '-menu1-table"><tr><th>First Name</th><td id="' + a + '-menu1-pFName">First Name</td></tr> <tr><th>Last Name</th><td id="' + a + '-menu1-pLName">Last Name</td></tr> <tr><th>SSN</th><td id="' + a + '-menu1-pSSN">SSN</td></tr> <tr><th>BirthDate</th><td id="' + a + '-menu1-pDate">BirthDate</td></tr> </table></td></tr>');
-        //        $('#myTable > tbody:last-child').append('<tr class="' + a + '-tr"><th class="menu" id="' + a + '-menu2">Menu 2 </th>' +
-        //            '<td><table id="' + a + '-menu2-table"><tr><th>Name</th><td id="' + a + '-menu2-pName">Medicine Name</td></tr> </table></td></tr>');
-        //    }
-        //}
-        //$(document).ready(start('amb1'));
-        //$(document).ready(start('amb2'));
-
-        //$('#menuAmb').on('click', function () {
-        //    $('.amb').show();
-        //    $('#dispatchDiv').hide();
-        //    $('#menuAmb').removeClass();
-        //    $('#menuAmb').addClass("show");
-        //    $('#dispatch').removeClass();
-        //    $('#dispatch').addClass("hide");
-        //});
-        //$('#dispatch').on('click', function () {
-        //    $('.amb').hide();
-        //    $('#dispatchDiv').show();
-        //    $('#dispatch').removeClass();
-        //    $('#dispatch').addClass("show");
-        //    $('#menuAmb').removeClass();
-        //    $('#menuAmb').addClass("hide");
-        //});
-
-
-
-        //$('[id$="button"]').on('click', function (e) {
-        //    $('#dispatchAmbList').empty();
-        //    e.preventDefault();
-        //    $.ajax({
-        //        type: "POST",
-        //        data: "{}",
-        //        url: "ER.aspx/GetAmbulances",
-        //        contentType: "application/json; charset=utf-8",
-        //        dataType: "json",
-        //        success: function (data) {
-
-        //            $.each(data.d, function (index, item) {
-        //                var listAmb = "<li> <button id='dispAmb" + item.ambulanceID + "'> Amb" + item.ambulanceID + "</button><img src='/Images/Greenlight.gif'></li>";
-        //                $("#dispatchAmbList").show();
-        //                $('#dispatchAmbList').append(listAmb);
-
-        //            })
-
-        //            $.connection.hub.start().done(function () {
-        //                $("button[id^='dispAmb']").click(function () {
-        //                    chat.server.sendTo(username, "hello", "amb1");
-        //                });
-        //            });
-        //        },
-        //        failure: function (response) {
-        //            var r = jQuery.parseJSON(response.responseText);
-        //            alert("Message: " + r.Message);
-        //        }
-        //    })
-        //});
-        //function OnSuccess(response) {
-        //    alert("success");
-        //    console.log(response.d);
-        //}
-        //function OnErrorCall(response) {
-        //    console.log("error");
-        //}
-
-        //$(".amb").click(function () {
-        //    var i = this.id;
-        //    //alert('#' + i);
-        //    $('#' + i).click(function () {
-        //        //alert('#' + i);
-        //        $("tr[class^='amb']").hide();
-        //        $("tr[class^='" + i + "']").show();
-        //        $("table[id^='" + i + "']").hide();
-
-        //        $('#' + i + '-menu1').on('click', function () {
-        //            //alert("am dat click");
-        //            $("table[id^='" + i + "-menu']").hide();
-        //            $('#' + i + '-menu1-table').show();
-        //            //  			$('#' + i + '-menu1').parent().append('<td><table id="' + i + '-menu1-table"><tr><th>First Name</th><td id="' + i + '-menu1-pFName">First Name</td></tr> <tr><th>Last Name</th><td id="' + i + '-menu1-pLName">Last Name</td></tr></table></td>');
-        //        });
-        //        $('#' + i + '-menu2').on('click', function () {
-        //            alert("am dat click");
-        //            $("table[id^='" + i + "-menu']").hide();
-        //            $('#' + i + '-menu2-table').show();
-        //            //  			$('#' + i + '-menu1').parent().append('<td><table id="' + i + '-menu1-table"><tr><th>First Name</th><td id="' + i + '-menu1-pFName">First Name</td></tr> <tr><th>Last Name</th><td id="' + i + '-menu1-pLName">Last Name</td></tr></table></td>');
-        //        });
-        //    });
-        //});
+    
     </script>
 </body>
 </html>

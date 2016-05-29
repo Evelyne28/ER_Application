@@ -21,8 +21,11 @@ namespace ER_application.Repository
 
         public ICollection<T> GetAll()
         {
-            context.Configuration.ProxyCreationEnabled = false;
-            return context.Set<T>().ToList();
+            using (var c = new EREntities())
+            {
+                context.Configuration.ProxyCreationEnabled = false;
+                return context.Set<T>().ToList();
+            }
         }
 
         //public async Task<ICollection<T>> GetAllAsync()
@@ -32,7 +35,10 @@ namespace ER_application.Repository
 
         public T Get(int id)
         {
-            return context.Set<T>().Find(id);
+            using (var c = new EREntities())
+            {
+                return context.Set<T>().Find(id);
+            }
         }
 
         //public async Task<T> GetAsync(int id)
@@ -82,9 +88,12 @@ namespace ER_application.Repository
 
         public T Add(T t)
         {
-            context.Set<T>().Add(t);
-            context.SaveChanges();
-            return t;
+            using (var c = new EREntities())
+            {
+                context.Set<T>().Add(t);
+                context.SaveChanges();
+                return t;
+            }
         }
 
         //public async Task<T> AddAsync(T t)

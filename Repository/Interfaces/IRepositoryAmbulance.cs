@@ -10,14 +10,21 @@ namespace ER_application.Repository.Interfaces
     interface IRepositoryAmbulance
     {
         int addPatient(Patient p);
-        int addAllergy(Allergy a);
+        //int addAllergy(Allergy a);
         int addPatientAmbulance(PatientAmbulance pa);
+        void addPatientInjury(PatientInjury pi);
+        void addInjuryMechanism(InjuryMechanism im);
+        void addPatientVital(PatientVital pv);
         Patient getRandomPatient();
-        List<String> getPatientDiseases(int id);
+        List<int> getPatientDiseases(int id);
         List<Allergy> getAllergies();
         List<Disease> getMedicalHistory();
         List<Injury> getInjuries();
         List<Mechanism> getMechanisms();
+        List<VitalSign> getVitalSigns();
+        Injury findInjury(int id);
+        PatientInjury findPatientInjury(int paID, int injuryID);
 
+        int addVitalSign(VitalSign vs);
     }
 }

@@ -23,14 +23,39 @@ namespace ER_application.Controller
             return repository.addPatient(p);
         }
 
-        public int addAllergy(Allergy a)
-        {
-            return repository.addAllergy(a);
-        }
+        //public int addAllergy(Allergy a)
+        //{
+        //    return repository.addAllergy(a);
+        //}
 
         public int addPatientAmbulance(PatientAmbulance pa) 
         {
             return repository.addPatientAmbulance(pa);
+        }
+
+        public void addVitalSigns(List<VitalSign> vitalSigns, int paID) {
+            foreach (VitalSign vs in vitalSigns)
+            {
+                int id = repository.addVitalSign(vs);
+                PatientVital pv = new PatientVital();
+                pv.paID = paID;
+                pv.vID = id;
+                repository.addPatientVital(pv);
+            }
+        }
+
+        public void addPatientInjury(List<String> injuryList, int paID)
+        {
+            foreach (String injuryID in injuryList) {
+                int id = Convert.ToInt32(injuryID);
+                PatientInjury pi = repository.findPatientInjury(paID, id);
+                if (pi != null)
+                {
+                    PatientInjury pi2 = new PatientInjury(paID, id);
+                    repository.addPatientInjury(pi2);
+                }
+            }
+
         }
 
         public Patient getRandomPatient()
@@ -38,7 +63,7 @@ namespace ER_application.Controller
             return repository.getRandomPatient();
         }
 
-        public List<String> getPatientDiseases(int id)
+        public List<int> getPatientDiseases(int id)
         {
             return repository.getPatientDiseases(id);
         }
@@ -61,6 +86,11 @@ namespace ER_application.Controller
         public List<Mechanism> getMechanisms()
         {
             return repository.getMechanisms();
+        }
+
+        public List<VitalSign> getVitalSigns()
+        {
+            return repository.getVitalSigns();
         }
 
     }
