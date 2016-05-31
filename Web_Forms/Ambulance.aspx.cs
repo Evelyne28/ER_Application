@@ -52,9 +52,9 @@ namespace ER_application.Web_Forms
         }
 
         [WebMethod]
-        public static List<int> GetPatientDiseases(int patientID)
+        public static List<Disease> GetPatientDiseases(int patientID)
         {
-            List<int> d = controller.getPatientDiseases(patientID);
+            List<Disease> d = controller.getPatientDiseases(patientID);
             return d;
         }
 
@@ -87,11 +87,15 @@ namespace ER_application.Web_Forms
         }
 
         [WebMethod]
-        public static String AddPatient(Patient patient, PatientAmbulance pa)
+        public static String AddPatient(Patient patient, PatientAmbulance pa, List<String> allergyList, List<String> diseaseList)
         {
             int idP = controller.addPatient(patient);
             pa.patientID = idP;
             int idPA = controller.addPatientAmbulance(pa);
+            if (allergyList.Count != 0)
+                controller.addPatientAllergies(allergyList, idP);
+            if (diseaseList.Count != 0)
+                controller.addPatientDiseases(diseaseList, idP);
             return idP + ";" + idPA;
         }
 

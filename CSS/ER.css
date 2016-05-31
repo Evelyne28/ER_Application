@@ -1,0 +1,92 @@
+﻿html, body {
+    width: 100%;
+}
+body {
+    background-image: url('../Images/greyGradient.jpg');
+    background-size: 100%;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-attachment: fixed;
+    background-size: cover;
+}
+#divAmb {
+    width: 20%;
+    height: 100%;
+    position: fixed;
+    margin-top: 5%;
+}
+#myTable {
+	width: 100%;
+	background-color: #333;
+    position: absolute;
+}
+.header {
+	width: 20%;
+	height: 50px;
+	color: white;
+}
+.header:hover {
+	cursor: hand;
+	background-color: red;
+}
+#ulAmb {
+    list-style-type: none;
+}
+#patientDiv {
+    display: block;
+    width: 80%;
+    margin-left: 20%;
+    margin-top: 6%;
+}
+table[id$="patientTable"] {
+    float: left;
+}
+div[id$="divHistory"] {
+    float: left;
+    margin-left: 3%;
+    width: 20%;
+}
+div[id$="divAllergies"] {
+    float: left;
+    margin-left: 5%;
+    margin-top: -1%;
+    width: 20%;
+}
+table[id$='commentsPb'] {
+    float: left;
+    margin-top: 20%;
+    margin-left: 5%;
+}
+.pAllergy, .pHistory, .pInjury {
+    font-weight: bold;
+}
+#ulAmb li button {
+    height: 40px;
+    width: 55%;
+    margin-bottom: 1%;
+    background: #ff0000;
+    background-image: -webkit-linear-gradient(top, #ff0000, #AC3F3F);
+    background-image: -moz-linear-gradient(top, #ff0000, #AC3F3F);
+    background-image: -ms-linear-gradient(top, #ff0000, #AC3F3F);
+    background-image: -o-linear-gradient(top, #ff0000, #AC3F3F);
+    background-image: linear-gradient(to bottom, #ff0000, #AC3F3F);
+    -webkit-border-radius: 60;
+    -moz-border-radius: 60;
+    border-radius: 60px;
+    font-family: Arial;
+    color: #ffffff;
+    font-size: 13px;
+    padding: 5px 15px 5px 15px;
+    text-decoration: none;
+    position: relative;
+    top: 2px;
+}
+#ulAmb li button:hover {
+    background: #e01b1b;
+    background-image: -webkit-linear-gradient(top, #e01b1b, #330f0f);
+    background-image: -moz-linear-gradient(top, #e01b1b, #330f0f);
+    background-image: -ms-linear-gradient(top, #e01b1b, #330f0f);
+    background-image: -o-linear-gradient(top, #e01b1b, #330f0f);
+    background-image: linear-gradient(to bottom, #e01b1b, #330f0f);
+    text-decoration: none;
+}

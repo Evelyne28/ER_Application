@@ -16,5 +16,6 @@ namespace ER_application.Repository.Interfaces
         List<Incident> readIncidents();
         List<Ambulance> readAmbulances();
         bool updateIncident(Incident i);
+        void updateAmbulance(Ambulance a, int id);
     }
 }

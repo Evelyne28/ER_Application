@@ -9,7 +9,7 @@
         success: function (data) {
 
             $.each(data.d, function (i, item) {
-                var liAllergy = "<li><input type='checkbox' name='pAllergies' value='" + item.name + "' id='chkA" + item.name + "'>" + item.name + "</li>";
+                var liAllergy = "<li><input type='checkbox' name='pAllergies' value='" + item.name + "' id='chkA_" + item.allergyID + "'>" + item.name + "</li>";
                 $('#ulAllergies').append(liAllergy);
             })
         },
@@ -29,69 +29,8 @@
         success: function (data) {
 
             $.each(data.d, function (i, item) {
-                var liDisease = "<li><input type='checkbox' name='pDisease' value='" + item.name + "' id='chkD" + item.diseaseID + "'>" + item.name + "</li>";
+                var liDisease = "<li><input type='checkbox' name='pDisease' value='" + item.name + "' id='chkD_" + item.diseaseID + "'>" + item.name + "</li>";
                 $('#ulHistory').append(liDisease);
-            })
-        },
-        failure: function (response) {
-            var r = jQuery.parseJSON(response.responseText);
-            alert("Message: " + r.Message);
-        }
-    })
-}
-
-function ajaxGetVitalSigns() {
-    $.ajax({ //Get all vitalSigns
-        type: "POST",
-        data: "{}",
-        url: "Ambulance.aspx/GetVitalSigns",
-        contentType: "application/json; charset=utf-8",
-        dataType: "json",
-        async: true,
-        success: function (data) {
-
-            $.each(data.d, function (i, item) {
-                var liDisease = "<li><input type='checkbox' name='pDisease' value='" + item.name + "' id='chkD" + item.diseaseID + "'>" + item.name + "</li>";
-                $('#ulHistory').append(liDisease);
-            })
-        },
-        failure: function (response) {
-            var r = jQuery.parseJSON(response.responseText);
-            alert("Message: " + r.Message);
-        }
-    })
-}
-
-function ajaxProblem() {
-    $.ajax({ //Get all injuries
-        type: "POST",
-        data: "{}",
-        url: "Ambulance.aspx/GetInjuries",
-        contentType: "application/json; charset=utf-8",
-        dataType: "json",
-        async: true,
-        success: function (data) {
-            $.each(data.d, function (i, item) {
-                var liInjury = "<li><input type='checkbox' name='pInjury' value='" + item.name + "' id='chkI"  + item.name + "_" + item.injuryID + "'>" + item.name + "</li>";
-                $('#ulInjuries').append(liInjury);
-            })
-        },
-        failure: function (response) {
-            var r = jQuery.parseJSON(response.responseText);
-            alert("Message: " + r.Message);
-        }
-    })
-    $.ajax({ //Get all mechanisms
-        type: "POST",
-        data: "{}",
-        url: "Ambulance.aspx/GetMechanisms",
-        contentType: "application/json; charset=utf-8",
-        dataType: "json",
-        async: true,
-        success: function (data) {
-            $.each(data.d, function (i, item) {
-                var liMechanism = "<li><input type='checkbox' name='pMechanism' value='" + item.name + "' id='chkM" + item.name + "'>" + item.name + "</li>";
-                $('#ulMechanism').append(liMechanism);
             })
         },
         failure: function (response) {
@@ -120,17 +59,30 @@ function ajaxAddPatient() { //Add patient
         incidentID: $("#cIncidentID").val(),
         ambulanceID: 1
     }
-    $.ajax({ 
+    var diseaseList = [];
+    $('#ulHistory input:checked').each(function () {
+        var parts = $(this).attr('id').split('_');
+        id = parts[1];
+        diseaseList.push(id);
+    });
+    var allergyList = [];
+    $('#ulAllergies input:checked').each(function () {
+        var parts = $(this).attr('id').split('_');
+        id = parts[1];
+        allergyList.push(id);
+    });
+    $.ajax({
         type: "POST",
-        data: JSON.stringify({ 'patient': patient, 'pa': pa }),
+        data: JSON.stringify({ 'patient': patient, 'pa': pa, 'allergyList': allergyList, 'diseaseList': diseaseList }),
         url: "Ambulance.aspx/AddPatient",
         contentType: "application/json; charset=utf-8",
         async: true,
         success: function (data) {
+            sendPatientER('amb1', patient, allergyList, diseaseList);
             var parts = data.d.split(';');
             $('#patientIDInput').val(parts[0]);
             $('#cPAID').val(parts[1]);
-            ajaxSetSession();
+            ajaxSetSession();      
         },
         failure: function (response) {
             var r = jQuery.parseJSON(response.responseText);
@@ -161,23 +113,11 @@ function ajaxAddPatientAmbulance() {
     })
 }
 
-function ajaxAddVitalSigns(vitalSigns) {
-    $.ajax({
-        type: "POST",
-        data: JSON.stringify({ 'vitalSigns': vitalSigns }),
-        url: "Ambulance.aspx/AddVitalSigns",
-        contentType: "application/json; charset=utf-8",
-        success: function (data) {
-        },
-        failure: function (response) {
-            var r = jQuery.parseJSON(response.responseText);
-            alert("Message: " + r.Message);
-        }
-    })
-}
-
 function ajaxScanCard() {
+    $('li').css("color", "black");
     $('input:checkbox').removeAttr('checked');
+    var allergyList = [];
+    var diseasesList = [];
     $.ajax({ //Get patient from DB
         type: "POST",
         data: "{}",
@@ -193,13 +133,31 @@ function ajaxScanCard() {
                 }
                 else if (index == 'Allergy') {
                     $.each(item, function (i) {
-                        $('#chkA' + item[i].name).prop('checked', true);
+                        $('#chkA_' + item[i].allergyID).prop('checked', true);
+                        $('#chkA_' + item[i].allergyID).parent().css("color", "red");
+                        allergyList.push(item[i].name);
                     })
                 }
                 else
                     $('#' + index + 'Input').val(item);
             })
             var pID = $('#patientIDInput').val();
+            var patient = {
+                patientID: pID,
+                ssn: $("#ssnInput").val(),
+                firstName: $("#firstNameInput").val(),
+                lastName: $("#lastNameInput").val(),
+                gender: $("#genderInput").val(),
+                address: $("#addressInput").val(),
+                phone: $("#phoneInput").val(),
+                birthDate: $("#birthDateInput").val(),
+                age: $("#ageInput").val(),
+                city: $("#cityInput").val(),
+                county: $("#countyInput").val(),
+                zipCode: $("#zipCodeInput").val(),
+                bloodType: $("#bloodTypeInput").val()
+            };
+
             $.ajax({ //Get his medical history
                 type: "POST",
                 data: JSON.stringify({ patientID: pID }),
@@ -207,39 +165,20 @@ function ajaxScanCard() {
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 success: function (data) {
-
                     $.each(data.d, function (i, item) {
-                        $('#chkD' + item).prop('checked', true);
+                        $('#chkD_' + item.diseaseID).prop('checked', true);
+                        $('#chkD_' + item.diseaseID).parent().css("color", "red");
+                        diseasesList.push(item.name);
                     })
+                    sendPatientER('amb1', patient, allergyList, diseasesList);
                 },
                 failure: function (response) {
                     var r = jQuery.parseJSON(response.responseText);
                     alert("Message: " + r.Message);
                 }
             })
+            
             ajaxAddPatientAmbulance();
-        },
-        failure: function (response) {
-            var r = jQuery.parseJSON(response.responseText);
-            alert("Message: " + r.Message);
-        }
-    })
-}
-
-function ajaxSaveProblems() {
-    var injuriesList = [];
-    $('#ulInjuries input:checked').each(function () {
-        var parts = $(this).attr('id').split('_');
-        id = parts[1];
-        injuriesList.push(id);
-    });
-    $.ajax({
-        type: "POST",
-        data: JSON.stringify({ 'injuriesList': injuriesList }),
-        url: "Ambulance.aspx/AddPatientInjury",
-        contentType: "application/json; charset=utf-8",
-        async: true,
-        success: function (data) {
         },
         failure: function (response) {
             var r = jQuery.parseJSON(response.responseText);
@@ -253,7 +192,7 @@ function ajaxSetSession() { //Set session variables
     var incidentID = $('#cIncidentID').val();
     var ambulanceID = 1;
     var paID = $('#cPAID').val();
-    $.ajax({ 
+    $.ajax({
         type: "POST",
         data: JSON.stringify({ 'pID': patientID, 'iID': incidentID, 'aID': ambulanceID, 'paID': paID }),
         url: "Ambulance.aspx/SetSession",

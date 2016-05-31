@@ -103,18 +103,20 @@ namespace ER_application.Repository
         //    return t;
         //}
 
-        public T Update(T updated,int key)
+        public void Update(T updated, int key)
         {
-            if (updated == null)
-                return null;
-
-            T existing = context.Set<T>().Find(key);
-            if (existing != null)
+            if (updated != null)
             {
-                context.Entry(existing).CurrentValues.SetValues(updated);
-                context.SaveChanges();
+                //return null;
+
+                T existing = context.Set<T>().Find(key);
+                if (existing != null)
+                {
+                    context.Entry(existing).CurrentValues.SetValues(updated);
+                    context.SaveChanges();
+                }
+                // return existing;
             }
-            return existing;
         }
 
         //public async Task<T> UpdateAsync(T updated, int key)

@@ -11,7 +11,7 @@ namespace ER_application.Repository.Interfaces
         ICollection<T> GetAll();
         T Get(int id);
         T Add(T t);
-        T Update(T updated, int key);
+        void Update(T updated, int key);
         void Delete(T t);
         int Count();
     //IQueryable<T> FindBy(Expression<Func<T, bool>> predicate);

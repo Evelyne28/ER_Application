@@ -51,13 +51,22 @@ namespace ER_application.Services
             ServerWorker.singleTonServer.map[number].response = response;
         }
 
-        //public void gps(string number)
-        //{
-        //    Clients.All.showNumber(number);
-        //}
-
         public void sendCoordinates(string toWho, string coordinates) {
             Clients.All.receiveCoordinates(toWho, coordinates);
+        }
+
+        public void sendPatientER(string fromWho, Patient patient, List<String> allergyList, List<String> diseasesList)     {
+            Clients.All.receivePatient(fromWho, patient, allergyList, diseasesList);
+        }
+
+        public void sendProblemER(string fromWho, string pComplaint, string mObservations, List<String> injuries)
+        {
+            Clients.All.receiveProblem(fromWho, pComplaint, mObservations, injuries);
+        }
+
+        public void sendSmth(string hey)
+        {
+            Clients.All.receiveSmth(hey);
         }
     }
 }

@@ -130,22 +130,32 @@
   <ItemGroup>
     <Content Include="CSS\Ambulance.css" />
     <Content Include="CSS\Dispatch.css" />
+    <Content Include="CSS\ER.css" />
     <Content Include="CSS\Login.css" />
     <Content Include="Images\blink.gif" />
     <Content Include="Images\checked.png" />
     <Content Include="Images\GreenCircle.png" />
     <Content Include="Images\Greenlight.gif" />
+    <Content Include="Images\greyGradient.jpg" />
     <Content Include="Images\OrangeCircle.png" />
     <Content Include="Images\redC.png" />
     <Content Include="Images\RedCircle.png" />
+    <Content Include="Images\redGradient.jpg" />
     <Content Include="Images\white.png" />
     <Content Include="packages.config" />
-    <Content Include="Scripts\Ambulance.js" />
-    <Content Include="Scripts\AmbulanceFunctions.js" />
+    <Content Include="Scripts\AmbulanceScripts\Ambulance.js" />
+    <Content Include="Scripts\AmbulanceScripts\AmbulanceDispatch.js" />
+    <Content Include="Scripts\AmbulanceScripts\AmbulanceInterventions.js" />
+    <Content Include="Scripts\AmbulanceScripts\AmbulancePatient.js" />
+    <Content Include="Scripts\AmbulanceScripts\AmbulanceProblem.js" />
+    <Content Include="Scripts\AmbulanceScripts\AmbulanceVitals.js" />
     <Content Include="Scripts\createMarker.js" />
     <Content Include="Scripts\epoly.js" />
     <Content Include="Scripts\Dispatch.js" />
+    <Content Include="Scripts\ERScripts\ER.js" />
+    <Content Include="Scripts\ERScripts\ER_Functions.js" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
+    <Content Include="Web_Forms\ER.aspx" />
     <EntityDeploy Include="Models\Domain.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>Domain.Designer.cs</LastGenOutput>
@@ -186,7 +196,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controller\ControllerAmbulance.cs" />
+    <Compile Include="Controller\ControllerER.cs" />
     <Compile Include="Controller\Interfaces\IControllerAmbulance.cs" />
+    <Compile Include="Controller\Interfaces\IControllerER.cs" />
     <Compile Include="Models\Allergy.cs">
       <DependentUpon>Domain.tt</DependentUpon>
     </Compile>
@@ -259,7 +271,9 @@
     <Compile Include="Repository\GenericRepository.cs" />
     <Compile Include="Repository\Interfaces\IGenericRepository.cs" />
     <Compile Include="Repository\Interfaces\IRepositoryAmbulance.cs" />
+    <Compile Include="Repository\Interfaces\IRepositoryER.cs" />
     <Compile Include="Repository\RepositoryAmbulance.cs" />
+    <Compile Include="Repository\RepositoryER.cs" />
     <Compile Include="Services\ChatHub.cs" />
     <Compile Include="Controller\ControllerUser.cs" />
     <Compile Include="Controller\ControllerDispatcher.cs" />
@@ -293,6 +307,13 @@
     </Compile>
     <Compile Include="Web_Forms\Login.aspx.designer.cs">
       <DependentUpon>Login.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Web_Forms\ER.aspx.cs">
+      <DependentUpon>ER.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Web_Forms\ER.aspx.designer.cs">
+      <DependentUpon>ER.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup />

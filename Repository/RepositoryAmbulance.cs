@@ -13,6 +13,8 @@ namespace ER_application.Repository
     {
         public EREntities context;
         public IGenericRepository<Patient> repoPatient;
+        public IGenericRepository<Disease> repoDisease;
+        public IGenericRepository<PatientDisease> repoPD;
         public IGenericRepository<PatientAmbulance> repoPA;
         public IGenericRepository<Allergy> repoAllergy;
         public IGenericRepository<Injury> repoInjury;
@@ -25,6 +27,8 @@ namespace ER_application.Repository
             
             context = new EREntities();
             repoPatient = new GenericRepository<Patient>(context);
+            repoPD = new GenericRepository<PatientDisease>(context);
+            repoDisease = new GenericRepository<Disease>(context);
             repoPA = new GenericRepository<PatientAmbulance>(context);
             repoAllergy = new GenericRepository<Allergy>(context);
             repoInjury = new GenericRepository<Injury>(context);
@@ -41,13 +45,6 @@ namespace ER_application.Repository
             return p.patientID;
         }
 
-        //public int addAllergy(Allergy a)
-        //{
-        //    context.Allergy.Add(a);
-        //    context.SaveChanges();
-        //    return a.allergyID;
-        //}
-
         public int addPatientAmbulance(PatientAmbulance pa)
         {
             DetachAll();
@@ -55,8 +52,22 @@ namespace ER_application.Repository
             return pa.paID;
         }
 
+        public int addVitalSign(VitalSign vs)
+        {
+            DetachAll();
+            repoVS.Add(vs);
+            return vs.vitalID;
+        }
+
+        public void addPatientDisease(PatientDisease pd)
+        {
+            DetachAll();
+            repoPD.Add(pd);
+        }
+
         public void addPatientInjury(PatientInjury pi)
         {
+            DetachAll();
             repoPI.Add(pi);
         }
 
@@ -65,31 +76,23 @@ namespace ER_application.Repository
             //
         }
 
-        public int addVitalSign(VitalSign vs)
-        {
-            repoVS.Add(vs);
-            return vs.vitalID;
-        }
-
         public void addPatientVital(PatientVital pv)
         {
+            DetachAll();
             repoPV.Add(pv);
         }
 
-        public Patient getRandomPatient()
+        public void addPatientAllergies(List<Allergy> allergies, Patient p)
         {
-            List<Patient> patients = new List<Patient>();
-            patients = getPatients();
-            Random r = new Random();
-            int number = r.Next(patients.Count);
-            Patient p = patients.ElementAt(number);
-            List<Allergy> allergies = getPatientAllergies(p.patientID);
-            p.Allergy = allergies;          
-            return p;
+            foreach (Allergy allergy in allergies)
+            {
+                p.Allergy.Add(allergy);
+            }
+            context.SaveChanges();
         }
 
         public List<Patient> getPatients()
-        {          
+        {
             return repoPatient.GetAll().Cast<Patient>().ToList();
         }
 
@@ -113,26 +116,38 @@ namespace ER_application.Repository
             return repoVS.GetAll().Cast<VitalSign>().ToList();
         }
 
+        public Patient getRandomPatient()
+        {
+            List<Patient> patients = new List<Patient>();
+            patients = getPatients();
+            Random r = new Random();
+            int number = r.Next(patients.Count);
+            Patient p = patients.ElementAt(number);
+            List<Allergy> allergies = getPatientAllergies(p.patientID);
+            p.Allergy = allergies;          
+            return p;
+        }
+
         public List<PatientInjury> getPatientInjuries()
         {
             using (var c = new EREntities())
             {
-                context.Configuration.ProxyCreationEnabled = false;
-                List<PatientInjury> piList = new List<PatientInjury>();
-                var load = from a in context.PatientInjury select a;
-                if (load != null)
-                {
-                    try
-                    {
-                        piList = load.ToList();
-                    }
-                    catch (Exception ex)
-                    {
-                        string exx = ex.InnerException.ToString();
-                    }
-                }
-                return piList;
-                // return repoPI.GetAll().Cast<PatientInjury>().ToList();
+                //context.Configuration.ProxyCreationEnabled = false;
+                //List<PatientInjury> piList = new List<PatientInjury>();
+                //var load = from a in context.PatientInjury select a;
+                //if (load != null)
+                //{
+                //    try
+                //    {
+                //        piList = load.ToList();
+                //    }
+                //    catch (Exception ex)
+                //    {
+                //        string exx = ex.InnerException.ToString();
+                //    }
+                //}
+                //return piList;
+                return repoPI.GetAll().Cast<PatientInjury>().ToList();
             }
         }
 
@@ -171,11 +186,11 @@ namespace ER_application.Repository
             }
         }
 
-        public List<int> getPatientDiseases(int id)
+        public List<Disease> getPatientDiseases(int id)
         {
             using (var c = new EREntities())
             {
-                List<int> diseases = new List<int>();
+                List<Disease> diseases = new List<Disease>();
                 context.Configuration.ProxyCreationEnabled = false;
                 var load = from p in context.Patient
                            from d in context.Disease
@@ -184,15 +199,33 @@ namespace ER_application.Repository
                            select new { d.name, d.diseaseID };
                 foreach (var disease in load)
                 {
-                    int i = disease.diseaseID;
-                    diseases.Add(i);
+                    Disease d = new Disease();
+                    d.diseaseID = disease.diseaseID;
+                    d.name = disease.name;
+                    diseases.Add(d);
                 }
                 return diseases;
             }
         }
 
-        public Injury findInjury(int id) {
+        public Injury findInjury(int id) 
+        {
             return repoInjury.Get(id);
+        }
+
+        public Patient findPatient(int id)
+        {
+            return repoPatient.Get(id);
+        }
+
+        public Allergy findAllergy(int id)
+        {
+            return repoAllergy.Get(id);
+        }
+
+        public Disease findDisease(int id)
+        {
+            return repoDisease.Get(id);
         }
 
         public PatientInjury findPatientInjury(int paID, int injuryID)
@@ -213,10 +246,8 @@ namespace ER_application.Repository
 
         public void DetachAll()
         {
-
             foreach (DbEntityEntry dbEntityEntry in this.context.ChangeTracker.Entries())
             {
-
                 if (dbEntityEntry.Entity != null)
                 {
                     dbEntityEntry.State = EntityState.Detached;

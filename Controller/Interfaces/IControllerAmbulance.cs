@@ -15,11 +15,13 @@ namespace ER_application.Controller.Interfaces
         void addVitalSigns(List<VitalSign> vitalSigns, int paID);
         void addPatientInjury(List<String> injuryList, int paID);
         Patient getRandomPatient();
-        List<int> getPatientDiseases(int id);
+        List<Disease> getPatientDiseases(int id);
         List<Allergy> getAllergies();
         List<Disease> getMedicalHistory();
         List<Injury> getInjuries();
         List<Mechanism> getMechanisms();
         List<VitalSign> getVitalSigns();
+        void addPatientAllergies(List<String> allergies, int pID);
+        void addPatientDiseases(List<String> diseases, int pID);
     }
 }

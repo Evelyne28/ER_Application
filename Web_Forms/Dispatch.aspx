@@ -34,49 +34,15 @@
         </div>
 
         <div id="infoCall">
-            <%--<table id="infoTable">
-                <tr>
-                    <td id="itPos"> <input type="hidden" name="cPos" id="cPos"/></td>
-                </tr>
-                <tr>
-                    <th>Adresa GPS</th>
-                    <td id="itAddress"> <textarea id="addressInput" name="addressInput" rows="4" cols="50"></textarea></td>
-                </tr>
-                <tr>
-                    <th>Caller Location</th>
-                    <td id="itCLocation"> <textarea id="cLocationInput" name="cLocationInput" rows="4" cols="50"></textarea> </td>
-                </tr>
-                <tr>
-                    <th>Telefon</th>
-                    <td id="itCPhone"> <input type="text" name="cPhoneInput" id="cPhoneInput"/></td>
-                </tr>
-                <tr>
-                    <th>Caller name</th>
-                    <td id="itCName"> <input type="text" name="cNameInput" id="cNameInput"/></td>
-                </tr>
-                <tr>
-                    <th>Locatie pacient</th>
-                    <td id="idPLocation"> <textarea id="pLocationInput" name="pLocationInput" rows="4" cols="50"></textarea></td>
-                </tr>
-                <tr>
-                    <th>Stare pacient</th>
-                    <td id="idPState"> <textarea id="pStateInput" name="pStateInput" rows="4" cols="50"></textarea> </td>
-                </tr>
-                <tr>
-                    <th>Date pacient</th>
-                    <td id="idPInfo"> <textarea id="pInfoInput" name="pInfoInput" rows="4" cols="50"></textarea> </td>
-                </tr>
-                <tr>
-                    <th>Ce s-a intamplat</th>
-                    <td id="idDesc"> <textarea id="descInput" name="descInput" rows="4" cols="50"></textarea> </td>
-                </tr>
-            </table>--%>
+        <div id="divCall">
+            <button id="btnWait">Pune in asteptare</button>
+            <button id="btnEndCall">Inchide apelul</button>
+        </div>
         </div>
         <div id="mapCall"> </div>
 
         <div id="divAmb">
             <ul id="listAmb">
-
             </ul>
         </div>
         <div id="map_canvas" style="width:100%;height:500px;"></div>

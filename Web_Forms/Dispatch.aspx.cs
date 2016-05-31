@@ -47,6 +47,12 @@ namespace ER_application.Web_Forms
         }
 
         [WebMethod]
+        public static void UpdateAmbulance(Models.Ambulance ambulance, int id)
+        {
+            ctrl.updateAmbulance(ambulance, id);
+        }
+
+        [WebMethod]
         public static void updateIncident(string id, string gps, string cLocation, string cName,
                                           string pLocation, string pState, string pInfo, string description)
         {

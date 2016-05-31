@@ -21,5 +21,11 @@ namespace ER_application.Models
     
         public virtual Disease Disease { get; set; }
         public virtual Patient Patient { get; set; }
+
+        public PatientDisease(int pID, int dID)
+        {
+            this.pID = pID;
+            this.dID = dID;
+        }
     }
 }

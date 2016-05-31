@@ -49,6 +49,11 @@ namespace ER_application.Controller
             return repository.readAmbulances();
         }
 
+        public void updateAmbulance(Ambulance a, int id)
+        {
+            repository.updateAmbulance(a, id);
+        }
+
         public bool updateIncident(int id, String gps, String cLocation, String cName,
                                    String pLocation, String pState, String pInfo, String description, int resolved)
         {

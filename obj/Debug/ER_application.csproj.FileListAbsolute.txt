@@ -1,3 +1,4 @@
+C:\Users\Eve\Documents\Visual Studio 2013\Projects\ER_application\ER_application\obj\Debug\ER_application.csprojResolveAssemblyReference.cache
 C:\Users\Eve\Documents\Visual Studio 2013\Projects\ER_application\ER_application\bin\ER_application.dll.config
 C:\Users\Eve\Documents\Visual Studio 2013\Projects\ER_application\ER_application\bin\ER_application.dll
 C:\Users\Eve\Documents\Visual Studio 2013\Projects\ER_application\ER_application\bin\ER_application.pdb
@@ -36,4 +37,3 @@ C:\Users\Eve\Documents\Visual Studio 2013\Projects\ER_application\ER_application
 C:\Users\Eve\Documents\Visual Studio 2013\Projects\ER_application\ER_application\bin\System.Web.WebPages.Razor.xml
 C:\Users\Eve\Documents\Visual Studio 2013\Projects\ER_application\ER_application\obj\Debug\ER_application.dll
 C:\Users\Eve\Documents\Visual Studio 2013\Projects\ER_application\ER_application\obj\Debug\ER_application.pdb
-C:\Users\Eve\Documents\Visual Studio 2013\Projects\ER_application\ER_application\obj\Debug\ER_application.csprojResolveAssemblyReference.cache

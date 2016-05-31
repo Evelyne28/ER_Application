@@ -1,5 +1,8 @@
 ﻿var map;
 var geocoder;
+var ambID;
+var ambLicense;
+var phoneNumber;    
 
 //Map init and centered in Cluj-Napoca
 function initialize() { 
@@ -16,14 +19,14 @@ function initialize() {
 
 function createTable(number) {
     $('<table id="' + number + 'table"><tr><td> <input type="hidden" id="' + number + 'cPos"/></td></tr>' + 
-    '<tr><th>Adresa GPS</th><td> <textarea id="' + number + 'addressInput" rows="4" cols="50"></textarea></td></tr>' + 
-    '<tr><th>Caller Location</th><td> <textarea id="' + number + 'cLocationInput" rows="4" cols="50"></textarea></td></tr>' + 
-    '<tr><th>Telefon</th><td> <input type="text" id="' + number + 'cPhoneInput"/></td></tr>' + 
-    '<tr><th>Caller name</th><td> <input type="text" id="' + number + 'cNameInput"/></td></tr>' + 
-    '<tr><th>Locatie pacient</th><td> <textarea id="' + number + 'pLocationInput" rows="4" cols="50"></textarea></td></tr>' + 
-    '<tr><th>Stare pacient</th><td> <textarea id="' + number + 'pStateInput" rows="4" cols="50"></textarea></td></tr>' + 
-    '<tr><th>Date pacient</th><td> <textarea id="' + number + 'pInfoInput" rows="4" cols="50"></textarea></td></tr>' + 
-    '<tr><th>Ce s-a intamplat</th><td> <textarea id="' + number + 'descInput" rows="4" cols="50"></textarea> </td></tr></table>').appendTo( '#infoCall' );
+    '<tr><th>Adresa GPS</th><td> <textarea readonly id="' + number + 'addressInput" rows="4" cols="50"></textarea></td></tr>' + 
+    '<tr><th>Caller Location</th><td> <textarea id="' + number + 'cLocationInput" rows="4" cols="50" style="background-color:rgba(255, 107, 107, 0.22)"></textarea></td></tr>' +
+    '<tr><th>Telefon</th><td> <textarea readonly id="' + number + 'cPhoneInput" rows="1" cols="50"></textarea></td></tr>' +
+    '<tr><th>Caller name</th><td> <textarea id="' + number + 'cNameInput" rows="1" cols="50" style="background-color:rgba(255, 107, 107, 0.22)"></textarea></td></tr>' +
+    '<tr><th>Locatie pacient</th><td> <textarea id="' + number + 'pLocationInput" rows="4" cols="50" style="background-color:rgba(255, 107, 107, 0.22)"></textarea></td></tr>' +
+    '<tr><th>Stare pacient</th><td> <textarea id="' + number + 'pStateInput" rows="4" cols="50" style="background-color:rgba(255, 107, 107, 0.22)"></textarea></td></tr>' +
+    '<tr><th>Date pacient</th><td> <textarea id="' + number + 'pInfoInput" rows="4" cols="50" style="background-color:rgba(255, 107, 107, 0.22)"></textarea></td></tr>' +
+    '<tr><th>Ce s-a intamplat</th><td> <textarea id="' + number + 'descInput" rows="4" cols="50" style="background-color:rgba(255, 107, 107, 0.22)"></textarea></td></tr></table>').appendTo('#infoCall');
     //$("#" + number + "table").siblings().hide();
 }
 
@@ -43,27 +46,29 @@ endLoc[1] = 'Strada Hermann Oberth 5, Cluj-Napoca';
 //endLoc[2] = 'Strada Hermann Oberth 5, Cluj-Napoca';
 //endLoc[3] = 'Strada Hermann Oberth 5, Cluj-Napoca';
 $(function () {
+    $(document).on('click', '#btnEndCall', function (ev) {
+        $("button[id$='respond']").removeClass('buttonOpacity');
+        ev.preventDefault();
+    });
     var chat = $.connection.chatHub;
     $("#infoCall").hide();
-    //chat.client.methodName = function (name, patient) {
-    //    $('#' + name + '-menu1-pFName').html(patient.firstName);
-    //    $('#' + name + '-menu1-pLName').html(patient.lastName);
-    //    $('#' + name + '-menu1-pSSN').html(patient.ssn);
-    //    $('#' + name + '-menu1-pDate').html(patient.date);
-    //};
     //Show caller number
     chat.client.showNumber = function (number) {
         parts = number.split(';');
         number = parts[0];
+        phoneNumber = number;
         $("#callTable").append("<tr><th id=th" + number + "><img id=img" + number + " src='../Images/blink.gif'>" + number + "</th><td><button id='" + number + "respond'> Respond </button></td></tr>");
-        createTable(number);
+        $("#" + phoneNumber + "table").siblings().hide();
+        $("#" + number + "table").hide();
         $('button[id^=' + number + ']').click(function (ev) {
+            createTable(number);
             //Respond to call
             chat.server.sendResponse("yes;" + number);
             chat.server.sendBusySignal(username, number);
             $("#infoCall").show();
-            $("#" + number + "table").siblings().hide();
+            $("#" + phoneNumber + "respond").addClass('buttonOpacity');
             $("button[id$='respond']").not('#' + number + 'respond').addClass('buttonOpacity');
+            $('#listAmb').empty();
             //Show ambulances status
             $.ajax({
                 type: "POST",
@@ -75,16 +80,16 @@ $(function () {
 
                     $.each(data.d, function (index, item) {
                         if (item.state == 0)
-                            var listAmb = "<li id='liAmb" + item.ambulanceID + "'> <button id='dispAmb" + item.ambulanceID + "'> Amb" + item.ambulanceID
-                                + "</button>&nbsp&nbsp&nbsp<img id='imgAmb" + item.ambulanceID + "' src='/Images/GreenCircle.png'></li>";
+                            var listAmb = "<li id='liAmb_" + item.ambulanceID + "'> <button id='dispAmb_" + item.ambulanceID + "'>" + item.licensePlate
+                                + "</button>&nbsp&nbsp&nbsp<img id='imgAmb_" + item.ambulanceID + "' src='/Images/GreenCircle.png'></li>";
                         else
-                            var listAmb = "<li id='liAmb" + item.ambulanceID + "'> <button id='dispAmb" + item.ambulanceID + "'> Amb" + item.ambulanceID
-                                + "</button>&nbsp&nbsp&nbsp<img id='imgAmb" + item.ambulanceID + "' src='/Images/RedCircle.png'></li>";
+                            var listAmb = "<li id='liAmb_" + item.ambulanceID + "'> <button id='dispAmb_" + item.ambulanceID + "'>" + item.licensePlate
+                                + "</button>&nbsp&nbsp&nbsp<img id='imgAmb_" + item.ambulanceID + "' src='/Images/RedCircle.png'></li>";
                         $('#listAmb').append(listAmb);
 
                     })
                     //Assign case to an ambulance
-                    $("button[id^='dispAmb']").click(function (e) {
+                    $("button[id^='dispAmb_']").click(function (e) {
                         //var id = parts[1];
                         //var addressInput = $("#addressInput").val();
                         //var cLocationInput = $("#cLocationInput").val();
@@ -107,6 +112,10 @@ $(function () {
                         //        alert("success");
                         //    }
                         //});
+                        ambID = $(this).attr('id');
+                        ambLicense = $(this).html();
+                        var parts = ambID.split('_');
+                        ambID = parts[1];
                         incident = {
                             incidentID: parts[1],
                             posInc: $("#" + number + "cPos").val(),
@@ -119,10 +128,10 @@ $(function () {
                             patientInfo: $("#" + number + "pInfoInput").val(),
                             description: $("#" + number + "descInput").val()
                         };
-                        chat.server.sendIncident("amb1", incident);
+                        chat.server.sendIncident("amb" + ambID, incident);
                         chat.server.sendResolved(number);
-                        chat.server.sendCoordinates("amb1", incident.posInc);
-                        chat.server.updateAmbulanceState("Amb1", "busy");
+                        chat.server.sendCoordinates("amb" + ambID, incident.posInc);
+                        chat.server.updateAmbulanceState(ambID, "1");
                         e.preventDefault();
                     });
 
@@ -202,11 +211,32 @@ $(function () {
     }
 
     chat.client.updateAmbulance = function (name, state) {
-        $("#img" + name).remove();
-        if (state == "busy")
-            $('#li' + name).append('<img id="img"' + name + ' src="../Images/RedCircle.png" />');
+        $("#imgAmb_" + name).remove(); 
+        if (state == "1")
+            $('#liAmb_' + name).append('<img id="imgAmb_"' + name + ' src="../Images/RedCircle.png" />');
         else
-            $('#li' + name).prepend('<img id="img"' + name + ' src="../Images/GreenCircle.png" />');
+            $('#liAmb_' + name).prepend('<img id="imgAmb_"' + name + ' src="../Images/GreenCircle.png" />');
+        //ajaxUpdateAmbulance();
+        //function ajaxAddPatient() { //Add patient
+            var ambulance = {
+                ambulanceID: ambID, 
+                licensePlate: ambLicense,
+                state: state
+            };
+            $.ajax({
+                type: "POST",
+                data: JSON.stringify({ 'ambulance': ambulance, 'id': ambID }),
+                url: "Dispatch.aspx/UpdateAmbulance",
+                contentType: "application/json; charset=utf-8",
+                async: true,
+                success: function (data) {
+                },
+                failure: function (response) {
+                    var r = jQuery.parseJSON(response.responseText);
+                    alert("Message: " + r.Message);
+                }
+            })
+      //  }
     }
 
     $.connection.hub.start().done(function () {

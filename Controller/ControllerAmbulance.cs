@@ -33,13 +33,36 @@ namespace ER_application.Controller
             return repository.addPatientAmbulance(pa);
         }
 
+        public void addPatientAllergies(List<String> allergies, int pID)
+        {
+            List<Allergy> list = new List<Allergy>();
+            Patient p = repository.findPatient(pID);
+            foreach (String a in allergies)
+            {
+                int idA = Convert.ToInt32(a);
+                Allergy allergy = repository.findAllergy(idA);
+                list.Add(allergy);
+            }
+            repository.addPatientAllergies(list, p);
+        }
+
+        public void addPatientDiseases(List<String> diseases, int pID) 
+        {
+            Patient p = repository.findPatient(pID);
+            foreach (String d in diseases)
+            {
+                int idD = Convert.ToInt32(d);
+                Disease disease = repository.findDisease(idD);
+                PatientDisease pd = new PatientDisease(pID, idD);
+                repository.addPatientDisease(pd);
+            }
+        }
+
         public void addVitalSigns(List<VitalSign> vitalSigns, int paID) {
             foreach (VitalSign vs in vitalSigns)
             {
                 int id = repository.addVitalSign(vs);
-                PatientVital pv = new PatientVital();
-                pv.paID = paID;
-                pv.vID = id;
+                PatientVital pv = new PatientVital(paID, id);
                 repository.addPatientVital(pv);
             }
         }
@@ -55,7 +78,6 @@ namespace ER_application.Controller
                     repository.addPatientInjury(pi2);
                 }
             }
-
         }
 
         public Patient getRandomPatient()
@@ -63,7 +85,7 @@ namespace ER_application.Controller
             return repository.getRandomPatient();
         }
 
-        public List<int> getPatientDiseases(int id)
+        public List<Disease> getPatientDiseases(int id)
         {
             return repository.getPatientDiseases(id);
         }

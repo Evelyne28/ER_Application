@@ -55,20 +55,16 @@ namespace ER_application.Web_Forms
                     Session["userPassword"] = password;
                     Response.Redirect("Ambulance.aspx");
                 }
-
-
                 else if (role == 3)
                 {
                     Session["userName"] = userName;
                     Session["userPassword"] = password;
-                    Response.Redirect("Ambulance.aspx");
+                    Response.Redirect("ER.aspx");
                 }
 
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine("baaaaaaaaaa");
-                System.Diagnostics.Debug.WriteLine(ex.Message);
                 var message = "Userul sau parola sunt introduse gresit!";
                 string script = "<script type=\"text/javascript\">alert('" + message + "');</script>";
                 ClientScript.RegisterClientScriptBlock(this.GetType(), "Alert", script);

@@ -10,9 +10,11 @@ namespace ER_application.Repository
     public class RepositoryDispatcher : IRepositoryDispatcher
     {
         EREntities context;
+        IGenericRepository<Ambulance> repoAmb;
 
         public RepositoryDispatcher() {
             context = new EREntities();
+            repoAmb = new GenericRepository<Ambulance>(context);
         }
 
         public void createPatient(Patient p)
@@ -26,6 +28,11 @@ namespace ER_application.Repository
             context.Incident.Add(i);
             context.SaveChanges();
             return i.incidentID;
+        }
+
+        public void updateAmbulance(Ambulance a, int id)
+        {
+            repoAmb.Update(a, id);
         }
 
         public bool updateIncident(Incident incident)

@@ -31,10 +31,12 @@ function menuAdministration(value) {
     if (value == 'dispatch') {
         $("#mapCall").css({ opacity: 1, zoom: 1 });
         document.getElementById('mapCall').style.width = '40%';
+        document.getElementById('mapCall').style.height = '400px';
     }
     else {
         $("#mapCall").css({ opacity: 0, zoom: 0 });
-        document.getElementById('mapCall').style.width = '10%';
+        document.getElementById('mapCall').style.width = '5%';
+        document.getElementById('mapCall').style.height = '0px';
     }
     for (var i = 0; i < items.length; i++) {
         if (items[i] == value) {
@@ -48,8 +50,23 @@ function menuAdministration(value) {
     }
 }
 
+function sendPatientER(fromWho, patient, allergyList, diseasesList) {
+    var chat = $.connection.chatHub;
+    chat.server.sendPatientER(fromWho, patient, allergyList, diseasesList);
+}
+
+function sendProblemER(fromWho, pComplaint, mObservations, injuries) {
+    var chat = $.connection.chatHub;
+    chat.server.sendProblemER(fromWho, pComplaint, mObservations, injuries);
+}
+
+function sendVitals(fromWho, vitalsList) {
+    var chat = $.connection.chatHub;
+    chat.server.sendVitalsER(fromWho, vitalsList);
+}
+
 function addTime(number, rowID) {
-    $('<td> <input type="text" name="' + number + 'hourInput" id="' + number + 'hourInput"/>' +
+    $('<td> <input type="text" name="' + number + 'hourInput" id="' + number + 'hourInput"/><span class="colon">:</span>' +
     '<input type="text" name="' + number + 'minuteInput" id="' + number + 'minuteInput"/></td>').appendTo('#' + rowID);
     var now = new Date();
     $('#' + number + 'hourInput').val(now.getHours());
@@ -184,6 +201,7 @@ $(function () {
 
     //Add patient
     $(document).on('click', '#btnAddPatient', function (ev) {
+        $("#buttonCard").addClass('buttonOpacity');
         ajaxAddPatient();
        // ajaxSetSession();
         ev.preventDefault();
@@ -191,6 +209,7 @@ $(function () {
 
     //Scan card
     $(document).on('click', '#buttonCard', function (ev) {
+        $("#btnAddPatient").addClass('buttonOpacity');
         ajaxScanCard();
         //ajaxAddPatientAmbulance();
         //ajaxSetSession();
