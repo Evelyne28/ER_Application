@@ -16,7 +16,8 @@ namespace ER_application.Controller.Interfaces
         List<Incident> readIncidents();
         List<Ambulance> readAmbulances();
         void updateAmbulance(Ambulance a, int id);
-        bool updateIncident(int id, String gps, String cLocation, String cName,
-                                   String pLocation, String pState, String pInfo, String description, int resolved);
+        //bool updateIncident(int id, String gps, String cLocation, String cName,
+        //                           String pLocation, String pState, String pInfo, String description, int resolved);
+        void updateIncident(Incident i, int id);
     }
 }

@@ -9,6 +9,7 @@ using System.Web;
 using Microsoft.AspNet.SignalR;
 using ER_application.Controller;
 using ER_application.Controller.Interfaces;
+using System.Globalization;
 
 namespace ER_application.Services
 {
@@ -30,7 +31,7 @@ namespace ER_application.Services
         public class ClientWorker
         {
             public TcpClient client;
-            public ChatHub chat;
+            public DispatchHub chat;
             public static string number { get; set; }
             public string response;
             private IControllerDispatcher controller;
@@ -49,11 +50,13 @@ namespace ER_application.Services
                     Console.WriteLine("Conexiune acceptata: " + client);
                     String cePrimesc = Rd.ReadLine();
                     String number = cePrimesc;
-                    int id = controller.createIncident(DateTime.Now, number);
+                    DateTime d = DateTime.Now;
+                    int id = controller.createIncident(d, number);
                     ServerWorker.singleTonServer.map.Add(number, cl);
                     cl.response = "";
-                    var hub = GlobalHost.ConnectionManager.GetHubContext<ChatHub>();
-                    number = number + ";" + id.ToString();
+                    var hub = GlobalHost.ConnectionManager.GetHubContext<DispatchHub>();
+                    Thread.CurrentThread.CurrentCulture = new CultureInfo("en-GB");
+                    number = number + ";" + id.ToString() + ";" + d.ToShortDateString() + ";" + d.ToShortTimeString();
                     hub.Clients.All.showNumber(number);
 
                     while (true)

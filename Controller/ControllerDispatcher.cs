@@ -54,20 +54,25 @@ namespace ER_application.Controller
             repository.updateAmbulance(a, id);
         }
 
-        public bool updateIncident(int id, String gps, String cLocation, String cName,
-                                   String pLocation, String pState, String pInfo, String description, int resolved)
+        public void updateIncident(Incident i, int id)
         {
-            Incident i = new Incident();
-            i.incidentID = id;
-            i.locationGPS = gps;
-            i.callerLocation = cLocation;
-            i.callerName = cName;
-            i.patientLocation = pLocation;
-            i.patientState = pState;
-            i.patientInfo = pInfo;
-            i.description = description;
-            i.resolved = resolved;
-            return repository.updateIncident(i);
+            repository.updateIncident(i, id);
         }
+
+        //public bool updateIncident(int id, String gps, String cLocation, String cName,
+        //                           String pLocation, String pState, String pInfo, String description, int resolved)
+        //{
+        //    Incident i = new Incident();
+        //    i.incidentID = id;
+        //    i.locationGPS = gps;
+        //    i.callerLocation = cLocation;
+        //    i.callerName = cName;
+        //    i.patientLocation = pLocation;
+        //    i.patientState = pState;
+        //    i.patientInfo = pInfo;
+        //    i.description = description;
+        //    i.resolved = resolved;
+        //    return repository.updateIncident(i);
+        //}
     }
 }

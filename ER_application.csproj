@@ -15,7 +15,7 @@
     <AssemblyName>ER_application</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <UseIISExpress>true</UseIISExpress>
-    <IISExpressSSLPort />
+    <IISExpressSSLPort>44300</IISExpressSSLPort>
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
@@ -77,6 +77,9 @@
     </Reference>
     <Reference Include="Owin">
       <HintPath>..\..\..\..\..\Downloads\SignalR Getting Started Application\C#\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="SecuritySwitch">
+      <HintPath>..\packages\SecuritySwitch.4.4.0.0\lib\SecuritySwitch.dll</HintPath>
     </Reference>
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
@@ -150,8 +153,9 @@
     <Content Include="Scripts\AmbulanceScripts\AmbulanceProblem.js" />
     <Content Include="Scripts\AmbulanceScripts\AmbulanceVitals.js" />
     <Content Include="Scripts\createMarker.js" />
+    <Content Include="Scripts\DispatchScripts\Dispatch_Functions.js" />
     <Content Include="Scripts\epoly.js" />
-    <Content Include="Scripts\Dispatch.js" />
+    <Content Include="Scripts\DispatchScripts\Dispatch.js" />
     <Content Include="Scripts\ERScripts\ER.js" />
     <Content Include="Scripts\ERScripts\ER_Functions.js" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
@@ -173,6 +177,9 @@
       <DependentUpon>Domain.edmx</DependentUpon>
       <LastGenOutput>Domain.cs</LastGenOutput>
     </Content>
+    <None Include="SecuritySwitch-v4.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -189,7 +196,9 @@
     <Content Include="Scripts\jquery.signalR-2.0.2.min.js" />
     <Content Include="Scripts\mapScript.js" />
     <Content Include="Scripts\sample3.html" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web_Forms\Ambulance.aspx" />
     <Content Include="Web_Forms\Dispatch.aspx" />
     <Content Include="Web_Forms\Login.aspx" />
@@ -274,6 +283,7 @@
     <Compile Include="Repository\Interfaces\IRepositoryER.cs" />
     <Compile Include="Repository\RepositoryAmbulance.cs" />
     <Compile Include="Repository\RepositoryER.cs" />
+    <Compile Include="Services\AmbulanceHub.cs" />
     <Compile Include="Services\ChatHub.cs" />
     <Compile Include="Controller\ControllerUser.cs" />
     <Compile Include="Controller\ControllerDispatcher.cs" />
@@ -285,6 +295,7 @@
     <Compile Include="Repository\Interfaces\IRepositoryUser.cs" />
     <Compile Include="Repository\RepositoryUser.cs" />
     <Compile Include="Repository\RepositoryDispatcher.cs" />
+    <Compile Include="Services\DispatchHub.cs" />
     <Compile Include="Services\ServerWorker.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="Web_Forms\Ambulance.aspx.cs">
@@ -316,7 +327,12 @@
       <DependentUpon>ER.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\..\GPS\GPS\GPS.csproj">
+      <Project>{3087e766-b414-4ca7-a7ce-1b2fe4885d76}</Project>
+      <Name>GPS</Name>
+    </ProjectReference>
+  </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>

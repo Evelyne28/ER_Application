@@ -37,3 +37,8 @@ C:\Users\Eve\Documents\Visual Studio 2013\Projects\ER_application\ER_application
 C:\Users\Eve\Documents\Visual Studio 2013\Projects\ER_application\ER_application\bin\System.Web.WebPages.Razor.xml
 C:\Users\Eve\Documents\Visual Studio 2013\Projects\ER_application\ER_application\obj\Debug\ER_application.dll
 C:\Users\Eve\Documents\Visual Studio 2013\Projects\ER_application\ER_application\obj\Debug\ER_application.pdb
+C:\Users\Eve\Documents\Visual Studio 2013\Projects\ER_application\ER_application\bin\SecuritySwitch.dll
+C:\Users\Eve\Documents\Visual Studio 2013\Projects\ER_application\ER_application\bin\Files\coordinates.txt
+C:\Users\Eve\Documents\Visual Studio 2013\Projects\ER_application\ER_application\bin\Files\phoneNumbers.txt
+C:\Users\Eve\Documents\Visual Studio 2013\Projects\ER_application\ER_application\bin\GPS.exe
+C:\Users\Eve\Documents\Visual Studio 2013\Projects\ER_application\ER_application\bin\GPS.pdb

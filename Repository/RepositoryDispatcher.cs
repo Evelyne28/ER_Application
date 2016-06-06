@@ -11,10 +11,12 @@ namespace ER_application.Repository
     {
         EREntities context;
         IGenericRepository<Ambulance> repoAmb;
+        IGenericRepository<Incident> repoInc;
 
         public RepositoryDispatcher() {
             context = new EREntities();
             repoAmb = new GenericRepository<Ambulance>(context);
+            repoInc = new GenericRepository<Incident>(context);
         }
 
         public void createPatient(Patient p)
@@ -35,30 +37,46 @@ namespace ER_application.Repository
             repoAmb.Update(a, id);
         }
 
-        public bool updateIncident(Incident incident)
+        public void updateIncident(Incident i, int id)
         {
-            try
+            //repoInc.Update(i, id);
+            using (var db = new EREntities())
             {
-                Incident i = context.Incident.Find(incident.incidentID);
-                if (i != null)
+                var result = db.Incident.SingleOrDefault(b => b.incidentID == id);
+                if (result != null)
                 {
-                    i.locationGPS = incident.locationGPS;
-                    i.callerLocation = incident.callerLocation;
-                    i.callerName = incident.callerName;
-                    i.patientLocation = incident.patientLocation;
-                    i.patientState = incident.patientState;
-                    i.patientInfo = incident.patientInfo;
-                    i.description = incident.description;
-                    i.resolved = incident.resolved;
-                    context.SaveChanges();
-                    return true;
+                    result.locationGPS = i.locationGPS;
+                    result.callerLocation = i.callerLocation;
+                    result.callerName = i.callerName;
+                    result.patientLocation = i.patientLocation;
+                    result.patientState = i.patientState;
+                    result.patientInfo = i.patientInfo;
+                    result.description = i.description;
+                    db.SaveChanges();
                 }
             }
-            catch (Exception ex)
-            {
-                string exception = ex.InnerException.ToString();
-            } 
-            return false;
+            //try
+            //{
+            //    Incident i = context.Incident.Find(incident.incidentID);
+            //    if (i != null)
+            //    {
+            //        i.locationGPS = incident.locationGPS;
+            //        i.callerLocation = incident.callerLocation;
+            //        i.callerName = incident.callerName;
+            //        i.patientLocation = incident.patientLocation;
+            //        i.patientState = incident.patientState;
+            //        i.patientInfo = incident.patientInfo;
+            //        i.description = incident.description;
+            //        i.resolved = incident.resolved;
+            //        context.SaveChanges();
+            //        return true;
+            //    }
+            //}
+            //catch (Exception ex)
+            //{
+            //    string exception = ex.InnerException.ToString();
+            //} 
+            //return false;
 
         }
 

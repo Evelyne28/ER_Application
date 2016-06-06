@@ -15,7 +15,7 @@ namespace ER_application.Repository.Interfaces
         int getPatientID(String ssn);
         List<Incident> readIncidents();
         List<Ambulance> readAmbulances();
-        bool updateIncident(Incident i);
+        void updateIncident(Incident i, int id);
         void updateAmbulance(Ambulance a, int id);
     }
 }

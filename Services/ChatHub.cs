@@ -9,6 +9,7 @@ namespace ER_application.Services
 {
     public class ChatHub : Hub
     {
+        //public static Dictionary<string, string> map = new Dictionary<string, string>();
         public void Send(string name, string message)
         {
             // Call the broadcastMessage method to update clients.
@@ -20,40 +21,43 @@ namespace ER_application.Services
             Clients.All.methodName(name, p);
         }
 
-        public void sendIncident(string toWho, Incident i)
-        {
-            Clients.All.receiveIncident(toWho, i);
-        }
+        //public void sendIncident(string toWho, Incident i)
+        //{
+        //    Clients.All.receiveIncident(toWho, i);
+        //}
 
         public void sendTo(string name, string message, string toWho)
         {
             Clients.All.receive(name, message, toWho);
         }
 
-        public void sendBusySignal(string fromWho, string number)
-        {
-            Clients.All.receiveBusySignal(fromWho, number);
-        }
+        //public void sendBusySignal(string fromWho, string number)
+        //{
+        //    if (!map.ContainsKey(number)) {
+        //        map.Add(number, fromWho);
+        //        Clients.All.receiveBusySignal(fromWho, number);
+        //    }       
+        //}
 
-        public void sendResolved(string number)
-        {
-            Clients.All.receiveResolved(number);
-        }
+        //public void sendResolved(string number)
+        //{
+        //    Clients.All.receiveResolved(number);
+        //}
 
-        public void updateAmbulanceState(string name, string state)
-        {
-            Clients.All.updateAmbulance(name, state);
-        }
+        //public void updateAmbulanceState(string name, string state)
+        //{
+        //    Clients.All.updateAmbulance(name, state);
+        //}
 
-        public void sendResponse(string response)
-        {
-            String number = response.Split(';')[1];
-            ServerWorker.singleTonServer.map[number].response = response;
-        }
+        //public void sendResponse(string response)
+        //{
+        //    String number = response.Split(';')[1];
+        //    ServerWorker.singleTonServer.map[number].response = response;
+        //}
 
-        public void sendCoordinates(string toWho, string coordinates) {
-            Clients.All.receiveCoordinates(toWho, coordinates);
-        }
+        //public void sendCoordinates(string toWho, string coordinates) {
+        //    Clients.All.receiveCoordinates(toWho, coordinates);
+        //}
 
         public void sendPatientER(string fromWho, Patient patient, List<String> allergyList, List<String> diseasesList)     {
             Clients.All.receivePatient(fromWho, patient, allergyList, diseasesList);

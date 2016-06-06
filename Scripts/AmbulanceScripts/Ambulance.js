@@ -127,7 +127,7 @@ function createRow(number) {
 google.maps.event.addDomListener(window, "load", initialize);
 
 $(function () {   
-    var chat = $.connection.chatHub;
+    var chat = $.connection.ambulanceHub;
     var username = $('#welcome').text();
     var parts = username.split(' ');
     username = parts[1];
@@ -154,7 +154,7 @@ $(function () {
         createRow(1, "1vitalTR");
     });
 
-    chat.client.receiveIncident = function (toWho, incident) {
+    chat.client.receiveIncidentDispatch = function (nameAmb, incident, coordInc) {
         setInterval(function () {
             var color = $("#dispatchMenu").css("background-color");
             if (color == 'rgb(51, 51, 51)') {
@@ -164,7 +164,7 @@ $(function () {
                 $("#dispatchMenu").css('background-color', '#333');
             }
         }, 400);
-        if (toWho == username) {
+        if (nameAmb == username) {
             $("#cIncidentID").val(incident.incidentID);
             $("#addressGPSInput").val(incident.locationGPS);
             $("#cLocationInput").val(incident.callerLocation);
@@ -174,6 +174,23 @@ $(function () {
             $("#pStateInput").val(incident.patientState);
             $("#pInfoInput").val(incident.patientInfo);
             $("#descInput").val(incident.description);
+            //Receive coordinates
+            var ll = coordInc.split(',');
+            var lat = parseFloat(ll[0]);
+            var lng = parseFloat(ll[1]);
+            var latlng = new google.maps.LatLng(lat, lng);
+            var marker = new google.maps.Marker({
+                position: latlng,
+                map: map,
+                title: incident.callerPhone
+            });
+            gmarkers.push(marker);
+            var infowindow = new google.maps.InfoWindow({
+                content: "<span>" + number + "</span>"
+            });
+            marker.addListener('click', function () {
+                infowindow.open(map, marker);
+            });
         }
     }
 
@@ -250,5 +267,10 @@ $(function () {
     $(document).on('click', '#btnSave', function (ev) {
         ajaxSaveProblems();
         ev.preventDefault();
+    });
+
+    $.connection.hub.start().done(function () {
+        //dispatchCon.hub.start();
+        //ambulanceCon.hub.start();
     });
 });
