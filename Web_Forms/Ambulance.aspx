@@ -162,18 +162,97 @@
         </div>
 	</div>
     <div id="vitalDiv">
-        <button id="addVital"> Adauga  </button>
-        <button id="saveVitals"> Salveaza  </button>
         <table id="vitalTable">
             <tr id="vitalHeader">
-                <th> Time </th>
-                <th> Nivel de constiinta </th>
-                <th> Respiratie </th>
-                <th> Puls </th>
-                <th> Left / Right</th>
-                <th> Piele </th>
+                <th> <button id="addVital"> + </button> Time </th>
+                <th> Sistolic </th>
+                <th> Diastolic </th>
+                <th> Puls / Tip </th>
+                <th> Respiratie / Tip </th>
+                <th> SPO2 </th>
+                <th> CO2 </th>
+                <th> Blood sugar </th>
+                <th> Temperature </th>
+                <th> Skin </th>
+                <th> Pupils Left / Right</th>
+                <th> Pain </th>
+                <th> Conciousness </th>
             </tr>
         </table>
+        <table id="inputVitals">
+		<tr>
+			<th> Sistolic </th> 
+			<td class="vitalTD"> <input type="text" id="inputSistolic" placeholder="Sistolic"/> </td>
+			<th> Diastolic </th>
+			<td class="vitalTD"> <input type="text" id="inputDiastolic" placeholder="Diastolic"/> </td>
+		</tr>
+		<tr>
+			<th> Puls </th>
+			<td class="vitalTD"> 
+				<input type="text" id="inputPulsRate"/> <br/>
+				<input type="radio" id="radioPulsR" name="puls" value="Regular"/> Regular <br/>
+				<input type="radio" id="radioPulsI" name="puls" value="Iregular"/> Irregular
+			</td>
+			<th> Respiratie </th>
+			<td class="vitalTD"> 
+				<input type="text" id="inputRespiratieRate"/> <br/>
+				<input type="radio" id="radioRespR" name="respiratie" value="Regular"/> Regular <br/>
+				<input type="radio" id="radioRespS" name="respiratie" value="Shallowed"/> Shallowed <br/>
+				<input type="radio" id="radioRespL" name="respiratie" value="Labored"/> Labored
+			 </td>
+		</tr>
+		<tr>
+			<th> SPO2 </th>
+			<td class="vitalTD"> <input type="text" id="inputSPO2"/> </td>
+			<th> CO2 </th>
+			<td class="vitalTD"> <input type="text" id="inputCO2"/> </td>
+		</tr>
+		<tr>
+			<th> Blood sugar </th>
+			<td class="vitalTD"> <input type="text" id="inputBS"/> </td>
+			<th> Temperature </th>
+			<td class="vitalTD"> <input type="text" id="inputTemperature"/> </td>
+		</tr>
+		<tr>
+			<th> Skin </th>
+			<td class="vitalTD"> 
+				<input type="radio" id="radioSkinC" name="skin" value="Cool"/> Cool
+				<br/>
+				<input type="radio" id="radioSkinP" name="skin" value="Pale"/> Pale
+				<br/>
+				<input type="radio" id="radioSkinW" name="skin" value="Worm"/> Worm
+			</td>
+			<th> Pupils </th>
+			<td class="vitalTD">
+				<span> Left / Right </span> <br/>
+				<input type="radio" id="radioPLN" name="pupilLeft" value="Normal"/> Normal 
+				<input type="radio" id="radioPRN" name="pupilRight" value="Normal"/> Normal
+				<br/>
+				<input type="radio" id="radioPLD" name="pupilLeft" value="Dilated"/> Dilated
+				<input type="radio" id="radioPRD" name="pupilRight" value="Dilated"/> Dilated
+				<br/>
+				<input type="radio" id="radioPLNR" name="pupilLeft" value="No reaction"/> No reaction
+				<input type="radio" id="radioPRNR" name="pupilRight" value="No reaction"/> No reaction
+			</td>
+		</tr>
+		<tr>
+			<th> Pain </th>
+			<td class="vitalTD"> <input type="text" id="inputPain"/> </td>
+			<th> Level of consciousness </th>
+			<td class="vitalTD">
+				<input type="radio" id="radioConscA" name="consciousness" value="Alert"/> Alert <br/>
+				<input type="radio" id="radioConscV" name="consciousness" value="Voice"/> Voice <br/>
+				<input type="radio" id="radioConscP" name="consciousness" value="Pain"/> Pain <br/>
+				<input type="radio" id="radioConscU" name="consciousness" value="Unresponsive"/> Unresponsive
+			</td>
+		</tr>
+	</table>
+    <div id="divRight">
+        <button id="btnGenerateVitals"> Genereaza </button>
+        <button id="btnAddVital"> Adauga </button>
+        <button id="btnCancelVital"> Cancel </button>
+        <button id="saveVitals"> Salveaza </button>
+    </div>
     </div>
     <div id="mapCall"> </div>
         

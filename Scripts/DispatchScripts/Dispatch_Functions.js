@@ -6,16 +6,12 @@
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         success: function (data) {
-
+            createTitles();
             $.each(data.d, function (index, item) {
-                if (item.state == 0)
-                    var listAmb = "<li id='liAmb_" + item.ambulanceID + "'> <button id='dispAmb_" + item.ambulanceID + "'>" + item.licensePlate
-                        + "</button>&nbsp&nbsp&nbsp<img id='imgAmb_" + item.ambulanceID + "' src='/Images/GreenCircle.png'></li>";
-                else 
-                    var listAmb = "<li id='liAmb_" + item.ambulanceID + "'> <button id='dispAmb_" + item.ambulanceID + "'>" + item.licensePlate
-                        + "</button>&nbsp&nbsp&nbsp<img id='imgAmb_" + item.ambulanceID + "' src='/Images/RedCircle.png'></li>";
-                    
-                $('#listAmb').append(listAmb);
+                if (item.state == 0) 
+                    createFreeAmb(item.ambulanceID, item.licensePlate, item.ambulanceType);
+                else if (item.state == 1) 
+                    createBusyAmb(item.ambulanceID, item.licensePlate, item.ambulanceType);
                 $('#dispAmb_' + item.ambulanceID).addClass('.buttonOpacity');
             })
             //Assign case to an ambulance
@@ -27,21 +23,21 @@
                 ambID = parts[1];
                 incident = {
                     incidentID: parts[1],
-                    locationGPS: $("#" + phoneNumber + "addressInput").val(),
-                    callerLocation: $("#" + phoneNumber + "cLocationInput").val(),
-                    callerPhone: $("#" + phoneNumber + "cPhoneInput").val(),
-                    callerName: $("#" + phoneNumber + "cNameInput").val(),
-                    patientLocation: $("#" + phoneNumber + "pLocationInput").val(),
-                    patientState: $("#" + phoneNumber + "pStateInput").val(),
-                    patientInfo: $("#" + phoneNumber + "pInfoInput").val(),
-                    description: $("#" + phoneNumber + "descInput").val()
+                    locationGPS: $("#" + copyOfPhone + "addressInput").val(),
+                    callerLocation: $("#" + copyOfPhone + "cLocationInput").val(),
+                    callerPhone: $("#" + copyOfPhone + "cPhoneInput").val(),
+                    callerName: $("#" + copyOfPhone + "cNameInput").val(),
+                    patientLocation: $("#" + copyOfPhone + "pLocationInput").val(),
+                    patientState: $("#" + copyOfPhone + "pStateInput").val(),
+                    patientInfo: $("#" + copyOfPhone + "pInfoInput").val(),
+                    description: $("#" + copyOfPhone + "descInput").val()
                 };
-                var coordInc = $("#" + phoneNumber + "cPos").val();
+                var coordInc = $("#" + copyOfPhone + "cPos").val();
                 //chat.server.sendIncident("amb" + ambID, incident);
                 //chat.server.sendResolved(number);
                 //chat.server.sendCoordinates("amb" + ambID, incident.posInc);
                 //chat.server.updateAmbulanceState(ambID, "1");
-                sendIncident(ambID, phoneNumber, incident, "1", coordInc);
+                sendIncident(ambID, copyOfPhone, incident, "1", coordInc);
                 e.preventDefault();
             });
         },
@@ -98,6 +94,7 @@ function ajaxUpdateAmbulanceStatus(state) {
     })
 }
 
+
 function createTable(number, incidentID) {
     $('<table id="' + number + 'table"><tr><td> <input type="hidden" id="' + number + 'cPos" value="' + incidentID + '"/></td></tr>' +
     '<tr><th>Data</th><td> <textarea readonly id="' + number + 'dateInput" rows="1" cols="50"></textarea></td></tr>' +
@@ -110,4 +107,29 @@ function createTable(number, incidentID) {
     '<tr><th>Date pacient</th><td> <textarea id="' + number + 'pInfoInput" rows="4" cols="50" style="background-color:rgba(255, 107, 107, 0.22)"></textarea></td></tr>' +
     '<tr><th>Ce s-a intamplat</th><td> <textarea id="' + number + 'descInput" rows="4" cols="50" style="background-color:rgba(255, 107, 107, 0.22)"></textarea></td></tr></table>').appendTo('#infoCall');
     //$("#" + number + "table").siblings().hide();
+}
+
+function createFreeAmb(id, licensePlate, ambulanceType) {
+    var listAmb = "<li id='liAmb_" + id + "'> <button id='dispAmb_" + id + "'>" + licensePlate + "</button>&nbsp&nbsp&nbsp<img id='imgAmb_" + id + "' src='/Images/GreenCircle.png'></li>";
+    appendToList(ambulanceType, listAmb);
+}
+
+function createBusyAmb(id, licensePlate, ambulanceType) {
+    var listAmb = "<li id='liAmb_" + id + "'> <button id='dispAmb_" + id + "'>" + licensePlate + "</button>&nbsp&nbsp&nbsp<img id='imgAmb_" + id + "' src='/Images/redC.png'></li>";
+    appendToList(ambulanceType, listAmb)
+}
+
+function appendToList(ambulanceType, listAmb) {
+    if (ambulanceType == 1)
+        $('#listAmbA').append(listAmb);
+    if (ambulanceType == 2)
+        $('#listAmbB').append(listAmb);
+    if (ambulanceType == 3)
+        $('#listAmbC').append(listAmb);
+}
+
+function createTitles() {
+    $('#listAmbA').append("<li> Tip A </li>");
+    $('#listAmbB').append("<li> Tip B </li>");
+    $('#listAmbC').append("<li> Tip C </li>");
 }

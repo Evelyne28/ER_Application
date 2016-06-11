@@ -21,15 +21,21 @@ namespace ER_application.Models
     
         public int vitalID { get; set; }
         public Nullable<System.DateTime> vitalTime { get; set; }
-        public string consciousnessType { get; set; }
-        public Nullable<int> respirationRate { get; set; }
-        public string respirationType { get; set; }
-        public Nullable<int> pulseRate { get; set; }
+        public string systolic { get; set; }
+        public string diastolic { get; set; }
+        public string pulseRate { get; set; }
         public string pulseType { get; set; }
-        public string pulseBP { get; set; }
-        public string rightPupilType { get; set; }
-        public string leftPupilType { get; set; }
+        public string respirationRate { get; set; }
+        public string respirationType { get; set; }
+        public string spo2 { get; set; }
+        public string co2 { get; set; }
+        public string bloodSugar { get; set; }
+        public string temperature { get; set; }
         public string skinType { get; set; }
+        public string leftPupilType { get; set; }
+        public string rightPupilType { get; set; }
+        public string pain { get; set; }
+        public string consciousnessType { get; set; }
     
         public virtual ICollection<PatientVital> PatientVital { get; set; }
     }

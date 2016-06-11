@@ -4,9 +4,16 @@ var ambID;
 var ambLicense;
 var color = "";
 var phoneNumber = "";
+var copyOfPhone = "";
 var incidentID = "";
 var allNumbers = [];
 var busyNumbers = [];
+var waitingMap = [];
+var dictionary = {};
+var timestart = null;
+
+var vis = "";
+var stop = true;
 
 //Map init and centered in Cluj-Napoca
 function initialize() { 
@@ -21,11 +28,138 @@ function initialize() {
     geocoder = new google.maps.Geocoder();
 }
 
+function showtimer(timercount) {
+    if (timercount) {
+        clearTimeout(timercount);
+        clockID = 0;
+    }
+    if (!timestart) {
+        timestart = new Date();
+    }
+    var timeend = new Date();
+    var timedifference = timeend.getTime() - timestart.getTime();
+    timeend.setTime(timedifference);
+    var minutes_passed = timeend.getMinutes();
+    if (minutes_passed < 10) {
+        minutes_passed = "0" + minutes_passed;
+    }
+    var seconds_passed = timeend.getSeconds();
+    if (seconds_passed < 10) {
+        seconds_passed = "0" + seconds_passed;
+    }
+    var minutes = minutes_passed + ":" + seconds_passed;
+    $("#timetextarea" + copyOfPhone).val(minutes);
+    timercount = setTimeout("showtimer()", 1000);
+}
+
+function timeCounter() {
+    //if (!timercount) {
+    //    timestart = new Date();
+    //document.timetextarea.value = "00:00";
+    var tCount = 0;
+        $("#timetextarea" + copyOfPhone).val("00:00");
+        //document.timeform.laptime.value = "";
+        tCount = setTimeout("showtimer()", 1000, tCount);
+    //}
+    //else {
+    //    alert("hello");
+        //var timeend = new Date();
+        //var timedifference = timeend.getTime() - timestart.getTime();
+        //timeend.setTime(timedifference);
+        //var minutes_passed = timeend.getMinutes();
+        //if (minutes_passed < 10) {
+        //    minutes_passed = "0" + minutes_passed;
+        //}
+        //var seconds_passed = timeend.getSeconds();
+        //if (seconds_passed < 10) {
+        //    seconds_passed = "0" + seconds_passed;
+        //}
+        //var milliseconds_passed = timeend.getMilliseconds();
+        //if (milliseconds_passed < 10) {
+        //    milliseconds_passed = "00" + milliseconds_passed;
+        //}
+        //else if (milliseconds_passed < 100) {
+        //    milliseconds_passed = "0" + milliseconds_passed;
+        //}
+        //document.timeform.laptime.value = minutes_passed + ":" + seconds_passed + "." + milliseconds_passed;
+   // }
+}
+
+function cronometro() {
+    // if (stop == false) {
+    values = dictionary[copyOfPhone];
+    parts = values.split(';');
+    minuti = parts[0];
+    secondi = parts[1];
+        secondi++;
+        if (secondi > 59) {
+            secondi = 0;
+            minuti++;
+        }
+        values = minuti + ";" + secondi;
+        dictionary[copyOfPhone] = values;
+        mostra(secondi, minuti);
+        setTimeout("cronometro()", 1000);
+    //}
+}
+function mostra() {
+    //if (ore < 10) vis = ""; else vis = ore;
+    values = dictionary[copyOfPhone];
+    parts = values.split(';');
+    minuti = parts[0];
+    secondi = parts[1];
+    vis = "";
+    if (minuti < 10) vis = vis + "0";
+    vis = vis + minuti + ":";
+    if (secondi < 10) vis = vis + "0";
+    vis = vis + secondi;
+    document.getElementById("timetextarea" + copyOfPhone).innerHTML = vis;
+}
+
+
 function sendIncident(nameAmb, number, incident, state, coordInc) {
     var dispatchCon = $.connection.dispatchHub;
     var ambulanceCon = $.connection.ambulanceHub;
     dispatchCon.server.sendResolvedDispatch(nameAmb, state, number, incident);
     ambulanceCon.server.sendIncidentAmbulance('amb' + nameAmb, incident, coordInc);
+}
+
+function appendWaitingTable(key, val) {
+    if (val == 0)
+        $("#tableWaiting").append("<tr><th id='th" + key + "'><img id='img" + key + "' src='../Images/redC.png'>"
+            + key + "</th><td><button id='" + key + "info'> Info </button> <span id='timetextarea" + key + "'> 00:00 </span></td></tr>");
+    if (val == 1)
+        $("#tableWaiting").append("<tr><th id='th" + key + "'><img id='img" + key + "' src='../Images/yellowCircle.png'>"
+            + key + "</th><td><button id='" + key + "info'> Info </button> <span id='timetextarea" + key + "'> 00:00 </span></td></tr>");
+    if (val == 2)
+        $("#tableWaiting").append("<tr><th id='th" + key + "'><img id='img" + key + "' src='../Images/GreenCircle.png'>"
+            + key + "</th><td><button id='" + key + "info'> Info </button> <span id='timetextarea" + key + "'> 00:00 </span></td></tr>");
+}
+
+function orderTable() {
+    //ordoneaza tabelul apelurilor in asteptare in functie de prioritate
+    var sorted = waitingMap.slice(0).sort(function (a, b) {
+        return a.value - b.value;
+    });
+    $('#tableWaiting tbody').remove();
+    waitingMap = [];
+    for (var i = 0, len = sorted.length; i < len; ++i) {
+        waitingMap.push({
+            key: sorted[i].key,
+            value: sorted[i].value
+        });
+        appendWaitingTable(sorted[i].key, sorted[i].value);
+    }
+}
+
+function orderWaitingTable(val) {
+    $('#th' + phoneNumber).parent().remove();
+    appendWaitingTable(phoneNumber, val);
+    waitingMap.push({
+        key: phoneNumber,
+        value: val
+    });
+    orderTable();
 }
 
 google.maps.event.addDomListener(window, "load", initialize);
@@ -78,7 +212,7 @@ $(function () {
             $("#tableActions").show();
             //$("#" + phoneNumber + "respond").addClass('buttonOpacity');
             //$("button[id$='respond']").not('#' + number + 'respond').addClass('buttonOpacity');
-            $('#listAmb').empty();
+            $('#listAmbA').empty();
             ajaxGetAmbulances();
             ev.preventDefault();
         });
@@ -198,6 +332,7 @@ $(function () {
             }
         }
         ajaxUpdateIncident();
+        copyOfPhone = phoneNumber;
         phoneNumber = "";
         // ajaxSetSession();
         ev.preventDefault();
@@ -207,8 +342,28 @@ $(function () {
         if (color == "")
             alert("Please select incident gravity");
         else {
-            $('#th' + phoneNumber).parent().remove();
-            $("#tableWaiting").append("<tr><th id='th" + phoneNumber + "'><img id='img" + phoneNumber + "' src='../Images/redC.png'>" + phoneNumber + "</th><td><button id='" + phoneNumber + "info'> Info </button></td></tr>");
+            if (color == 'red') 
+                orderWaitingTable(0);
+            if (color == 'yellow')
+                orderWaitingTable(1);
+            if (color == 'green') 
+                orderWaitingTable(2);
+            copyOfPhone = phoneNumber;
+            //dictionary.push({
+            //    key: phoneNumber,
+            //    value: "0;0"
+            //})
+            $("button[id$='respond']").not('#' + phoneNumber + 'respond').removeClass('buttonOpacity');
+            $('#' + phoneNumber + 'respond').addClass('buttonOpacity');
+            for (var i = 0; i < allNumbers.length; i++) {
+                if ($.inArray(allNumbers[i], busyNumbers) == -1)
+                    $('#' + allNumbers[i] + 'respond').removeClass('buttonOpacity');
+                else
+                    $('#' + allNumbers[i] + 'respond').addClass('buttonOpacity');
+            }
+            dictionary[phoneNumber] = "0;0";
+            //cronometro(0,0);
+            phoneNumber = "";
         }
         ev.preventDefault();
     });

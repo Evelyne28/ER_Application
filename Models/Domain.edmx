@@ -19,6 +19,14 @@
           <Property Name="ambulanceID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="licensePlate" Type="varchar" MaxLength="10" />
           <Property Name="state" Type="int" />
+          <Property Name="ambulanceType" Type="int" />
+        </EntityType>
+        <EntityType Name="AmbulanceType">
+          <Key>
+            <PropertyRef Name="ambulanceTypeID" />
+          </Key>
+          <Property Name="ambulanceTypeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="typeName" Type="varchar" MaxLength="20" />
         </EntityType>
         <EntityType Name="AmbulanceUser">
           <Key>
@@ -46,6 +54,17 @@
           </Key>
           <Property Name="categoryID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="name" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="DispatchUser">
+          <Key>
+            <PropertyRef Name="dispatchID" />
+          </Key>
+          <Property Name="dispatchID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="userID" Type="int" />
+          <Property Name="ssn" Type="varchar" MaxLength="30" />
+          <Property Name="firstName" Type="varchar" MaxLength="30" />
+          <Property Name="lastName" Type="varchar" MaxLength="30" />
+          <Property Name="role" Type="int" />
         </EntityType>
         <EntityType Name="ER_User">
           <Key>
@@ -183,16 +202,34 @@
           </Key>
           <Property Name="vitalID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="vitalTime" Type="datetime" />
-          <Property Name="consciousnessType" Type="varchar" MaxLength="20" />
-          <Property Name="respirationRate" Type="int" />
-          <Property Name="respirationType" Type="varchar" MaxLength="20" />
-          <Property Name="pulseRate" Type="int" />
+          <Property Name="systolic" Type="varchar" MaxLength="10" />
+          <Property Name="diastolic" Type="varchar" MaxLength="10" />
+          <Property Name="pulseRate" Type="varchar" MaxLength="10" />
           <Property Name="pulseType" Type="varchar" MaxLength="20" />
-          <Property Name="pulseBP" Type="varchar" MaxLength="10" />
-          <Property Name="rightPupilType" Type="varchar" MaxLength="20" />
-          <Property Name="leftPupilType" Type="varchar" MaxLength="20" />
+          <Property Name="respirationRate" Type="varchar" MaxLength="10" />
+          <Property Name="respirationType" Type="varchar" MaxLength="20" />
+          <Property Name="spo2" Type="varchar" MaxLength="20" />
+          <Property Name="co2" Type="varchar" MaxLength="20" />
+          <Property Name="bloodSugar" Type="varchar" MaxLength="20" />
+          <Property Name="temperature" Type="varchar" MaxLength="10" />
           <Property Name="skinType" Type="varchar" MaxLength="30" />
+          <Property Name="leftPupilType" Type="varchar" MaxLength="20" />
+          <Property Name="rightPupilType" Type="varchar" MaxLength="20" />
+          <Property Name="pain" Type="varchar" MaxLength="10" />
+          <Property Name="consciousnessType" Type="varchar" MaxLength="20" />
         </EntityType>
+        <Association Name="FK__Ambulance__ambul__7AF13DF7">
+          <End Role="AmbulanceType" Type="Self.AmbulanceType" Multiplicity="0..1" />
+          <End Role="Ambulance" Type="Self.Ambulance" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AmbulanceType">
+              <PropertyRef Name="ambulanceTypeID" />
+            </Principal>
+            <Dependent Role="Ambulance">
+              <PropertyRef Name="ambulanceType" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK__Ambulance__userI__3D2915A8">
           <End Role="UserMode" Type="Self.UserMode" Multiplicity="0..1" />
           <End Role="AmbulanceUser" Type="Self.AmbulanceUser" Multiplicity="*" />
@@ -214,6 +251,18 @@
             </Principal>
             <Dependent Role="Disease">
               <PropertyRef Name="categoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__DispatchU__userI__6D9742D9">
+          <End Role="UserMode" Type="Self.UserMode" Multiplicity="0..1" />
+          <End Role="DispatchUser" Type="Self.DispatchUser" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserMode">
+              <PropertyRef Name="userID" />
+            </Principal>
+            <Dependent Role="DispatchUser">
+              <PropertyRef Name="userID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -361,7 +410,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__PatientVit__paID__640DD89F">
+        <Association Name="FK__PatientVit__paID__7FB5F314">
           <End Role="PatientAmbulance" Type="Self.PatientAmbulance" Multiplicity="0..1" />
           <End Role="PatientVital" Type="Self.PatientVital" Multiplicity="*" />
           <ReferentialConstraint>
@@ -373,7 +422,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__PatientVita__vID__6501FCD8">
+        <Association Name="FK__PatientVita__vID__00AA174D">
           <End Role="VitalSign" Type="Self.VitalSign" Multiplicity="0..1" />
           <End Role="PatientVital" Type="Self.PatientVital" Multiplicity="*" />
           <ReferentialConstraint>
@@ -388,9 +437,11 @@
         <EntityContainer Name="ERModelStoreContainer">
           <EntitySet Name="Allergy" EntityType="Self.Allergy" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Ambulance" EntityType="Self.Ambulance" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AmbulanceType" EntityType="Self.AmbulanceType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AmbulanceUser" EntityType="Self.AmbulanceUser" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Disease" EntityType="Self.Disease" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DiseaseCategory" EntityType="Self.DiseaseCategory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DispatchUser" EntityType="Self.DispatchUser" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ER_User" EntityType="Self.ER_User" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Incident" EntityType="Self.Incident" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Injury" EntityType="Self.Injury" Schema="dbo" store:Type="Tables" />
@@ -405,6 +456,10 @@
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserMode" EntityType="Self.UserMode" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="VitalSign" EntityType="Self.VitalSign" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Ambulance__ambul__7AF13DF7" Association="Self.FK__Ambulance__ambul__7AF13DF7">
+            <End Role="AmbulanceType" EntitySet="AmbulanceType" />
+            <End Role="Ambulance" EntitySet="Ambulance" />
+          </AssociationSet>
           <AssociationSet Name="FK__Ambulance__userI__3D2915A8" Association="Self.FK__Ambulance__userI__3D2915A8">
             <End Role="UserMode" EntitySet="UserMode" />
             <End Role="AmbulanceUser" EntitySet="AmbulanceUser" />
@@ -412,6 +467,10 @@
           <AssociationSet Name="FK__Disease__categor__0E391C95" Association="Self.FK__Disease__categor__0E391C95">
             <End Role="DiseaseCategory" EntitySet="DiseaseCategory" />
             <End Role="Disease" EntitySet="Disease" />
+          </AssociationSet>
+          <AssociationSet Name="FK__DispatchU__userI__6D9742D9" Association="Self.FK__DispatchU__userI__6D9742D9">
+            <End Role="UserMode" EntitySet="UserMode" />
+            <End Role="DispatchUser" EntitySet="DispatchUser" />
           </AssociationSet>
           <AssociationSet Name="FK__ER_User__userID__3864608B" Association="Self.FK__ER_User__userID__3864608B">
             <End Role="UserMode" EntitySet="UserMode" />
@@ -461,11 +520,11 @@
             <End Role="PatientAmbulance" EntitySet="PatientAmbulance" />
             <End Role="PatientInjury" EntitySet="PatientInjury" />
           </AssociationSet>
-          <AssociationSet Name="FK__PatientVit__paID__640DD89F" Association="Self.FK__PatientVit__paID__640DD89F">
+          <AssociationSet Name="FK__PatientVit__paID__7FB5F314" Association="Self.FK__PatientVit__paID__7FB5F314">
             <End Role="PatientAmbulance" EntitySet="PatientAmbulance" />
             <End Role="PatientVital" EntitySet="PatientVital" />
           </AssociationSet>
-          <AssociationSet Name="FK__PatientVita__vID__6501FCD8" Association="Self.FK__PatientVita__vID__6501FCD8">
+          <AssociationSet Name="FK__PatientVita__vID__00AA174D" Association="Self.FK__PatientVita__vID__00AA174D">
             <End Role="VitalSign" EntitySet="VitalSign" />
             <End Role="PatientVital" EntitySet="PatientVital" />
           </AssociationSet>
@@ -490,7 +549,17 @@
           <Property Name="ambulanceID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="licensePlate" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="state" Type="Int32" />
+          <Property Name="ambulanceType" Type="Int32" />
+          <NavigationProperty Name="AmbulanceType1" Relationship="Self.FK__Ambulance__ambul__7AF13DF7" FromRole="Ambulance" ToRole="AmbulanceType" />
           <NavigationProperty Name="PatientAmbulance" Relationship="Self.FK__PatientAm__ambul__52E34C9D" FromRole="Ambulance" ToRole="PatientAmbulance" />
+        </EntityType>
+        <EntityType Name="AmbulanceType">
+          <Key>
+            <PropertyRef Name="ambulanceTypeID" />
+          </Key>
+          <Property Name="ambulanceTypeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="typeName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Ambulance" Relationship="Self.FK__Ambulance__ambul__7AF13DF7" FromRole="AmbulanceType" ToRole="Ambulance" />
         </EntityType>
         <EntityType Name="AmbulanceUser">
           <Key>
@@ -522,6 +591,18 @@
           <Property Name="categoryID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Disease" Relationship="Self.FK__Disease__categor__0E391C95" FromRole="DiseaseCategory" ToRole="Disease" />
+        </EntityType>
+        <EntityType Name="DispatchUser">
+          <Key>
+            <PropertyRef Name="dispatchID" />
+          </Key>
+          <Property Name="dispatchID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="userID" Type="Int32" />
+          <Property Name="ssn" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="firstName" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="lastName" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="role" Type="Int32" />
+          <NavigationProperty Name="UserMode" Relationship="Self.FK__DispatchU__userI__6D9742D9" FromRole="DispatchUser" ToRole="UserMode" />
         </EntityType>
         <EntityType Name="ER_User">
           <Key>
@@ -613,7 +694,7 @@
           <NavigationProperty Name="InjuryMechanism" Relationship="Self.FK__InjuryMech__paID__69C6B1F5" FromRole="PatientAmbulance" ToRole="InjuryMechanism" />
           <NavigationProperty Name="Patient" Relationship="Self.FK__PatientAm__patie__51EF2864" FromRole="PatientAmbulance" ToRole="Patient" />
           <NavigationProperty Name="PatientInjury" Relationship="Self.FK__PatientInj__paID__56B3DD81" FromRole="PatientAmbulance" ToRole="PatientInjury" />
-          <NavigationProperty Name="PatientVital" Relationship="Self.FK__PatientVit__paID__640DD89F" FromRole="PatientAmbulance" ToRole="PatientVital" />
+          <NavigationProperty Name="PatientVital" Relationship="Self.FK__PatientVit__paID__7FB5F314" FromRole="PatientAmbulance" ToRole="PatientVital" />
         </EntityType>
         <EntityType Name="PatientDisease">
           <Key>
@@ -644,8 +725,8 @@
           <Property Name="pvID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="paID" Type="Int32" />
           <Property Name="vID" Type="Int32" />
-          <NavigationProperty Name="PatientAmbulance" Relationship="Self.FK__PatientVit__paID__640DD89F" FromRole="PatientVital" ToRole="PatientAmbulance" />
-          <NavigationProperty Name="VitalSign" Relationship="Self.FK__PatientVita__vID__6501FCD8" FromRole="PatientVital" ToRole="VitalSign" />
+          <NavigationProperty Name="PatientAmbulance" Relationship="Self.FK__PatientVit__paID__7FB5F314" FromRole="PatientVital" ToRole="PatientAmbulance" />
+          <NavigationProperty Name="VitalSign" Relationship="Self.FK__PatientVita__vID__00AA174D" FromRole="PatientVital" ToRole="VitalSign" />
         </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
@@ -666,6 +747,7 @@
           <Property Name="password" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
           <Property Name="role" Type="Int32" />
           <NavigationProperty Name="AmbulanceUser" Relationship="Self.FK__Ambulance__userI__3D2915A8" FromRole="UserMode" ToRole="AmbulanceUser" />
+          <NavigationProperty Name="DispatchUser" Relationship="Self.FK__DispatchU__userI__6D9742D9" FromRole="UserMode" ToRole="DispatchUser" />
           <NavigationProperty Name="ER_User" Relationship="Self.FK__ER_User__userID__3864608B" FromRole="UserMode" ToRole="ER_User" />
         </EntityType>
         <EntityType Name="VitalSign">
@@ -674,17 +756,35 @@
           </Key>
           <Property Name="vitalID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="vitalTime" Type="DateTime" Precision="3" />
-          <Property Name="consciousnessType" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="respirationRate" Type="Int32" />
-          <Property Name="respirationType" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="pulseRate" Type="Int32" />
+          <Property Name="systolic" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="diastolic" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="pulseRate" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="pulseType" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="pulseBP" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="rightPupilType" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="leftPupilType" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="respirationRate" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="respirationType" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="spo2" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="co2" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="bloodSugar" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="temperature" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="skinType" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="PatientVital" Relationship="Self.FK__PatientVita__vID__6501FCD8" FromRole="VitalSign" ToRole="PatientVital" />
+          <Property Name="leftPupilType" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="rightPupilType" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="pain" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="consciousnessType" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="PatientVital" Relationship="Self.FK__PatientVita__vID__00AA174D" FromRole="VitalSign" ToRole="PatientVital" />
         </EntityType>
+        <Association Name="FK__Ambulance__ambul__7AF13DF7">
+          <End Role="AmbulanceType" Type="Self.AmbulanceType" Multiplicity="0..1" />
+          <End Role="Ambulance" Type="Self.Ambulance" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AmbulanceType">
+              <PropertyRef Name="ambulanceTypeID" />
+            </Principal>
+            <Dependent Role="Ambulance">
+              <PropertyRef Name="ambulanceType" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK__PatientAm__ambul__52E34C9D">
           <End Role="Ambulance" Type="Self.Ambulance" Multiplicity="0..1" />
           <End Role="PatientAmbulance" Type="Self.PatientAmbulance" Multiplicity="*" />
@@ -730,6 +830,18 @@
             </Principal>
             <Dependent Role="PatientDisease">
               <PropertyRef Name="dID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__DispatchU__userI__6D9742D9">
+          <End Role="UserMode" Type="Self.UserMode" Multiplicity="0..1" />
+          <End Role="DispatchUser" Type="Self.DispatchUser" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserMode">
+              <PropertyRef Name="userID" />
+            </Principal>
+            <Dependent Role="DispatchUser">
+              <PropertyRef Name="userID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -829,7 +941,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__PatientVit__paID__640DD89F">
+        <Association Name="FK__PatientVit__paID__7FB5F314">
           <End Role="PatientAmbulance" Type="Self.PatientAmbulance" Multiplicity="0..1" />
           <End Role="PatientVital" Type="Self.PatientVital" Multiplicity="*" />
           <ReferentialConstraint>
@@ -841,7 +953,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__PatientVita__vID__6501FCD8">
+        <Association Name="FK__PatientVita__vID__00AA174D">
           <End Role="VitalSign" Type="Self.VitalSign" Multiplicity="0..1" />
           <End Role="PatientVital" Type="Self.PatientVital" Multiplicity="*" />
           <ReferentialConstraint>
@@ -860,9 +972,11 @@
         <EntityContainer Name="EREntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Allergy" EntityType="Self.Allergy" />
           <EntitySet Name="Ambulance" EntityType="Self.Ambulance" />
+          <EntitySet Name="AmbulanceType" EntityType="Self.AmbulanceType" />
           <EntitySet Name="AmbulanceUser" EntityType="Self.AmbulanceUser" />
           <EntitySet Name="Disease" EntityType="Self.Disease" />
           <EntitySet Name="DiseaseCategory" EntityType="Self.DiseaseCategory" />
+          <EntitySet Name="DispatchUser" EntityType="Self.DispatchUser" />
           <EntitySet Name="ER_User" EntityType="Self.ER_User" />
           <EntitySet Name="Incident" EntityType="Self.Incident" />
           <EntitySet Name="Injury" EntityType="Self.Injury" />
@@ -876,6 +990,10 @@
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
           <EntitySet Name="UserMode" EntityType="Self.UserMode" />
           <EntitySet Name="VitalSign" EntityType="Self.VitalSign" />
+          <AssociationSet Name="FK__Ambulance__ambul__7AF13DF7" Association="Self.FK__Ambulance__ambul__7AF13DF7">
+            <End Role="AmbulanceType" EntitySet="AmbulanceType" />
+            <End Role="Ambulance" EntitySet="Ambulance" />
+          </AssociationSet>
           <AssociationSet Name="FK__PatientAm__ambul__52E34C9D" Association="Self.FK__PatientAm__ambul__52E34C9D">
             <End Role="Ambulance" EntitySet="Ambulance" />
             <End Role="PatientAmbulance" EntitySet="PatientAmbulance" />
@@ -891,6 +1009,10 @@
           <AssociationSet Name="FK__PatientDise__dID__3B0BC30C" Association="Self.FK__PatientDise__dID__3B0BC30C">
             <End Role="Disease" EntitySet="Disease" />
             <End Role="PatientDisease" EntitySet="PatientDisease" />
+          </AssociationSet>
+          <AssociationSet Name="FK__DispatchU__userI__6D9742D9" Association="Self.FK__DispatchU__userI__6D9742D9">
+            <End Role="UserMode" EntitySet="UserMode" />
+            <End Role="DispatchUser" EntitySet="DispatchUser" />
           </AssociationSet>
           <AssociationSet Name="FK__ER_User__userID__3864608B" Association="Self.FK__ER_User__userID__3864608B">
             <End Role="UserMode" EntitySet="UserMode" />
@@ -924,11 +1046,11 @@
             <End Role="PatientAmbulance" EntitySet="PatientAmbulance" />
             <End Role="PatientInjury" EntitySet="PatientInjury" />
           </AssociationSet>
-          <AssociationSet Name="FK__PatientVit__paID__640DD89F" Association="Self.FK__PatientVit__paID__640DD89F">
+          <AssociationSet Name="FK__PatientVit__paID__7FB5F314" Association="Self.FK__PatientVit__paID__7FB5F314">
             <End Role="PatientAmbulance" EntitySet="PatientAmbulance" />
             <End Role="PatientVital" EntitySet="PatientVital" />
           </AssociationSet>
-          <AssociationSet Name="FK__PatientVita__vID__6501FCD8" Association="Self.FK__PatientVita__vID__6501FCD8">
+          <AssociationSet Name="FK__PatientVita__vID__00AA174D" Association="Self.FK__PatientVita__vID__00AA174D">
             <End Role="VitalSign" EntitySet="VitalSign" />
             <End Role="PatientVital" EntitySet="PatientVital" />
           </AssociationSet>
@@ -957,6 +1079,15 @@
                 <ScalarProperty Name="ambulanceID" ColumnName="ambulanceID" />
                 <ScalarProperty Name="licensePlate" ColumnName="licensePlate" />
                 <ScalarProperty Name="state" ColumnName="state" />
+                <ScalarProperty Name="ambulanceType" ColumnName="ambulanceType" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AmbulanceType">
+            <EntityTypeMapping TypeName="ERModel.AmbulanceType">
+              <MappingFragment StoreEntitySet="AmbulanceType">
+                <ScalarProperty Name="ambulanceTypeID" ColumnName="ambulanceTypeID" />
+                <ScalarProperty Name="typeName" ColumnName="typeName" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -987,6 +1118,18 @@
               <MappingFragment StoreEntitySet="DiseaseCategory">
                 <ScalarProperty Name="categoryID" ColumnName="categoryID" />
                 <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DispatchUser">
+            <EntityTypeMapping TypeName="ERModel.DispatchUser">
+              <MappingFragment StoreEntitySet="DispatchUser">
+                <ScalarProperty Name="dispatchID" ColumnName="dispatchID" />
+                <ScalarProperty Name="userID" ColumnName="userID" />
+                <ScalarProperty Name="ssn" ColumnName="ssn" />
+                <ScalarProperty Name="firstName" ColumnName="firstName" />
+                <ScalarProperty Name="lastName" ColumnName="lastName" />
+                <ScalarProperty Name="role" ColumnName="role" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1128,15 +1271,21 @@
               <MappingFragment StoreEntitySet="VitalSign">
                 <ScalarProperty Name="vitalID" ColumnName="vitalID" />
                 <ScalarProperty Name="vitalTime" ColumnName="vitalTime" />
-                <ScalarProperty Name="consciousnessType" ColumnName="consciousnessType" />
-                <ScalarProperty Name="respirationRate" ColumnName="respirationRate" />
-                <ScalarProperty Name="respirationType" ColumnName="respirationType" />
+                <ScalarProperty Name="systolic" ColumnName="systolic" />
+                <ScalarProperty Name="diastolic" ColumnName="diastolic" />
                 <ScalarProperty Name="pulseRate" ColumnName="pulseRate" />
                 <ScalarProperty Name="pulseType" ColumnName="pulseType" />
-                <ScalarProperty Name="pulseBP" ColumnName="pulseBP" />
-                <ScalarProperty Name="rightPupilType" ColumnName="rightPupilType" />
-                <ScalarProperty Name="leftPupilType" ColumnName="leftPupilType" />
+                <ScalarProperty Name="respirationRate" ColumnName="respirationRate" />
+                <ScalarProperty Name="respirationType" ColumnName="respirationType" />
+                <ScalarProperty Name="spo2" ColumnName="spo2" />
+                <ScalarProperty Name="co2" ColumnName="co2" />
+                <ScalarProperty Name="bloodSugar" ColumnName="bloodSugar" />
+                <ScalarProperty Name="temperature" ColumnName="temperature" />
                 <ScalarProperty Name="skinType" ColumnName="skinType" />
+                <ScalarProperty Name="leftPupilType" ColumnName="leftPupilType" />
+                <ScalarProperty Name="rightPupilType" ColumnName="rightPupilType" />
+                <ScalarProperty Name="pain" ColumnName="pain" />
+                <ScalarProperty Name="consciousnessType" ColumnName="consciousnessType" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

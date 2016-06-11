@@ -12,19 +12,15 @@ namespace ER_application.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Ambulance
+    public partial class DispatchUser
     {
-        public Ambulance()
-        {
-            this.PatientAmbulance = new HashSet<PatientAmbulance>();
-        }
+        public int dispatchID { get; set; }
+        public Nullable<int> userID { get; set; }
+        public string ssn { get; set; }
+        public string firstName { get; set; }
+        public string lastName { get; set; }
+        public Nullable<int> role { get; set; }
     
-        public int ambulanceID { get; set; }
-        public string licensePlate { get; set; }
-        public Nullable<int> state { get; set; }
-        public Nullable<int> ambulanceType { get; set; }
-    
-        public virtual AmbulanceType AmbulanceType1 { get; set; }
-        public virtual ICollection<PatientAmbulance> PatientAmbulance { get; set; }
+        public virtual UserMode UserMode { get; set; }
     }
 }

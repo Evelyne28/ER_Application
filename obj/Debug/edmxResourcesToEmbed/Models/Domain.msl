@@ -15,6 +15,15 @@
           <ScalarProperty Name="ambulanceID" ColumnName="ambulanceID" />
           <ScalarProperty Name="licensePlate" ColumnName="licensePlate" />
           <ScalarProperty Name="state" ColumnName="state" />
+          <ScalarProperty Name="ambulanceType" ColumnName="ambulanceType" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="AmbulanceType">
+      <EntityTypeMapping TypeName="ERModel.AmbulanceType">
+        <MappingFragment StoreEntitySet="AmbulanceType">
+          <ScalarProperty Name="ambulanceTypeID" ColumnName="ambulanceTypeID" />
+          <ScalarProperty Name="typeName" ColumnName="typeName" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -45,6 +54,18 @@
         <MappingFragment StoreEntitySet="DiseaseCategory">
           <ScalarProperty Name="categoryID" ColumnName="categoryID" />
           <ScalarProperty Name="name" ColumnName="name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DispatchUser">
+      <EntityTypeMapping TypeName="ERModel.DispatchUser">
+        <MappingFragment StoreEntitySet="DispatchUser">
+          <ScalarProperty Name="dispatchID" ColumnName="dispatchID" />
+          <ScalarProperty Name="userID" ColumnName="userID" />
+          <ScalarProperty Name="ssn" ColumnName="ssn" />
+          <ScalarProperty Name="firstName" ColumnName="firstName" />
+          <ScalarProperty Name="lastName" ColumnName="lastName" />
+          <ScalarProperty Name="role" ColumnName="role" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -186,15 +207,21 @@
         <MappingFragment StoreEntitySet="VitalSign">
           <ScalarProperty Name="vitalID" ColumnName="vitalID" />
           <ScalarProperty Name="vitalTime" ColumnName="vitalTime" />
-          <ScalarProperty Name="consciousnessType" ColumnName="consciousnessType" />
-          <ScalarProperty Name="respirationRate" ColumnName="respirationRate" />
-          <ScalarProperty Name="respirationType" ColumnName="respirationType" />
+          <ScalarProperty Name="systolic" ColumnName="systolic" />
+          <ScalarProperty Name="diastolic" ColumnName="diastolic" />
           <ScalarProperty Name="pulseRate" ColumnName="pulseRate" />
           <ScalarProperty Name="pulseType" ColumnName="pulseType" />
-          <ScalarProperty Name="pulseBP" ColumnName="pulseBP" />
-          <ScalarProperty Name="rightPupilType" ColumnName="rightPupilType" />
-          <ScalarProperty Name="leftPupilType" ColumnName="leftPupilType" />
+          <ScalarProperty Name="respirationRate" ColumnName="respirationRate" />
+          <ScalarProperty Name="respirationType" ColumnName="respirationType" />
+          <ScalarProperty Name="spo2" ColumnName="spo2" />
+          <ScalarProperty Name="co2" ColumnName="co2" />
+          <ScalarProperty Name="bloodSugar" ColumnName="bloodSugar" />
+          <ScalarProperty Name="temperature" ColumnName="temperature" />
           <ScalarProperty Name="skinType" ColumnName="skinType" />
+          <ScalarProperty Name="leftPupilType" ColumnName="leftPupilType" />
+          <ScalarProperty Name="rightPupilType" ColumnName="rightPupilType" />
+          <ScalarProperty Name="pain" ColumnName="pain" />
+          <ScalarProperty Name="consciousnessType" ColumnName="consciousnessType" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

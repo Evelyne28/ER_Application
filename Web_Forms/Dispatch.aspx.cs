@@ -21,7 +21,7 @@ namespace ER_application.Web_Forms
         protected void Page_Load(object sender, EventArgs e)
         {
             String username = Session["userName"].ToString();
-            welcome.InnerHtml = username;
+            welcome.InnerHtml = "Dispecerat: " + username;
             //if (!serverExists)
             //{
             //    ServerWorker singleton = ServerWorker.InstanceCreation();

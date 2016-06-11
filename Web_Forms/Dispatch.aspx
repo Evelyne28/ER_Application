@@ -20,13 +20,13 @@
 
         </div>
 
-        <table id="topMenu">
+        <%--<table id="topMenu">
 			<tr>
                 <th class="hide"> </th>
 				<th class="show" id="dispatch">Dispatch</th>
 				<th class="hide"> </th>
 			</tr>
-		</table>
+		</table>--%>
         <table id="calls">
             <tr>
                 <td>
@@ -61,8 +61,9 @@
             
         </div>--%>
         <div id="divAmb">
-            <ul id="listAmb">
-            </ul>
+            <ul id="listAmbA"></ul>
+            <ul id="listAmbB"></ul>
+            <ul id="listAmbC"></ul>
         </div>
         <div id="map_canvas" style="width:100%;height:500px;"></div>
         

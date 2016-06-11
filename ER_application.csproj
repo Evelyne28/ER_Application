@@ -145,9 +145,11 @@
     <Content Include="Images\RedCircle.png" />
     <Content Include="Images\redGradient.jpg" />
     <Content Include="Images\white.png" />
+    <Content Include="Images\yellowCircle.png" />
     <Content Include="packages.config" />
     <Content Include="Scripts\AmbulanceScripts\Ambulance.js" />
     <Content Include="Scripts\AmbulanceScripts\AmbulanceDispatch.js" />
+    <Content Include="Scripts\AmbulanceScripts\AmbulanceFunctions.js" />
     <Content Include="Scripts\AmbulanceScripts\AmbulanceInterventions.js" />
     <Content Include="Scripts\AmbulanceScripts\AmbulancePatient.js" />
     <Content Include="Scripts\AmbulanceScripts\AmbulanceProblem.js" />
@@ -214,6 +216,9 @@
     <Compile Include="Models\Ambulance.cs">
       <DependentUpon>Domain.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\AmbulanceType.cs">
+      <DependentUpon>Domain.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\AmbulanceUser.cs">
       <DependentUpon>Domain.tt</DependentUpon>
     </Compile>
@@ -221,6 +226,9 @@
       <DependentUpon>Domain.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\DiseaseCategory.cs">
+      <DependentUpon>Domain.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DispatchUser.cs">
       <DependentUpon>Domain.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Domain.Context.cs">

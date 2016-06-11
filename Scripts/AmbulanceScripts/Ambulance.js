@@ -1,7 +1,9 @@
 ﻿var map;
 var geocoder;
 var gmarkers = [];
-var vitalCount = 2;
+var vitalSigns = [];
+var vitalCount = 1;
+var interval;
 
 //Map init and centered in Cluj-Napoca
 function initialize() {
@@ -14,40 +16,6 @@ function initialize() {
     map = new google.maps.Map(document.getElementById("mapCall"),
             myOptions);
     geocoder = new google.maps.Geocoder();
-}
-
-function ToJavaScriptDate(value) {
-    var pattern = /Date\(([^)]+)\)/;
-    var results = pattern.exec(value);
-    var dt = new Date(parseFloat(results[1]));
-    var monthNames = ["January", "February", "March", "April", "May", "June",
-                      "July", "August", "September", "October", "November", "December"];
-    var monthName = (monthNames[dt.getMonth()]);
-    return (dt.getDate()) + " " + monthName + " " + dt.getFullYear();
-}
-
-function menuAdministration(value) {
-    var items = ["dispatch", "patient", "problem", "vital", "interventions"];
-    if (value == 'dispatch') {
-        $("#mapCall").css({ opacity: 1, zoom: 1 });
-        document.getElementById('mapCall').style.width = '40%';
-        document.getElementById('mapCall').style.height = '400px';
-    }
-    else {
-        $("#mapCall").css({ opacity: 0, zoom: 0 });
-        document.getElementById('mapCall').style.width = '5%';
-        document.getElementById('mapCall').style.height = '0px';
-    }
-    for (var i = 0; i < items.length; i++) {
-        if (items[i] == value) {
-            $('#' + items[i] + 'Menu').addClass('red');
-            $('#' + items[i] + 'Div').show();
-        }
-        else {
-            $('#' + items[i] + 'Menu').removeClass('red');
-            $('#' + items[i] + 'Div').hide();
-        }
-    }
 }
 
 function sendPatientER(fromWho, patient, allergyList, diseasesList) {
@@ -65,65 +33,6 @@ function sendVitals(fromWho, vitalsList) {
     chat.server.sendVitalsER(fromWho, vitalsList);
 }
 
-function addTime(number, rowID) {
-    $('<td> <input type="text" name="' + number + 'hourInput" id="' + number + 'hourInput"/><span class="colon">:</span>' +
-    '<input type="text" name="' + number + 'minuteInput" id="' + number + 'minuteInput"/></td>').appendTo('#' + rowID);
-    var now = new Date();
-    $('#' + number + 'hourInput').val(now.getHours());
-    $('#' + number + 'minuteInput').val(now.getMinutes());
-    return;
-}
-
-function addRespiration(number, rowID) {
-    $('<td> <span>Rate</span> <input type="text" name="' + number + 'respRateInput" id="' + number + 'respRateInput"/><br/>' +
-    '<input type="radio" name="' + number + 'respType" value="Regular"/> Regular <br/>' + 
-    '<input type="radio" name="' + number + 'respType" value="Shallow"/> Shallow <br/>' +
-    '<input type="radio" name="' + number + 'respType" value="Labored"/> Labored <br/></td>').appendTo('#' + rowID);
-    return;
-}
-
-function addPulse(number, rowID) {
-    $('<td> <span>Rate</span> <input type="text" name="' + number + 'pulseRateInput" id="' + number + 'pulseRateInput"/><br/>' +
-    '<input type="radio" name="' + number + 'pulseType" value="Regular"/> Regular <br/>' +
-    '<input type="radio" name="' + number + 'pulseType" value="Irregular"/> Irregular <br/></td>').appendTo('#' + rowID);
-    return;
-}
-
-function addConsciousness(number, rowID) {
-    $('<td> <input type="radio" name="' + number + 'counsType" value="Alert"/> Alert <br/>' +
-    '<input type="radio" name="' + number + 'counsType" value="Voice"/> Voice <br/>' +
-    '<input type="radio" name="' + number + 'counsType" value="Pain"/> Pain <br/>' +
-    '<input type="radio" name="' + number + 'counsType" value="Unresponsive"/> Unresponsive <br/></td>').appendTo('#' + rowID);
-    return;
-}
-
-function addPupils(number, rowID) {
-    $('<td> <input type="radio" name="' + number + 'pupilType" value="Normal"/> <span>Normal</span> <br/>' +
-    '<input type="radio" name="' + number + 'pupilType" value="Dilated"/> <span>Dilated</span> <br/>' +
-    '<input type="radio" name="' + number + 'pupilType" value="No reaction"/> <span>No reaction</span> <br/></td>').appendTo('#' + rowID);
-    return;
-}
-
-function addSkin(number, rowID) {
-    $('<td> <input type="radio" name="' + number + 'skinType" value="Cool"/> Cool <br/>' +
-    '<input type="radio" name="' + number + 'skinType" value="Pale"/> Pale <br/>' +
-    '<input type="radio" name="' + number + 'skinType" value="Worm"/> Worm <br/></td>').appendTo('#' + rowID);
-    return;
-}
-
-function createRow(number) {
-    var $row = $('<tr id="' + number + 'vitalTR"></tr>');
-    $('#vitalTable > tbody:last').append($row);
-    rowID = number + "vitalTR";
-    addTime(number, rowID);
-    addConsciousness(number, rowID);
-    addRespiration(number, rowID);
-    addPulse(number, rowID);  
-    addPupils(number, rowID);
-    addSkin(number, rowID);
-    return;
-}
-
 google.maps.event.addDomListener(window, "load", initialize);
 
 $(function () {   
@@ -135,6 +44,10 @@ $(function () {
     $("#patientDiv").hide();
     $("#problemDiv").hide();
     $("#vitalDiv").hide();
+
+    $(document).click(function () {
+        clearInterval(interval);    
+    });
 
     $('#dispatchMenu').on('click', function () {
         menuAdministration('dispatch');
@@ -151,19 +64,12 @@ $(function () {
     });
     $('#vitalMenu').on('click', function () {
         menuAdministration('vital');
-        createRow(1, "1vitalTR");
+        $('#inputVitals').hide();
+        $('#divRight').hide();
     });
 
     chat.client.receiveIncidentDispatch = function (nameAmb, incident, coordInc) {
-        setInterval(function () {
-            var color = $("#dispatchMenu").css("background-color");
-            if (color == 'rgb(51, 51, 51)') {
-                $("#dispatchMenu").css('background-color', 'red');
-            }
-            else {
-                $("#dispatchMenu").css('background-color', '#333');
-            }
-        }, 400);
+        interval = setInterval(notifyAmbulance, 400);
         if (nameAmb == username) {
             $("#cIncidentID").val(incident.incidentID);
             $("#addressGPSInput").val(incident.locationGPS);
@@ -186,7 +92,7 @@ $(function () {
             });
             gmarkers.push(marker);
             var infowindow = new google.maps.InfoWindow({
-                content: "<span>" + number + "</span>"
+                content: "<span>" + incident.callerPhone + "</span>"
             });
             marker.addListener('click', function () {
                 infowindow.open(map, marker);
@@ -235,32 +141,61 @@ $(function () {
     });
 
     $(document).on('click', '#addVital', function (ev) {
-        createRow(vitalCount);    
-        vitalCount++;
+        $('#inputVitals').show();
+        $('#divRight').show();
+        $('#btnAddVital').addClass('buttonOpacity');
+        $('#saveVitals').addClass('buttonOpacity');
+        ev.preventDefault();
+    });
+
+    $("button[id$='removeVital']").click(function (ev) {
+        id = $(this).attr('id');
+        nr = id.charAt(0);
+        $('#vitalTable tr #' + nr + 'vitalTR').remove();
+        ev.preventDefault();
+    });
+
+    $(document).on('click', "button[id$='removeVital']", function (ev) {
+        if (confirm('Are you sure ?')) {
+            $(this).closest('tr').remove();
+        }      
+        ev.preventDefault();
+    });
+
+    $(document).on('click', '#btnGenerateVitals', function (ev) {
+        generateVitals();
         ev.preventDefault();
     });
 
     $(document).on('click', '#saveVitals', function (ev) {
-        var vitalSigns = [];
-        for (var i = 1; i < vitalCount; i++) {
-            var now = new Date();
-            now.setHours($('#' + i + 'hourInput').val());
-            now.setMinutes($('#' + i + 'minuteInput').val())
-            var vitalSign = {
-                vitalTime: now,
-                consciousnessType: $('input[name="' + i + 'counsType"]:checked').val(),
-                respirationRate: $('#' + i + 'respRateInput').val(),
-                respirationType: $('input[name="' + i + 'respType"]:checked').val(),
-                pulseRate: $('#' + i + 'pulseRateInput').val(),
-                pulseType: $('input[name="' + i + 'pulseType"]:checked').val(),
-                pulseBP: 'smth',
-                rightPupilType: 'right',
-                leftPupilType: $('input[name="' + i + 'pupilType"]:checked').val(),
-                skinType: $('input[name="' + i + 'skinType"]:checked').val(),
-            }
-            vitalSigns.push(vitalSign);
-        }
         ajaxAddVitalSigns(vitalSigns);
+        ev.preventDefault();
+    });
+
+    $(document).on('click', '#btnAddVital', function (ev) {
+        var now = new Date();
+        var vitalSign = {   
+            vitalTime: now,
+            systolic: $('#inputSistolic').val(),
+            diastolic: $('#inputDiastolic').val(),
+            pulseRate: $('#inputPulsRate').val(),
+            pulseType: $('input[name="puls"]:checked').val(),
+            respirationRate: $('#inputRespiratieRate').val(),
+            respirationType: $('input[name="respiratie"]:checked').val(),
+            spo2: $('#inputSPO2').val(),
+            co2: $('#inputCO2').val(),
+            bloodSugar: $('#inputBS').val(),
+            temperature: $('#inputTemperature').val(),
+            skinType: $('input[name="skin"]:checked').val(),
+            leftPupilType: $('input[name="pupilLeft"]:checked').val(),
+            rightPupilType: $('input[name="pupilRight"]:checked').val(),
+            pain: $('#inputPain').val(),
+            consciousnessType: $('input[name="consciousness"]:checked').val()
+        }
+        vitalSigns.push(vitalSign);
+        createRow(vitalSign, vitalCount);
+        vitalCount++;
+       // ajaxAddVitalSigns(vitalSigns);
         ev.preventDefault();
     });
 
@@ -270,7 +205,5 @@ $(function () {
     });
 
     $.connection.hub.start().done(function () {
-        //dispatchCon.hub.start();
-        //ambulanceCon.hub.start();
     });
 });

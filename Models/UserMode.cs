@@ -17,6 +17,7 @@ namespace ER_application.Models
         public UserMode()
         {
             this.AmbulanceUser = new HashSet<AmbulanceUser>();
+            this.DispatchUser = new HashSet<DispatchUser>();
             this.ER_User = new HashSet<ER_User>();
         }
     
@@ -26,6 +27,7 @@ namespace ER_application.Models
         public Nullable<int> role { get; set; }
     
         public virtual ICollection<AmbulanceUser> AmbulanceUser { get; set; }
+        public virtual ICollection<DispatchUser> DispatchUser { get; set; }
         public virtual ICollection<ER_User> ER_User { get; set; }
     }
 }

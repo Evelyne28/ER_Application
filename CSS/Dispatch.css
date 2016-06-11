@@ -92,7 +92,8 @@ table[id^='amb'] th {
     margin-left: 2%;
 }
 #divAmb {
-    width: 30%;
+    margin-right: 10%;
+    /*width: 30%;*/
     top: 450px;
     float: right;
     position: relative;
@@ -187,4 +188,20 @@ button[id$="respond"] {
 }
 #callTable, #tableWaiting {
     overflow-y: scroll;
+}
+ul[id^="listAmb"] {
+    float: left;
+    list-style-type: none;
+}
+#listAmbA:first-child {
+    text-align: center;
+    font-weight: bold;
+}
+#listAmbB:first-child {
+    text-align: center;
+    font-weight: bold;
+}
+#listAmbC:first-child {
+    text-align: center;
+    font-weight: bold;
 }

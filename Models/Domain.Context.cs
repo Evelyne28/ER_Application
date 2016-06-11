@@ -27,9 +27,11 @@ namespace ER_application.Models
     
         public virtual DbSet<Allergy> Allergy { get; set; }
         public virtual DbSet<Ambulance> Ambulance { get; set; }
+        public virtual DbSet<AmbulanceType> AmbulanceType { get; set; }
         public virtual DbSet<AmbulanceUser> AmbulanceUser { get; set; }
         public virtual DbSet<Disease> Disease { get; set; }
         public virtual DbSet<DiseaseCategory> DiseaseCategory { get; set; }
+        public virtual DbSet<DispatchUser> DispatchUser { get; set; }
         public virtual DbSet<ER_User> ER_User { get; set; }
         public virtual DbSet<Incident> Incident { get; set; }
         public virtual DbSet<Injury> Injury { get; set; }
