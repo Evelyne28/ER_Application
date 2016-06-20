@@ -23,9 +23,14 @@ function sendPatientER(fromWho, patient, allergyList, diseasesList) {
     chat.server.sendPatientER(fromWho, patient, allergyList, diseasesList);
 }
 
-function sendProblemER(fromWho, pComplaint, mObservations, injuries) {
+function sendProblemER(fromWho, pComplaint, mObservations, injuries, mechanisms) {
     var chat = $.connection.chatHub;
-    chat.server.sendProblemER(fromWho, pComplaint, mObservations, injuries);
+    chat.server.sendProblemER(fromWho, pComplaint, mObservations, injuries, mechanisms);
+}
+
+function sendVitalsER(fromWho, vitalSigns) {
+    var chat = $.connection.chatHub;
+    chat.server.sendVitalsER(fromWho, vitalSigns);
 }
 
 function sendVitals(fromWho, vitalsList) {
@@ -37,9 +42,8 @@ google.maps.event.addDomListener(window, "load", initialize);
 
 $(function () {   
     var chat = $.connection.ambulanceHub;
-    var username = $('#welcome').text();
-    var parts = username.split(' ');
-    username = parts[1];
+    //var parts = username.split(' ');
+    //username = parts[1];
     //ajaxOnLoad();
     $("#patientDiv").hide();
     $("#problemDiv").hide();
@@ -70,7 +74,9 @@ $(function () {
 
     chat.client.receiveIncidentDispatch = function (nameAmb, incident, coordInc) {
         interval = setInterval(notifyAmbulance, 400);
-        if (nameAmb == username) {
+        var id = $('#ambulanceID').val();
+        //nameAmb = nameAmb.substring(3, nameAmb.length-1);
+        if (nameAmb == id) {
             $("#cIncidentID").val(incident.incidentID);
             $("#addressGPSInput").val(incident.locationGPS);
             $("#cLocationInput").val(incident.callerLocation);
@@ -102,7 +108,9 @@ $(function () {
 
     //Show GPS location of number
     chat.client.receiveCoordinates = function (toWho, coordinates) {
-        if (toWho == username) {
+        var id = $('#ambulanceID').val();
+        toWho = toWho.substring(3, toWho.length - 1);
+        if (toWho == id) {
             var ll = coordinates.split(',');
             var lat = parseFloat(ll[0]);
             var lng = parseFloat(ll[1]);
@@ -168,7 +176,7 @@ $(function () {
     });
 
     $(document).on('click', '#saveVitals', function (ev) {
-        ajaxAddVitalSigns(vitalSigns);
+        ajaxSaveVitalSigns(vitalSigns);
         ev.preventDefault();
     });
 

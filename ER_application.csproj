@@ -135,8 +135,12 @@
     <Content Include="CSS\Dispatch.css" />
     <Content Include="CSS\ER.css" />
     <Content Include="CSS\Login.css" />
+    <Content Include="Images\96f2f2-min.jpg" />
+    <Content Include="Images\aboutimg-min.jpg" />
     <Content Include="Images\blink.gif" />
+    <Content Include="Images\blue.jpg" />
     <Content Include="Images\checked.png" />
+    <Content Include="Images\green.jpg" />
     <Content Include="Images\GreenCircle.png" />
     <Content Include="Images\Greenlight.gif" />
     <Content Include="Images\greyGradient.jpg" />
@@ -144,7 +148,9 @@
     <Content Include="Images\redC.png" />
     <Content Include="Images\RedCircle.png" />
     <Content Include="Images\redGradient.jpg" />
+    <Content Include="Images\softRed.jpg" />
     <Content Include="Images\white.png" />
+    <Content Include="Images\yellow.jpg" />
     <Content Include="Images\yellowCircle.png" />
     <Content Include="packages.config" />
     <Content Include="Scripts\AmbulanceScripts\Ambulance.js" />

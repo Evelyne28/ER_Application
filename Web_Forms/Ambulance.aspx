@@ -15,12 +15,12 @@
 </head>
 <body>
     <form id="form1" runat="server">
-    <div id="welcome" runat="server">
+<%--    <div id="welcome" runat="server">
     
-    </div>
-    <table id="myTable">
+    </div>--%>
+    <table id="myTable" runat="server">
 	    <tr>
-			<th class="header" id="dispatchMenu"> Dispatch </th>
+			<th class="header" id="dispatchMenu" runat="server"> </th>
 			<th class="header" id="patientMenu"> Patient info </th>
 			<th class="header" id="problemMenu"> Problem </th>
 			<th class="header" id="vitalMenu"> Vital signs </th>
@@ -130,14 +130,15 @@
         <div id="addPatient">
             
         </div>
-        <div id="divCard">
-            <button id="btnAddPatient"> Adauga pacient </button>
-            <button id="buttonCard"> Scanează cardul </button>
-        </div>
+        
         
         <div id="mHistory">
             <p id="pHistory"> Istoric medical </p>
             <ul id="ulHistory"> </ul>
+        </div>
+        <div id="divCard">
+            <button id="btnAddPatient"> Adauga pacient </button>
+            <button id="buttonCard"> Scanează cardul </button>
         </div>
 	</div>
     <div id="problemDiv">
@@ -255,8 +256,8 @@
     </div>
     </div>
     <div id="mapCall"> </div>
-        
-
+    <input id="ambulanceID" type="hidden" runat="server" />
+   
     </form>
     <!--Script references. -->
     <!--Reference the jQuery library. -->

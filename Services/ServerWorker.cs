@@ -51,7 +51,7 @@ namespace ER_application.Services
                     String cePrimesc = Rd.ReadLine();
                     String number = cePrimesc;
                     DateTime d = DateTime.Now;
-                    int id = controller.createIncident(d, number);
+                    int id = controller.createIncident(d, number, 0);
                     ServerWorker.singleTonServer.map.Add(number, cl);
                     cl.response = "";
                     var hub = GlobalHost.ConnectionManager.GetHubContext<DispatchHub>();
@@ -93,8 +93,6 @@ namespace ER_application.Services
                 
             }
         }
-
-  
 
         public static ServerWorker InstanceCreation()
         {

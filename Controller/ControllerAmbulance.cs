@@ -72,10 +72,24 @@ namespace ER_application.Controller
             foreach (String injuryID in injuryList) {
                 int id = Convert.ToInt32(injuryID);
                 PatientInjury pi = repository.findPatientInjury(paID, id);
-                if (pi != null)
+                if (pi == null)
                 {
                     PatientInjury pi2 = new PatientInjury(paID, id);
                     repository.addPatientInjury(pi2);
+                }
+            }
+        }
+
+        public void addInjuryMechanism(List<String> mechanismList, int paID)
+        {
+            foreach (String mechanismID in mechanismList)
+            {
+                int id = Convert.ToInt32(mechanismID);
+                InjuryMechanism im = repository.findInjuryMechanism(paID, id);
+                if (im == null)
+                {
+                    InjuryMechanism im2 = new InjuryMechanism(paID, id);
+                    repository.addInjuryMechanism(im2);
                 }
             }
         }

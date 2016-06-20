@@ -169,8 +169,9 @@ function ajaxScanCard() {
                         $('#chkD_' + item.diseaseID).prop('checked', true);
                         $('#chkD_' + item.diseaseID).parent().css("color", "red");
                         diseasesList.push(item.name);
-                    })
-                    sendPatientER('amb1', patient, allergyList, diseasesList);
+                    });
+                    id = $('#ambulanceID').val();
+                    sendPatientER(id, patient, allergyList, diseasesList);
                 },
                 failure: function (response) {
                     var r = jQuery.parseJSON(response.responseText);

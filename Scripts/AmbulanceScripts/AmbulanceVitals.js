@@ -20,13 +20,15 @@
     })
 }
 
-function ajaxAddVitalSigns(vitalSigns) {
+function ajaxSaveVitalSigns(vitalSigns) {
     $.ajax({
         type: "POST",
         data: JSON.stringify({ 'vitalSigns': vitalSigns }),
         url: "Ambulance.aspx/AddVitalSigns",
         contentType: "application/json; charset=utf-8",
         success: function (data) {
+            id = $('#ambulanceID').val();
+            sendVitalsER(id, vitalSigns);
         },
         failure: function (response) {
             var r = jQuery.parseJSON(response.responseText);

@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity.Infrastructure;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using ER_application.Models;
@@ -32,9 +34,41 @@ namespace ER_application.Repository
             return i.incidentID;
         }
 
-        public void updateAmbulance(Ambulance a, int id)
+        public void updateAmbulance(int id, int stateAmb)
         {
-            repoAmb.Update(a, id);
+            //repoAmb.Update(a, id);
+            DetachAll();
+            var ambulance = new Ambulance() { ambulanceID = id, state = stateAmb };
+            using (var db = new EREntities())
+            {
+                db.Ambulance.Attach(ambulance);
+                db.Entry(ambulance).Property(x => x.state).IsModified = true;
+                db.SaveChanges();
+            }
+        }
+
+        public void updateIncidentResolved(int id)
+        {
+            DetachAll();
+            var incident = new Incident() { incidentID = id, resolved = 1 };
+            using (var db = new EREntities())
+            {
+                db.Incident.Attach(incident);
+                db.Entry(incident).Property(x => x.resolved).IsModified = true;
+                db.SaveChanges();
+            }
+        }
+
+        public void updateIncidentGravity(int id, string gravityLevel)
+        {
+            DetachAll();
+            var incident = new Incident() { incidentID = id, gravity = gravityLevel };
+            using (var db = new EREntities())
+            {
+                db.Incident.Attach(incident);
+                db.Entry(incident).Property(x => x.gravity).IsModified = true;
+                db.SaveChanges();
+            }
         }
 
         public void updateIncident(Incident i, int id)
@@ -52,6 +86,7 @@ namespace ER_application.Repository
                     result.patientState = i.patientState;
                     result.patientInfo = i.patientInfo;
                     result.description = i.description;
+                    result.gravity = i.gravity;
                     db.SaveChanges();
                 }
             }
@@ -109,20 +144,24 @@ namespace ER_application.Repository
 
         public List<Incident> readIncidents()
         {
-            List<Incident> incidents = new List<Incident>();
-            var load = from a in context.Incident where a.resolved == 0 select a;
-            if (load != null)
+            using (var c = new EREntities())
             {
-                try
+                context.Configuration.ProxyCreationEnabled = false;
+                List<Incident> incidents = new List<Incident>();
+                var load = from a in context.Incident where a.resolved == 0 || a.resolved == 2 select a;
+                if (load != null)
                 {
-                    incidents = load.ToList();
+                    try
+                    {
+                        incidents = load.ToList();
+                    }
+                    catch (Exception ex)
+                    {
+                        string exception = ex.InnerException.ToString();
+                    }
                 }
-                catch (Exception ex)
-                {
-                    string exception = ex.InnerException.ToString();
-                }
+                return incidents;
             }
-            return incidents;
         }
 
         public List<Ambulance> readAmbulances()
@@ -142,6 +181,17 @@ namespace ER_application.Repository
                 }
             }
             return ambulances;
+        }
+
+        public void DetachAll()
+        {
+            foreach (DbEntityEntry dbEntityEntry in this.context.ChangeTracker.Entries())
+            {
+                if (dbEntityEntry.Entity != null)
+                {
+                    dbEntityEntry.State = EntityState.Detached;
+                }
+            }
         }
     }
 }

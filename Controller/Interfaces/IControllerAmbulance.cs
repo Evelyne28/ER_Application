@@ -14,6 +14,7 @@ namespace ER_application.Controller.Interfaces
         int addPatientAmbulance(PatientAmbulance pa);
         void addVitalSigns(List<VitalSign> vitalSigns, int paID);
         void addPatientInjury(List<String> injuryList, int paID);
+        void addInjuryMechanism(List<String> mechanismList, int paID);
         Patient getRandomPatient();
         List<Disease> getPatientDiseases(int id);
         List<Allergy> getAllergies();

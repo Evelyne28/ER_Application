@@ -4,9 +4,9 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="5fdee6d4643543f89893324443e85465" Name="Diagram1">
+      <Diagram DiagramId="dc6c054476fe4ed2bab4e891f6e5871e" Name="Diagram1">
         <EntityTypeShape EntityType="ERModel.Allergy" Width="1.5" PointX="0.75" PointY="15" IsExpanded="true" />
-        <EntityTypeShape EntityType="ERModel.Ambulance" Width="1.5" PointX="3" PointY="4.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ERModel.Ambulance" Width="1.5" PointX="3" PointY="4.25" IsExpanded="true" />
         <EntityTypeShape EntityType="ERModel.AmbulanceType" Width="1.5" PointX="0.75" PointY="4.75" IsExpanded="true" />
         <EntityTypeShape EntityType="ERModel.AmbulanceUser" Width="1.5" PointX="12" PointY="1.875" IsExpanded="true" />
         <EntityTypeShape EntityType="ERModel.Disease" Width="1.5" PointX="10" PointY="11.625" IsExpanded="true" />

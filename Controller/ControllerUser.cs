@@ -28,5 +28,10 @@ namespace ER_application.Controller
             return repository.getAmbulanceID(licensePlate);
         }
 
+        public Ambulance findAmbulance(string userName, string password)
+        {
+            return repository.findAmbulance(userName, password);
+        }
+
     }
 }

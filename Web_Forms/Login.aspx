@@ -18,11 +18,11 @@
     <div class="inner">
       <h1>Autentificare</h1>
       <form class="login" runat="server">
-        <div><input type="text" id="userName" name="userName" placeholder="Utilizator" required/></div>
+        <div id="divUser"><input type="text" id="userName" name="userName" placeholder="Utilizator" required/></div>
           <br />
-        <div><input type="password" id="userPassword" name="userPassword" placeholder="Parolă" required/></div>
+        <div id="divPassword"><input type="password" id="userPassword" name="userPassword" placeholder="Parolă" required/></div>
           <br />
-        <div><asp:Button id="Submit" Text="Autentificare" runat="server" onclick="btn_login_Click"></asp:Button></div>
+        <div id="divLogIn"><asp:Button id="Submit" Text="Autentificare" runat="server" onclick="btn_login_Click"></asp:Button></div>
       </form>
     </div>
   </section>

@@ -30,13 +30,16 @@ namespace ER_application.Models
         public string patientInfo { get; set; }
         public string description { get; set; }
         public Nullable<int> resolved { get; set; }
+        public string gravity { get; set; }
     
         public virtual ICollection<PatientAmbulance> PatientAmbulance { get; set; }
 
-        public Incident(DateTime d, String callerPhone)
+        public Incident(DateTime d, String callerPhone, int resolved)
         {
             this.dateOfEvent = d;
             this.callerPhone = callerPhone;
+            this.resolved = resolved;
         }
+
     }
 }

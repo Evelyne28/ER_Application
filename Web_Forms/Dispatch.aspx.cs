@@ -21,7 +21,7 @@ namespace ER_application.Web_Forms
         protected void Page_Load(object sender, EventArgs e)
         {
             String username = Session["userName"].ToString();
-            welcome.InnerHtml = "Dispecerat: " + username;
+            dispatch.InnerHtml = "Dispecerat: " + username;
             //if (!serverExists)
             //{
             //    ServerWorker singleton = ServerWorker.InstanceCreation();
@@ -45,14 +45,26 @@ namespace ER_application.Web_Forms
         }
 
         [WebMethod]
-        public static void UpdateAmbulance(Models.Ambulance ambulance, int id)
+        public static void UpdateAmbulance(int id, int state)
         {
-            ctrl.updateAmbulance(ambulance, id);
+            ctrl.updateAmbulance(id, state);
+        }
+
+        [WebMethod]
+        public static void UpdateIncidentResolved(int incidentID)
+        {
+            ctrl.updateIncidentResolved(incidentID);
+        }
+
+        [WebMethod]
+        public void updateIncidentGravity(int id, string gravityLevel)
+        {
+            ctrl.updateIncidentGravity(id, gravityLevel);
         }
 
         [WebMethod]
         public static void UpdateIncident(string incidentID, string gps, string cLocation, string cName,
-                                          string pLocation, string pState, string pInfo, string description)
+                                          string pLocation, string pState, string pInfo, string description, string gravity)
         {
             //GPS.Program p = new GPS.Program();
             //string s = p.returnPath();
@@ -66,6 +78,7 @@ namespace ER_application.Web_Forms
             i.patientState = pState;
             i.patientInfo = pInfo;
             i.description = description;
+            i.gravity = gravity;
             ctrl.updateIncident(i, Convert.ToInt32(incidentID));
         }
     }

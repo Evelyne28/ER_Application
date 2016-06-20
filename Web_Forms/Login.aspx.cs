@@ -33,8 +33,9 @@ namespace ER_application.Web_Forms
             }
             try
             {
+                Models.Ambulance a = controller.findAmbulance(userName, password);
                 int role = controller.findUser(userName, password);
-
+                
                 //int rol = controller.findUserIdentity(u);
                 //in functie de rolul gasit se afiseaza pagina corespunzatoare
                 if (role == 0)
@@ -49,17 +50,24 @@ namespace ER_application.Web_Forms
                     Session["userPassword"] = password;
                     Response.Redirect("Dispatch.aspx", false);
                 }
-                else if (role == 2)
-                {
-                    Session["userName"] = userName;
-                    Session["userPassword"] = password;
-                    Response.Redirect("Ambulance.aspx");
-                }
                 else if (role == 3)
                 {
                     Session["userName"] = userName;
                     Session["userPassword"] = password;
                     Response.Redirect("ER.aspx");
+                }
+                else if (a != null)
+                {
+                    Session["ambulanceID"] = a.ambulanceID;
+                    Session["licensePlate"] = a.licensePlate;;
+                    Session["userPassword"] = password;
+                    Response.Redirect("Ambulance.aspx");
+                }
+                else
+                {
+                    var message = "Userul sau parola sunt introduse gresit!";
+                    string script = "<script type=\"text/javascript\">alert('" + message + "');</script>";
+                    ClientScript.RegisterClientScriptBlock(this.GetType(), "Alert", script);
                 }
 
             }

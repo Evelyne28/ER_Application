@@ -23,6 +23,8 @@ namespace ER_application.Models
         public string licensePlate { get; set; }
         public Nullable<int> state { get; set; }
         public Nullable<int> ambulanceType { get; set; }
+        public string userName { get; set; }
+        public string userPass { get; set; }
     
         public virtual AmbulanceType AmbulanceType1 { get; set; }
         public virtual ICollection<PatientAmbulance> PatientAmbulance { get; set; }

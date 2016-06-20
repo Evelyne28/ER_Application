@@ -16,6 +16,8 @@
           <ScalarProperty Name="licensePlate" ColumnName="licensePlate" />
           <ScalarProperty Name="state" ColumnName="state" />
           <ScalarProperty Name="ambulanceType" ColumnName="ambulanceType" />
+          <ScalarProperty Name="userName" ColumnName="userName" />
+          <ScalarProperty Name="userPass" ColumnName="userPass" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -84,6 +86,7 @@
     <EntitySetMapping Name="Incident">
       <EntityTypeMapping TypeName="ERModel.Incident">
         <MappingFragment StoreEntitySet="Incident">
+          <ScalarProperty Name="gravity" ColumnName="gravity" />
           <ScalarProperty Name="incidentID" ColumnName="incidentID" />
           <ScalarProperty Name="dateOfEvent" ColumnName="dateOfEvent" />
           <ScalarProperty Name="locationGPS" ColumnName="locationGPS" />

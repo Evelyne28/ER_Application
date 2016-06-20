@@ -20,38 +20,64 @@
 
         </div>
 
-        <%--<table id="topMenu">
+        <table id="topMenu">
 			<tr>
-                <th class="hide"> </th>
-				<th class="show" id="dispatch">Dispatch</th>
-				<th class="hide"> </th>
+                <th class="show" id="dispatch" runat="server"></th>
+                <th class="hide"> </th>	
+				<th class="hide" id="toggleMap"> Harta </th>
 			</tr>
-		</table>--%>
+		</table>
         <table id="calls">
+            <tr>
+                <th> Apeluri nepreluate </th>
+                <th> Apeluri in asteptare </th>
+                <th> Apeluri rezolvate </th>
+            </tr>
             <tr>
                 <td>
                     <div id="callDiv">
-                        <p>Apeluri nepreluate</p>
+                        <%--<p>Apeluri nepreluate</p>--%>
                         <table id="callTable"></table>
                     </div>
+                </td>
+                <td>
+                    <div id="divWaiting">
+                        <%--<p>Apeluri in asteptare</p>--%>
+                        <table id="tableWaiting"></table>
+                    </div>
+                </td>
+                <td> 
+                    <div id="divResolved"> 
+                        <table id="tableResolved"></table>
+                    </div>
+                </td>
+            </tr>
+        </table>
+        
+
+        
+        <div id="mapCall"> </div>
+        <div id="infoCall">
+        
+        </div>
+        <table id="tableActions">
+            <tr>
+                <td class="gravity">Gravitatea situatiei</td>
+            </tr>
+            <tr>
+                <td>
+                    <button id="btnRed" style="background-color:red"></button>
+                    <button id="btnYellow" style="background-color:yellow"></button>
+                    <button id="btnGreen" style="background-color:green"></button>
                 </td>
             </tr>
             <tr>
                 <td>
-                    <div id="divWaiting">
-                        <p>Apeluri in asteptare</p>
-                        <table id="tableWaiting"></table>
-                    </div>
+                    <button id="btnWait">Pune in asteptare</button>
+                    <button id="btnEndCall">Inchide apelul</button>
                 </td>
-            </tr> 
+            </tr>
         </table>
-        
-
-        <div id="infoCall">
-        
-        </div>
-        <div id="mapCall"> </div>
-        
        <%-- <div id="divColors">
             <button id="btnRed" style="background-color:red"></button>
             <button id="btnYellow" style="background-color:yellow"></button>
@@ -65,29 +91,9 @@
             <ul id="listAmbB"></ul>
             <ul id="listAmbC"></ul>
         </div>
-        <div id="map_canvas" style="width:100%;height:500px;"></div>
+        <%--<div id="map_canvas" style="width:100%;height:500px;"></div>--%>
         
-        <table id="tableActions">
-            <tr>
-                <th></th>
-                <td>Gravitatea situatiei</td>
-            </tr>
-            <tr>
-                <th></th>
-                <td>
-                    <button id="btnRed" style="background-color:red"></button>
-                    <button id="btnYellow" style="background-color:yellow"></button>
-                    <button id="btnGreen" style="background-color:green"></button>
-                </td>
-            </tr>
-            <tr>
-                <th></th>
-                <td>
-                    <button id="btnWait">Pune in asteptare</button>
-                    <button id="btnEndCall">Inchide apelul</button>
-                </td>
-            </tr>
-        </table>
+        
     </div>
     </form>
    <!--Script references. -->

@@ -29,7 +29,7 @@ namespace ER_application.Repository.Interfaces
         Allergy findAllergy(int id);
         Disease findDisease(int id);
         PatientInjury findPatientInjury(int paID, int injuryID);
-
+        InjuryMechanism findInjuryMechanism(int paiD, int mechanismID);
         int addVitalSign(VitalSign vs);
     }
 }

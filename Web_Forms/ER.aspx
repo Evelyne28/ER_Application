@@ -42,18 +42,7 @@
             <ul id="ulMechanism"></ul>
         </div>--%>
 	</div>
-    <div id="vitalDiv">
-        <table id="vitalTable">
-            <tr id="vitalHeader">
-                <th> Time </th>
-                <th> Nivel de constiinta </th>
-                <th> Respiratie </th>
-                <th> Puls </th>
-                <th> Left / Right</th>
-                <th> Piele </th>
-            </tr>
-        </table>
-    </div>
+    <div id="vitalDiv"></div>
     <div id="mapCall"> </div>
     </form>
     <script src="/Scripts/jquery-1.10.2.min.js"></script>

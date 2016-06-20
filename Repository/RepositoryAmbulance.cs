@@ -22,6 +22,7 @@ namespace ER_application.Repository
         public IGenericRepository<PatientInjury> repoPI;
         public IGenericRepository<VitalSign> repoVS;
         public IGenericRepository<PatientVital> repoPV;
+        public IGenericRepository<InjuryMechanism> repoIM;
         
         public RepositoryAmbulance() {
             
@@ -36,6 +37,7 @@ namespace ER_application.Repository
             repoPI = new GenericRepository<PatientInjury>(context);
             repoVS = new GenericRepository<VitalSign>(context);
             repoPV = new GenericRepository<PatientVital>(context);
+            repoIM = new GenericRepository<InjuryMechanism>(context);
         }
 
         public int addPatient(Patient p)
@@ -73,7 +75,8 @@ namespace ER_application.Repository
 
         public void addInjuryMechanism(InjuryMechanism im)
         {
-            //
+            DetachAll();
+            repoIM.Add(im);
         }
 
         public void addPatientVital(PatientVital pv)
@@ -93,21 +96,25 @@ namespace ER_application.Repository
 
         public List<Patient> getPatients()
         {
+            context.Configuration.ProxyCreationEnabled = false;
             return repoPatient.GetAll().Cast<Patient>().ToList();
         }
 
         public List<Allergy> getAllergies()
         {
+            context.Configuration.ProxyCreationEnabled = false;
             return repoAllergy.GetAll().Cast<Allergy>().ToList();
         }
 
         public List<Injury> getInjuries()
         {
+            context.Configuration.ProxyCreationEnabled = false;
             return repoInjury.GetAll().Cast<Injury>().ToList();
         }
 
         public List<Mechanism> getMechanisms()
         {
+            context.Configuration.ProxyCreationEnabled = false;
             return repoMechanism.GetAll().Cast<Mechanism>().ToList();
         }
 
@@ -118,14 +125,19 @@ namespace ER_application.Repository
 
         public Patient getRandomPatient()
         {
-            List<Patient> patients = new List<Patient>();
-            patients = getPatients();
-            Random r = new Random();
-            int number = r.Next(patients.Count);
-            Patient p = patients.ElementAt(number);
-            List<Allergy> allergies = getPatientAllergies(p.patientID);
-            p.Allergy = allergies;          
-            return p;
+            //using (var c = new EREntities()) {
+                Patient p = (Patient)context.Patient.OrderBy(r => Guid.NewGuid()).First();
+                List<Allergy> allergies = getPatientAllergies(p.patientID);
+                p.Allergy = allergies;
+                return p;
+          //  }
+            //List<Patient> patients = new List<Patient>();
+            //patients = getPatients();
+            //Random r = new Random();
+            //int number = r.Next(patients.Count);
+            //Patient p = patients.ElementAt(number);
+            
+            
         }
 
         public List<PatientInjury> getPatientInjuries()
@@ -148,6 +160,14 @@ namespace ER_application.Repository
                 //}
                 //return piList;
                 return repoPI.GetAll().Cast<PatientInjury>().ToList();
+            }
+        }
+
+        public List<InjuryMechanism> getInjuryMechanisms()
+        {
+            using (var c = new EREntities())
+            {
+                return repoIM.GetAll().Cast<InjuryMechanism>().ToList();
             }
         }
 
@@ -236,9 +256,21 @@ namespace ER_application.Repository
                 foreach (PatientInjury pi in piList)
                 {
                     if (pi.paID == paID && pi.injID == injuryID)
-                        return null;
-                    else
                         return pi;
+                }
+                return null;
+            }
+        }
+
+        public InjuryMechanism findInjuryMechanism(int paID, int mechanismID)
+        {
+            using (var c = new EREntities())
+            {
+                List<InjuryMechanism> imList = getInjuryMechanisms();
+                foreach (InjuryMechanism im in imList)
+                {
+                    if (im.paID == paID && im.mecID == mechanismID)
+                        return im;
                 }
                 return null;
             }

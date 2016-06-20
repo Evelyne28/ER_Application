@@ -18,8 +18,10 @@ namespace ER_application.Web_Forms
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            String username = Session["userName"].ToString();
-            welcome.InnerHtml = "Welcome " + username;
+            String licensePlate = Session["licensePlate"].ToString();
+            //welcome.InnerHtml = "Welcome " + licensePlate;
+            dispatchMenu.InnerHtml = "Ambulanta" + licensePlate;
+            ambulanceID.Value = Session["ambulanceID"].ToString();
             controller = new ControllerAmbulance();
         }
 
@@ -112,6 +114,14 @@ namespace ER_application.Web_Forms
             String paID = HttpContext.Current.Session["paID"].ToString();
             int id = Convert.ToInt32(paID);
             controller.addPatientInjury(injuriesList, id);
+        }
+
+        [WebMethod(EnableSession = true)]
+        public static void AddInjuryMechanism(List<String> mechanismList)
+        {
+            String paID = HttpContext.Current.Session["paID"].ToString();
+            int id = Convert.ToInt32(paID);
+            controller.addInjuryMechanism(mechanismList, id);
         }
 
         [WebMethod]

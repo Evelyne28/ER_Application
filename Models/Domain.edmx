@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="ERModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="ERModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Allergy">
           <Key>
             <PropertyRef Name="allergyID" />
@@ -20,6 +20,8 @@
           <Property Name="licensePlate" Type="varchar" MaxLength="10" />
           <Property Name="state" Type="int" />
           <Property Name="ambulanceType" Type="int" />
+          <Property Name="userName" Type="varchar" MaxLength="10" />
+          <Property Name="userPass" Type="varchar" MaxLength="10" />
         </EntityType>
         <EntityType Name="AmbulanceType">
           <Key>
@@ -92,6 +94,7 @@
           <Property Name="patientInfo" Type="varchar" MaxLength="100" />
           <Property Name="description" Type="varchar" MaxLength="200" />
           <Property Name="resolved" Type="int" />
+          <Property Name="gravity" Type="varchar" MaxLength="10" />
         </EntityType>
         <EntityType Name="Injury">
           <Key>
@@ -529,8 +532,7 @@
             <End Role="PatientVital" EntitySet="PatientVital" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="ERModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -550,6 +552,8 @@
           <Property Name="licensePlate" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="state" Type="Int32" />
           <Property Name="ambulanceType" Type="Int32" />
+          <Property Name="userName" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="userPass" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="AmbulanceType1" Relationship="Self.FK__Ambulance__ambul__7AF13DF7" FromRole="Ambulance" ToRole="AmbulanceType" />
           <NavigationProperty Name="PatientAmbulance" Relationship="Self.FK__PatientAm__ambul__52E34C9D" FromRole="Ambulance" ToRole="PatientAmbulance" />
         </EntityType>
@@ -632,6 +636,7 @@
           <Property Name="description" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
           <Property Name="resolved" Type="Int32" />
           <NavigationProperty Name="PatientAmbulance" Relationship="Self.FK__PatientAm__incid__53D770D6" FromRole="Incident" ToRole="PatientAmbulance" />
+          <Property Name="gravity" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="Injury">
           <Key>
@@ -1080,6 +1085,8 @@
                 <ScalarProperty Name="licensePlate" ColumnName="licensePlate" />
                 <ScalarProperty Name="state" ColumnName="state" />
                 <ScalarProperty Name="ambulanceType" ColumnName="ambulanceType" />
+                <ScalarProperty Name="userName" ColumnName="userName" />
+                <ScalarProperty Name="userPass" ColumnName="userPass" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1148,6 +1155,7 @@
           <EntitySetMapping Name="Incident">
             <EntityTypeMapping TypeName="ERModel.Incident">
               <MappingFragment StoreEntitySet="Incident">
+                <ScalarProperty Name="gravity" ColumnName="gravity" />
                 <ScalarProperty Name="incidentID" ColumnName="incidentID" />
                 <ScalarProperty Name="dateOfEvent" ColumnName="dateOfEvent" />
                 <ScalarProperty Name="locationGPS" ColumnName="locationGPS" />

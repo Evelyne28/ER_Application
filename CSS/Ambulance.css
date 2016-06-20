@@ -2,7 +2,7 @@
     width: 100%;
 }
 body {
-    background-image: url('../Images/greyGradient.jpg');
+    background-image: url('../Images/blue.jpg');
     background-size: 100%;
     background-repeat: no-repeat;
     background-position: center center;
@@ -28,7 +28,7 @@ body {
 }
 .header:hover {
 	cursor: hand;
-	background-color: red;
+	background-color: rgba(198, 241, 255, 0.62);
 }
 #dispatchDiv {
     width: 55%;
@@ -36,16 +36,18 @@ body {
     margin-top: 1%;
 }
 #dispatchTable {
-    width: 100%;
+    width: 80%;
+    margin-left: 2%;
     float: left;
     border-radius: 25px;
-    background-color: rgba(0, 0, 0, 0.1);
+    padding: 1%;
+    background-color: rgba(0, 0, 0, 0.15);
 }
 #dispatchTable tbody tr {
     width: 100%;
 }
 #dispatchTable tbody th {
-    width: 28%;
+    width: 10%;
 }
 textarea, input {
     margin-left: 0px;
@@ -74,9 +76,12 @@ margin-top: 3%;*/
     float: left;
     border-radius: 20px;
     background-color: rgba(0, 0, 0, 0.1);
+    margin-left: 1%;
+    padding: 1%;
+    border: 1px solid #857676;
 }
 .red {
-	background-color: red;
+	background-color: rgba(198, 241, 255, 0.62);
 }
 #problemDiv {
     width: 80%;
@@ -97,11 +102,8 @@ margin-top: 3%;*/
 #divCard {
     float: left;
     width: 12%;
-    margin-top: 7%;
-    /* margin-left: -2%; */
-    margin-right: -2%;
-    position: relative;
-    top: 322px;
+    margin-top: 9%;
+    margin-left: 10%;
 }
 #buttonCard {
     width: 200%;
@@ -112,6 +114,10 @@ margin-top: 3%;*/
     height: 250px;
     float: left;
     margin-left: 5%;
+    padding-bottom: 1%;
+    border: 1px solid #857676;
+    background-color: rgba(0, 0, 0, 0.1);
+    border-radius: 20px;
 }
 #ulAllergies {
     -moz-column-count: 2; /* Firefox */
@@ -125,6 +131,10 @@ margin-top: 3%;*/
     float: left;
     margin-top: 3%;
     margin-left: 1%;
+    border: 1px solid #857676;
+    padding-bottom: 2%;\
+    background-color: rgba(0, 0, 0, 0.1);
+    border-radius: 20px;
 }
 #ulHistory {
     width: 100%;
@@ -138,6 +148,8 @@ margin-top: 3%;*/
 }
 #pAllergy, #pInjury, #pHistory, #pMechanism {
     font-weight: bold;
+    margin-left: 3%;
+    font-size: 110%;
 }
 #injuryPb {
     width: 70%;
@@ -145,6 +157,10 @@ margin-top: 3%;*/
     float: left;
     margin-top: 3%;
     margin-left: 1%;
+    border-radius: 25px;
+    padding: 1% 1%;
+    background-color: rgba(0, 0, 0, 0.15);
+    padding-bottom: 2%;
 }
 #ulInjuries {
     width: 100%;
@@ -197,15 +213,26 @@ input[id$="minuteInput"] {
 }
 #dispatchTable tr textarea, #dispatchTable tr input {
     background: transparent;
-    border: 1px solid grey;
+    border: 1px solid #454545;
 }
 #commentsPb {
     width: 60%;
+    border-radius: 25px;
+    padding: 2%;
+    background-color: rgba(0, 0, 0, 0.15);
     float: left;
+    margin-left: 1%;
+}
+#pComplaint, #mObservations {
+    background: rgba(0, 0, 0, 0.1);
+    border: 1px solid #454545;
 }
 #mechanism {
     float: left;
     margin-left: 4%;
+    border-radius: 25px;
+    padding: 1%;
+    background-color: rgba(0, 0, 0, 0.15);
 }
 #ulMechanism li {
     margin-bottom: 3%;

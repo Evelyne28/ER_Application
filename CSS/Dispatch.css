@@ -49,6 +49,15 @@ table[id^='amb'] {
 table[id^='amb'] th {
 	color: blue;
 }
+table[id$='table'] {
+    width: 100%;
+}
+.tableth {
+    width: 20%;
+}
+.tabletd {
+    width: 30%;
+}
 #dispatchDiv {
     padding: 20px 20px 20px;
     border-radius: 40px;
@@ -68,36 +77,55 @@ table[id^='amb'] th {
     right: 2px;
     width: 40%;
     height: 400px; 
+    z-index: 1;
 }
 #infoCall {
-    float: left;
-    width: 40%;
-    /*margin-left: 17%;
-    margin-top: -5%*/
+    width: 55%;
+    position: relative;
+    top: 205px;
+    margin-left: 4%;
 }
 #calls {
-    width: 20%;
+    width: 86%;
     margin-left: 2%;
     float: left;
+    margin-top: 2%
+}
+#calls tr td {
+    width: 30%;
 }
 #callDiv {
     width: 100%;
-    float: left;
-    margin-left: 2%;
+    height: 150px;
+    overflow-y: scroll;
+    overflow-x: hidden;
 }
 #divWaiting {
     float: left;
     clear: left;
     width: 100%;
     margin-left: 2%;
+    width: 100%;
+    height: 150px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+#divResolved {
+    float: left;
+    clear: left;
+    width: 100%;
+    margin-left: 2%;
+    width: 100%;
+    height: 150px;
+    overflow-y: scroll;
+    overflow-x: hidden;
 }
 #divAmb {
-    margin-right: 10%;
-    /*width: 30%;*/
-    top: 450px;
-    float: right;
+    width: 30%;
     position: relative;
-    /*right: -7%;*/
+    top: 70px;
+    right: -36%;
+    float: right;
 }
 button[id^="dispAmb_"] {
     border: 1px solid black;
@@ -108,6 +136,9 @@ button[id^="dispAmb_"] {
 input, textarea {
     background: transparent;
     border: 1px solid #9F9797;
+}
+textarea {
+    width: 100%;
 }
 #divP {
     width: 20%;
@@ -161,8 +192,8 @@ button[id$="respond"] {
 }
 #btnWait, #btnEndCall {
     height: 40px;
-    width: 20%; 
-    font-size: 13px;
+    width: 25%;
+    font-size: 14px;
     border: 1px solid #CDCDCD;
 }
 #divColors {
@@ -170,14 +201,14 @@ button[id$="respond"] {
     position: relative;
 }
 #btnRed, #btnYellow, #btnGreen {
-    width: 7%;
+    width: 10%;
     height: 30px;
     margin-bottom: 3%;
 }
 #tableActions {
-    margin-top: 3%;
-    margin-left: 17.5%;
-    width: 50%;
+    width: 40%;
+    float: right;
+    margin-top: -4%;
 }
 #tableActions td {
     width: 100%;
@@ -186,8 +217,12 @@ button[id$="respond"] {
 #tableActions tr td:first-child {
     /*padding-bottom: 80%;*/
 }
-#callTable, #tableWaiting {
+.gravity {
+    font-weight: bold;
+}
+#callTable, #tableWaiting, #tableResolved {
     overflow-y: scroll;
+    margin: 0 auto;
 }
 ul[id^="listAmb"] {
     float: left;

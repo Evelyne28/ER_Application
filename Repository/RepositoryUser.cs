@@ -24,8 +24,21 @@ namespace ER_application.Repository
                        {
                            a.role
                        }).ToList();
+            if (user.Count == 0)
+                return -1;
+            else 
+                return (int)user.ElementAt(0).role;
+        }
 
-            return (int)user.ElementAt(0).role;
+        public Ambulance findAmbulance(string userName, string password)
+        {
+            var ambulance = (from a in context.Ambulance
+                             where a.userName == userName && a.userPass == password
+                             select a).ToList();
+            if (ambulance.Count == 0)
+                return null;
+            else 
+                return (Ambulance)ambulance.ElementAt(0);
         }
 
         public int getAmbulanceID(String licensePlate)

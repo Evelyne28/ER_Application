@@ -23,9 +23,9 @@ namespace ER_application.Controller
             //repository.createPatient(p);
         }
 
-        public int createIncident(DateTime d, String callerPhone)
+        public int createIncident(DateTime d, String callerPhone, int resolved)
         {
-            Incident i = new Incident(d, callerPhone);
+            Incident i = new Incident(d, callerPhone, resolved);
             return repository.createIncident(i);
         }
 
@@ -49,14 +49,24 @@ namespace ER_application.Controller
             return repository.readAmbulances();
         }
 
-        public void updateAmbulance(Ambulance a, int id)
+        public void updateAmbulance(int id, int stateAmb)
         {
-            repository.updateAmbulance(a, id);
+            repository.updateAmbulance(id, stateAmb);
         }
 
         public void updateIncident(Incident i, int id)
         {
             repository.updateIncident(i, id);
+        }
+
+        public void updateIncidentResolved(int id)
+        {
+            repository.updateIncidentResolved(id);
+        }
+
+        public void updateIncidentGravity(int id, string gravityLevel)
+        {
+            repository.updateIncidentGravity(id, gravityLevel);
         }
 
         //public bool updateIncident(int id, String gps, String cLocation, String cName,

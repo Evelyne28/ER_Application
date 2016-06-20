@@ -20,5 +20,13 @@ namespace ER_application.Models
     
         public virtual Mechanism Mechanism { get; set; }
         public virtual PatientAmbulance PatientAmbulance { get; set; }
+
+        public InjuryMechanism(int paID, int mecID)
+        {
+            this.paID = paID;
+            this.mecID = mecID;
+        }
+
+        public InjuryMechanism() { }
     }
 }

@@ -11,7 +11,8 @@ var busyNumbers = [];
 var waitingMap = [];
 var dictionary = {};
 var timestart = null;
-
+var ambAssign = 0;
+var busyAmb = [];
 var vis = "";
 var stop = true;
 
@@ -121,19 +122,22 @@ function sendIncident(nameAmb, number, incident, state, coordInc) {
     var dispatchCon = $.connection.dispatchHub;
     var ambulanceCon = $.connection.ambulanceHub;
     dispatchCon.server.sendResolvedDispatch(nameAmb, state, number, incident);
-    ambulanceCon.server.sendIncidentAmbulance('amb' + nameAmb, incident, coordInc);
+    ambulanceCon.server.sendIncidentAmbulance(nameAmb, incident, coordInc);
 }
 
 function appendWaitingTable(key, val) {
+    parts = key.split("_");
+    id = parts[0];
+    key = parts[1];
     if (val == 0)
         $("#tableWaiting").append("<tr><th id='th" + key + "'><img id='img" + key + "' src='../Images/redC.png'>"
-            + key + "</th><td><button id='" + key + "info'> Info </button> <span id='timetextarea" + key + "'> 00:00 </span></td></tr>");
+            + key + "</th><td><button id='" + id + "_" + key + "_red_info'> Info </button> <span id='timetextarea" + key + "'> 00:00 </span></td></tr>");
     if (val == 1)
         $("#tableWaiting").append("<tr><th id='th" + key + "'><img id='img" + key + "' src='../Images/yellowCircle.png'>"
-            + key + "</th><td><button id='" + key + "info'> Info </button> <span id='timetextarea" + key + "'> 00:00 </span></td></tr>");
+            + key + "</th><td><button id='" + id + "_" + key + "_yellow_info'> Info </button> <span id='timetextarea" + key + "'> 00:00 </span></td></tr>");
     if (val == 2)
         $("#tableWaiting").append("<tr><th id='th" + key + "'><img id='img" + key + "' src='../Images/GreenCircle.png'>"
-            + key + "</th><td><button id='" + key + "info'> Info </button> <span id='timetextarea" + key + "'> 00:00 </span></td></tr>");
+            + key + "</th><td><button id='" + id + "_" + key + "_green_info'> Info </button> <span id='timetextarea" + key + "'> 00:00 </span></td></tr>");
 }
 
 function orderTable() {
@@ -154,9 +158,9 @@ function orderTable() {
 
 function orderWaitingTable(val) {
     $('#th' + phoneNumber).parent().remove();
-    appendWaitingTable(phoneNumber, val);
+    appendWaitingTable(incidentID + "_" + phoneNumber, val);
     waitingMap.push({
-        key: phoneNumber,
+        key: incidentID + "_" + phoneNumber,
         value: val
     });
     orderTable();
@@ -182,6 +186,8 @@ $(function () {
     $("#infoCall").hide();
     $("#divCall").hide();
     $("#tableActions").hide();
+    //$("#mapCall").hide();
+    ajaxGetIncidents();
     //Show caller number
     dispatchCon.client.showNumber = function (number) {
         parts = number.split(';');
@@ -212,7 +218,7 @@ $(function () {
             $("#tableActions").show();
             //$("#" + phoneNumber + "respond").addClass('buttonOpacity');
             //$("button[id$='respond']").not('#' + number + 'respond').addClass('buttonOpacity');
-            $('#listAmbA').empty();
+            busyAmb = [];
             ajaxGetAmbulances();
             ev.preventDefault();
         });
@@ -307,14 +313,15 @@ $(function () {
         //Update ambulance state
         $("#imgAmb_" + nameAmb).remove();
         if (state == "1") {
-            $('#liAmb_' + nameAmb).append('<img id="imgAmb_"' + nameAmb + ' src="../Images/RedCircle.png" />');
-            $('#dispAmb_' + item.ambulanceID).addClass('.buttonOpacity');
+            $('#liAmb_' + nameAmb).append('<img id="imgAmb_"' + nameAmb + ' src="../Images/redC.png" />');
+            $('#dispAmb_' + nameAmb).addClass('.buttonOpacity');
         }
         else {
             $('#liAmb_' + nameAmb).prepend('<img id="imgAmb_"' + nameAmb + ' src="../Images/GreenCircle.png" />');
-            $('#dispAmb_' + item.ambulanceID).removeClass('.buttonOpacity');
+            $('#dispAmb_' + nameAmb).removeClass('.buttonOpacity');
         }
-        ajaxUpdateAmbulanceStatus(state);
+        ajaxUpdateAmbulanceStatus(nameAmb, state);
+        ajaxUpdateIncidentResolved(nameAmb);
     }
 
     $(document).on('click', '#btnEndCall', function (ev) {
@@ -330,10 +337,13 @@ $(function () {
                 else
                     $('#' + allNumbers[i] + 'respond').addClass('buttonOpacity');
             }
-        }
-        ajaxUpdateIncident();
-        copyOfPhone = phoneNumber;
-        phoneNumber = "";
+            ajaxUpdateIncident();
+            ambAssign = 1;
+            manageAmb();
+            //$('#tableActions').hide();
+            copyOfPhone = phoneNumber;
+            phoneNumber = "";
+        } 
         // ajaxSetSession();
         ev.preventDefault();
     });
@@ -363,8 +373,24 @@ $(function () {
             }
             dictionary[phoneNumber] = "0;0";
             //cronometro(0,0);
+            ajaxUpdateIncident();
+            manageAmb();
             phoneNumber = "";
+            
         }
+        ev.preventDefault();
+    });
+
+    $(document).on('click', 'button[id$="info"]', function (ev) {
+        id = $(this).attr('id');
+        parts = id.split("_");
+        incidentID = parts[0];
+        phoneNumber = parts[1];
+        $("#" + number + "table").siblings().hide();
+        $("#" + number + "table").show();
+
+        ajaxGetAmbulances();
+        manageAmb();
         ev.preventDefault();
     });
 
@@ -380,6 +406,11 @@ $(function () {
 
     $(document).on('click', '#btnGreen', function (ev) {
         color = 'green';
+        ev.preventDefault();
+    });
+
+    $(document).on('click', '#toggleMap', function (ev) {
+        $("#mapCall").toggle("slide");
         ev.preventDefault();
     });
 

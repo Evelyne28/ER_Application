@@ -16,6 +16,8 @@ namespace ER_application.Repository.Interfaces
         List<Incident> readIncidents();
         List<Ambulance> readAmbulances();
         void updateIncident(Incident i, int id);
-        void updateAmbulance(Ambulance a, int id);
+        void updateIncidentResolved(int id);
+        void updateIncidentGravity(int id, string gravityLevel);
+        void updateAmbulance(int id, int stateAmb);
     }
 }

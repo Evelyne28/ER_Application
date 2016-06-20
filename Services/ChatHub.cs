@@ -63,9 +63,14 @@ namespace ER_application.Services
             Clients.All.receivePatient(fromWho, patient, allergyList, diseasesList);
         }
 
-        public void sendProblemER(string fromWho, string pComplaint, string mObservations, List<String> injuries)
+        public void sendProblemER(string fromWho, string pComplaint, string mObservations, List<String> injuries, List<String> mechanisms)
         {
-            Clients.All.receiveProblem(fromWho, pComplaint, mObservations, injuries);
+            Clients.All.receiveProblem(fromWho, pComplaint, mObservations, injuries, mechanisms);
+        }
+
+        public void sendVitalsER(string fromWho, List<VitalSign> vitalSigns)
+        {
+            Clients.All.receiveVitals(fromWho, vitalSigns);
         }
 
         public void sendSmth(string hey)

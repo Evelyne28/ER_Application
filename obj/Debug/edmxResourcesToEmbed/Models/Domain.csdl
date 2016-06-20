@@ -16,6 +16,8 @@
     <Property Name="licensePlate" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
     <Property Name="state" Type="Int32" />
     <Property Name="ambulanceType" Type="Int32" />
+    <Property Name="userName" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="userPass" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
     <NavigationProperty Name="AmbulanceType1" Relationship="Self.FK__Ambulance__ambul__7AF13DF7" FromRole="Ambulance" ToRole="AmbulanceType" />
     <NavigationProperty Name="PatientAmbulance" Relationship="Self.FK__PatientAm__ambul__52E34C9D" FromRole="Ambulance" ToRole="PatientAmbulance" />
   </EntityType>
@@ -98,6 +100,7 @@
     <Property Name="description" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
     <Property Name="resolved" Type="Int32" />
     <NavigationProperty Name="PatientAmbulance" Relationship="Self.FK__PatientAm__incid__53D770D6" FromRole="Incident" ToRole="PatientAmbulance" />
+    <Property Name="gravity" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
   </EntityType>
   <EntityType Name="Injury">
     <Key>
