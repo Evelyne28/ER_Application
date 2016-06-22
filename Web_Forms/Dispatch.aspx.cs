@@ -45,6 +45,12 @@ namespace ER_application.Web_Forms
         }
 
         [WebMethod]
+        public static Models.Incident GetIncident(int id)
+        {
+            return ctrl.getIncident(id);
+        }
+
+        [WebMethod]
         public static void UpdateAmbulance(int id, int state)
         {
             ctrl.updateAmbulance(id, state);
@@ -64,7 +70,7 @@ namespace ER_application.Web_Forms
 
         [WebMethod]
         public static void UpdateIncident(string incidentID, string gps, string cLocation, string cName,
-                                          string pLocation, string pState, string pInfo, string description, string gravity)
+                                          string pLocation, string pState, string pInfo, string description, string gravity, int resolved)
         {
             //GPS.Program p = new GPS.Program();
             //string s = p.returnPath();
@@ -79,6 +85,7 @@ namespace ER_application.Web_Forms
             i.patientInfo = pInfo;
             i.description = description;
             i.gravity = gravity;
+            i.resolved = resolved;
             ctrl.updateIncident(i, Convert.ToInt32(incidentID));
         }
     }

@@ -1,8 +1,8 @@
 ﻿$(function () {
     var ambID;
-    var chat = $.connection.chatHub;
+    var ambulanceHub = $.connection.ambulanceHub;
     ajaxGetAmbulances();
-    chat.client.receivePatient = function (fromWho, patient, allergyList, diseasesList) {
+    ambulanceHub.client.receivePatient = function (fromWho, patient, allergyList, diseasesList) {
         ambID = fromWho;
         createDiv(ambID, 'patientDiv');
         createPatient(ambID);
@@ -31,7 +31,7 @@
         })
     }
 
-    chat.client.receiveProblem = function (fromWho, pComplaint, mObservations, injuries, mechanisms) {
+    ambulanceHub.client.receiveProblem = function (fromWho, pComplaint, mObservations, injuries, mechanisms) {
         ambID = fromWho;
         createInjuries(ambID);
         $.each(injuries, function (i, item) {
@@ -48,7 +48,7 @@
         $('#' + ambID + 'mObservations').val(mObservations);
     }
 
-    chat.client.receiveVitals = function (fromWho, vitalSigns) {
+    ambulanceHub.client.receiveVitals = function (fromWho, vitalSigns) {
         ambID = fromWho;
         createVitals(ambID);
         $.each(vitalSigns, function (i, item) {

@@ -40,6 +40,5 @@ namespace ER_application.Models
             this.callerPhone = callerPhone;
             this.resolved = resolved;
         }
-
     }
 }

@@ -69,6 +69,11 @@ namespace ER_application.Controller
             repository.updateIncidentGravity(id, gravityLevel);
         }
 
+        public Incident getIncident(int id)
+        {
+            return repository.getIncident(id);
+        }
+
         //public bool updateIncident(int id, String gps, String cLocation, String cName,
         //                           String pLocation, String pState, String pInfo, String description, int resolved)
         //{

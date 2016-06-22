@@ -94,6 +94,15 @@ namespace ER_application.Controller
             }
         }
 
+        public void addPatientIntervention(List<PatientIntervention> intList, int paID)
+        {
+            foreach (PatientIntervention pInt in intList)
+            {
+                pInt.paID = paID;
+                repository.addPatientIntervention(pInt);
+            }
+        }
+
         public Patient getRandomPatient()
         {
             return repository.getRandomPatient();

@@ -17,6 +17,7 @@ namespace ER_application.Repository.Interfaces
         void addInjuryMechanism(InjuryMechanism im);
         void addPatientVital(PatientVital pv);
         void addPatientAllergies(List<Allergy> allergies, Patient p);
+        void addPatientIntervention(PatientIntervention pi);
         Patient getRandomPatient();
         List<Disease> getPatientDiseases(int id);
         List<Allergy> getAllergies();
@@ -31,5 +32,6 @@ namespace ER_application.Repository.Interfaces
         PatientInjury findPatientInjury(int paID, int injuryID);
         InjuryMechanism findInjuryMechanism(int paiD, int mechanismID);
         int addVitalSign(VitalSign vs);
+
     }
 }

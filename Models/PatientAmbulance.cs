@@ -18,6 +18,7 @@ namespace ER_application.Models
         {
             this.InjuryMechanism = new HashSet<InjuryMechanism>();
             this.PatientInjury = new HashSet<PatientInjury>();
+            this.PatientIntervention = new HashSet<PatientIntervention>();
             this.PatientVital = new HashSet<PatientVital>();
         }
     
@@ -31,6 +32,7 @@ namespace ER_application.Models
         public virtual ICollection<InjuryMechanism> InjuryMechanism { get; set; }
         public virtual Patient Patient { get; set; }
         public virtual ICollection<PatientInjury> PatientInjury { get; set; }
+        public virtual ICollection<PatientIntervention> PatientIntervention { get; set; }
         public virtual ICollection<PatientVital> PatientVital { get; set; }
     }
 }

@@ -185,7 +185,7 @@
       <DependentUpon>Domain.edmx</DependentUpon>
       <LastGenOutput>Domain.cs</LastGenOutput>
     </Content>
-    <None Include="SecuritySwitch-v4.xsd">
+    <None Include="Web_Forms\SecuritySwitch-v4.xsd">
       <SubType>Designer</SubType>
     </None>
     <None Include="Web.Debug.config">
@@ -277,6 +277,9 @@
       <DependentUpon>Domain.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\PatientInjury.cs">
+      <DependentUpon>Domain.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\PatientIntervention.cs">
       <DependentUpon>Domain.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\PatientVital.cs">

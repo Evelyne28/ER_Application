@@ -86,7 +86,6 @@
     <EntitySetMapping Name="Incident">
       <EntityTypeMapping TypeName="ERModel.Incident">
         <MappingFragment StoreEntitySet="Incident">
-          <ScalarProperty Name="gravity" ColumnName="gravity" />
           <ScalarProperty Name="incidentID" ColumnName="incidentID" />
           <ScalarProperty Name="dateOfEvent" ColumnName="dateOfEvent" />
           <ScalarProperty Name="locationGPS" ColumnName="locationGPS" />
@@ -98,6 +97,7 @@
           <ScalarProperty Name="patientInfo" ColumnName="patientInfo" />
           <ScalarProperty Name="description" ColumnName="description" />
           <ScalarProperty Name="resolved" ColumnName="resolved" />
+          <ScalarProperty Name="gravity" ColumnName="gravity" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -172,6 +172,20 @@
           <ScalarProperty Name="piID" ColumnName="piID" />
           <ScalarProperty Name="paID" ColumnName="paID" />
           <ScalarProperty Name="injID" ColumnName="injID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PatientIntervention">
+      <EntityTypeMapping TypeName="ERModel.PatientIntervention">
+        <MappingFragment StoreEntitySet="PatientIntervention">
+          <ScalarProperty Name="piID" ColumnName="piID" />
+          <ScalarProperty Name="paID" ColumnName="paID" />
+          <ScalarProperty Name="intName" ColumnName="intName" />
+          <ScalarProperty Name="intType" ColumnName="intType" />
+          <ScalarProperty Name="intNumber" ColumnName="intNumber" />
+          <ScalarProperty Name="intHour" ColumnName="intHour" />
+          <ScalarProperty Name="intMin" ColumnName="intMin" />
+          <ScalarProperty Name="intSupport" ColumnName="intSupport" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

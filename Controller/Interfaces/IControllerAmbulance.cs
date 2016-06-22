@@ -24,5 +24,6 @@ namespace ER_application.Controller.Interfaces
         List<VitalSign> getVitalSigns();
         void addPatientAllergies(List<String> allergies, int pID);
         void addPatientDiseases(List<String> diseases, int pID);
+        void addPatientIntervention(List<PatientIntervention> intList, int paID);
     }
 }

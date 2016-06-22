@@ -99,8 +99,8 @@
     <Property Name="patientInfo" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
     <Property Name="description" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
     <Property Name="resolved" Type="Int32" />
-    <NavigationProperty Name="PatientAmbulance" Relationship="Self.FK__PatientAm__incid__53D770D6" FromRole="Incident" ToRole="PatientAmbulance" />
     <Property Name="gravity" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="PatientAmbulance" Relationship="Self.FK__PatientAm__incid__53D770D6" FromRole="Incident" ToRole="PatientAmbulance" />
   </EntityType>
   <EntityType Name="Injury">
     <Key>
@@ -163,6 +163,7 @@
     <NavigationProperty Name="InjuryMechanism" Relationship="Self.FK__InjuryMech__paID__69C6B1F5" FromRole="PatientAmbulance" ToRole="InjuryMechanism" />
     <NavigationProperty Name="Patient" Relationship="Self.FK__PatientAm__patie__51EF2864" FromRole="PatientAmbulance" ToRole="Patient" />
     <NavigationProperty Name="PatientInjury" Relationship="Self.FK__PatientInj__paID__56B3DD81" FromRole="PatientAmbulance" ToRole="PatientInjury" />
+    <NavigationProperty Name="PatientIntervention" Relationship="Self.FK__PatientInt__paID__1D4655FB" FromRole="PatientAmbulance" ToRole="PatientIntervention" />
     <NavigationProperty Name="PatientVital" Relationship="Self.FK__PatientVit__paID__7FB5F314" FromRole="PatientAmbulance" ToRole="PatientVital" />
   </EntityType>
   <EntityType Name="PatientDisease">
@@ -186,6 +187,20 @@
     <Property Name="injID" Type="Int32" />
     <NavigationProperty Name="Injury" Relationship="Self.FK__PatientIn__injID__57A801BA" FromRole="PatientInjury" ToRole="Injury" />
     <NavigationProperty Name="PatientAmbulance" Relationship="Self.FK__PatientInj__paID__56B3DD81" FromRole="PatientInjury" ToRole="PatientAmbulance" />
+  </EntityType>
+  <EntityType Name="PatientIntervention">
+    <Key>
+      <PropertyRef Name="piID" />
+    </Key>
+    <Property Name="piID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="paID" Type="Int32" />
+    <Property Name="intName" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="intType" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="intNumber" Type="Int32" />
+    <Property Name="intHour" Type="Int32" />
+    <Property Name="intMin" Type="Int32" />
+    <Property Name="intSupport" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="PatientAmbulance" Relationship="Self.FK__PatientInt__paID__1D4655FB" FromRole="PatientIntervention" ToRole="PatientAmbulance" />
   </EntityType>
   <EntityType Name="PatientVital">
     <Key>
@@ -410,6 +425,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK__PatientInt__paID__1D4655FB">
+    <End Role="PatientAmbulance" Type="Self.PatientAmbulance" Multiplicity="0..1" />
+    <End Role="PatientIntervention" Type="Self.PatientIntervention" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PatientAmbulance">
+        <PropertyRef Name="paID" />
+      </Principal>
+      <Dependent Role="PatientIntervention">
+        <PropertyRef Name="paID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK__PatientVit__paID__7FB5F314">
     <End Role="PatientAmbulance" Type="Self.PatientAmbulance" Multiplicity="0..1" />
     <End Role="PatientVital" Type="Self.PatientVital" Multiplicity="*" />
@@ -455,6 +482,7 @@
     <EntitySet Name="PatientAmbulance" EntityType="Self.PatientAmbulance" />
     <EntitySet Name="PatientDisease" EntityType="Self.PatientDisease" />
     <EntitySet Name="PatientInjury" EntityType="Self.PatientInjury" />
+    <EntitySet Name="PatientIntervention" EntityType="Self.PatientIntervention" />
     <EntitySet Name="PatientVital" EntityType="Self.PatientVital" />
     <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
     <EntitySet Name="UserMode" EntityType="Self.UserMode" />
@@ -514,6 +542,10 @@
     <AssociationSet Name="FK__PatientInj__paID__56B3DD81" Association="Self.FK__PatientInj__paID__56B3DD81">
       <End Role="PatientAmbulance" EntitySet="PatientAmbulance" />
       <End Role="PatientInjury" EntitySet="PatientInjury" />
+    </AssociationSet>
+    <AssociationSet Name="FK__PatientInt__paID__1D4655FB" Association="Self.FK__PatientInt__paID__1D4655FB">
+      <End Role="PatientAmbulance" EntitySet="PatientAmbulance" />
+      <End Role="PatientIntervention" EntitySet="PatientIntervention" />
     </AssociationSet>
     <AssociationSet Name="FK__PatientVit__paID__7FB5F314" Association="Self.FK__PatientVit__paID__7FB5F314">
       <End Role="PatientAmbulance" EntitySet="PatientAmbulance" />

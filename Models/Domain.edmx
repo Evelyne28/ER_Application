@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="ERModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="ERModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Allergy">
           <Key>
             <PropertyRef Name="allergyID" />
@@ -171,6 +171,19 @@
           <Property Name="piID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="paID" Type="int" />
           <Property Name="injID" Type="int" />
+        </EntityType>
+        <EntityType Name="PatientIntervention">
+          <Key>
+            <PropertyRef Name="piID" />
+          </Key>
+          <Property Name="piID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="paID" Type="int" />
+          <Property Name="intName" Type="varchar" MaxLength="30" />
+          <Property Name="intType" Type="varchar" MaxLength="30" />
+          <Property Name="intNumber" Type="int" />
+          <Property Name="intHour" Type="int" />
+          <Property Name="intMin" Type="int" />
+          <Property Name="intSupport" Type="varchar" MaxLength="5" />
         </EntityType>
         <EntityType Name="PatientVital">
           <Key>
@@ -413,6 +426,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK__PatientInt__paID__1D4655FB">
+          <End Role="PatientAmbulance" Type="Self.PatientAmbulance" Multiplicity="0..1" />
+          <End Role="PatientIntervention" Type="Self.PatientIntervention" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PatientAmbulance">
+              <PropertyRef Name="paID" />
+            </Principal>
+            <Dependent Role="PatientIntervention">
+              <PropertyRef Name="paID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK__PatientVit__paID__7FB5F314">
           <End Role="PatientAmbulance" Type="Self.PatientAmbulance" Multiplicity="0..1" />
           <End Role="PatientVital" Type="Self.PatientVital" Multiplicity="*" />
@@ -455,6 +480,7 @@
           <EntitySet Name="PatientAmbulance" EntityType="Self.PatientAmbulance" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PatientDisease" EntityType="Self.PatientDisease" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PatientInjury" EntityType="Self.PatientInjury" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PatientIntervention" EntityType="Self.PatientIntervention" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PatientVital" EntityType="Self.PatientVital" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserMode" EntityType="Self.UserMode" Schema="dbo" store:Type="Tables" />
@@ -523,6 +549,10 @@
             <End Role="PatientAmbulance" EntitySet="PatientAmbulance" />
             <End Role="PatientInjury" EntitySet="PatientInjury" />
           </AssociationSet>
+          <AssociationSet Name="FK__PatientInt__paID__1D4655FB" Association="Self.FK__PatientInt__paID__1D4655FB">
+            <End Role="PatientAmbulance" EntitySet="PatientAmbulance" />
+            <End Role="PatientIntervention" EntitySet="PatientIntervention" />
+          </AssociationSet>
           <AssociationSet Name="FK__PatientVit__paID__7FB5F314" Association="Self.FK__PatientVit__paID__7FB5F314">
             <End Role="PatientAmbulance" EntitySet="PatientAmbulance" />
             <End Role="PatientVital" EntitySet="PatientVital" />
@@ -532,7 +562,8 @@
             <End Role="PatientVital" EntitySet="PatientVital" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="ERModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -635,8 +666,8 @@
           <Property Name="patientInfo" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="description" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
           <Property Name="resolved" Type="Int32" />
-          <NavigationProperty Name="PatientAmbulance" Relationship="Self.FK__PatientAm__incid__53D770D6" FromRole="Incident" ToRole="PatientAmbulance" />
           <Property Name="gravity" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="PatientAmbulance" Relationship="Self.FK__PatientAm__incid__53D770D6" FromRole="Incident" ToRole="PatientAmbulance" />
         </EntityType>
         <EntityType Name="Injury">
           <Key>
@@ -699,6 +730,7 @@
           <NavigationProperty Name="InjuryMechanism" Relationship="Self.FK__InjuryMech__paID__69C6B1F5" FromRole="PatientAmbulance" ToRole="InjuryMechanism" />
           <NavigationProperty Name="Patient" Relationship="Self.FK__PatientAm__patie__51EF2864" FromRole="PatientAmbulance" ToRole="Patient" />
           <NavigationProperty Name="PatientInjury" Relationship="Self.FK__PatientInj__paID__56B3DD81" FromRole="PatientAmbulance" ToRole="PatientInjury" />
+          <NavigationProperty Name="PatientIntervention" Relationship="Self.FK__PatientInt__paID__1D4655FB" FromRole="PatientAmbulance" ToRole="PatientIntervention" />
           <NavigationProperty Name="PatientVital" Relationship="Self.FK__PatientVit__paID__7FB5F314" FromRole="PatientAmbulance" ToRole="PatientVital" />
         </EntityType>
         <EntityType Name="PatientDisease">
@@ -722,6 +754,20 @@
           <Property Name="injID" Type="Int32" />
           <NavigationProperty Name="Injury" Relationship="Self.FK__PatientIn__injID__57A801BA" FromRole="PatientInjury" ToRole="Injury" />
           <NavigationProperty Name="PatientAmbulance" Relationship="Self.FK__PatientInj__paID__56B3DD81" FromRole="PatientInjury" ToRole="PatientAmbulance" />
+        </EntityType>
+        <EntityType Name="PatientIntervention">
+          <Key>
+            <PropertyRef Name="piID" />
+          </Key>
+          <Property Name="piID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="paID" Type="Int32" />
+          <Property Name="intName" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="intType" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="intNumber" Type="Int32" />
+          <Property Name="intHour" Type="Int32" />
+          <Property Name="intMin" Type="Int32" />
+          <Property Name="intSupport" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="PatientAmbulance" Relationship="Self.FK__PatientInt__paID__1D4655FB" FromRole="PatientIntervention" ToRole="PatientAmbulance" />
         </EntityType>
         <EntityType Name="PatientVital">
           <Key>
@@ -946,6 +992,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK__PatientInt__paID__1D4655FB">
+          <End Role="PatientAmbulance" Type="Self.PatientAmbulance" Multiplicity="0..1" />
+          <End Role="PatientIntervention" Type="Self.PatientIntervention" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PatientAmbulance">
+              <PropertyRef Name="paID" />
+            </Principal>
+            <Dependent Role="PatientIntervention">
+              <PropertyRef Name="paID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK__PatientVit__paID__7FB5F314">
           <End Role="PatientAmbulance" Type="Self.PatientAmbulance" Multiplicity="0..1" />
           <End Role="PatientVital" Type="Self.PatientVital" Multiplicity="*" />
@@ -991,6 +1049,7 @@
           <EntitySet Name="PatientAmbulance" EntityType="Self.PatientAmbulance" />
           <EntitySet Name="PatientDisease" EntityType="Self.PatientDisease" />
           <EntitySet Name="PatientInjury" EntityType="Self.PatientInjury" />
+          <EntitySet Name="PatientIntervention" EntityType="Self.PatientIntervention" />
           <EntitySet Name="PatientVital" EntityType="Self.PatientVital" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
           <EntitySet Name="UserMode" EntityType="Self.UserMode" />
@@ -1050,6 +1109,10 @@
           <AssociationSet Name="FK__PatientInj__paID__56B3DD81" Association="Self.FK__PatientInj__paID__56B3DD81">
             <End Role="PatientAmbulance" EntitySet="PatientAmbulance" />
             <End Role="PatientInjury" EntitySet="PatientInjury" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PatientInt__paID__1D4655FB" Association="Self.FK__PatientInt__paID__1D4655FB">
+            <End Role="PatientAmbulance" EntitySet="PatientAmbulance" />
+            <End Role="PatientIntervention" EntitySet="PatientIntervention" />
           </AssociationSet>
           <AssociationSet Name="FK__PatientVit__paID__7FB5F314" Association="Self.FK__PatientVit__paID__7FB5F314">
             <End Role="PatientAmbulance" EntitySet="PatientAmbulance" />
@@ -1155,7 +1218,6 @@
           <EntitySetMapping Name="Incident">
             <EntityTypeMapping TypeName="ERModel.Incident">
               <MappingFragment StoreEntitySet="Incident">
-                <ScalarProperty Name="gravity" ColumnName="gravity" />
                 <ScalarProperty Name="incidentID" ColumnName="incidentID" />
                 <ScalarProperty Name="dateOfEvent" ColumnName="dateOfEvent" />
                 <ScalarProperty Name="locationGPS" ColumnName="locationGPS" />
@@ -1167,6 +1229,7 @@
                 <ScalarProperty Name="patientInfo" ColumnName="patientInfo" />
                 <ScalarProperty Name="description" ColumnName="description" />
                 <ScalarProperty Name="resolved" ColumnName="resolved" />
+                <ScalarProperty Name="gravity" ColumnName="gravity" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1241,6 +1304,20 @@
                 <ScalarProperty Name="piID" ColumnName="piID" />
                 <ScalarProperty Name="paID" ColumnName="paID" />
                 <ScalarProperty Name="injID" ColumnName="injID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PatientIntervention">
+            <EntityTypeMapping TypeName="ERModel.PatientIntervention">
+              <MappingFragment StoreEntitySet="PatientIntervention">
+                <ScalarProperty Name="piID" ColumnName="piID" />
+                <ScalarProperty Name="paID" ColumnName="paID" />
+                <ScalarProperty Name="intName" ColumnName="intName" />
+                <ScalarProperty Name="intType" ColumnName="intType" />
+                <ScalarProperty Name="intNumber" ColumnName="intNumber" />
+                <ScalarProperty Name="intHour" ColumnName="intHour" />
+                <ScalarProperty Name="intMin" ColumnName="intMin" />
+                <ScalarProperty Name="intSupport" ColumnName="intSupport" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

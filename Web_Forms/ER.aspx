@@ -23,11 +23,10 @@
     </div>
     <table id="myTable">
 	    <tr>
-            <th class="header" id="ambulanceMenu"> Ambulances </th>
-			<th class="header" id="patientMenu"> Patient info </th>
-			<th class="header" id="problemMenu"> Problem </th>
-			<th class="header" id="vitalMenu"> Vital signs </th>
-			<th class="header" id="interventionsMenu"> Interventions </th>
+            <th class="header" id="ambulanceMenu"> Ambulante </th>
+			<th class="header" id="patientMenu"> Pacient </th>
+			<th class="header" id="vitalMenu"> Functii vitale </th>
+			<th class="header" id="interventionsMenu"> Interventii </th>
 		</tr>
 	</table>
     <div id="patientDiv">

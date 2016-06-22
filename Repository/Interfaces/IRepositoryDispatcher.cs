@@ -19,5 +19,6 @@ namespace ER_application.Repository.Interfaces
         void updateIncidentResolved(int id);
         void updateIncidentGravity(int id, string gravityLevel);
         void updateAmbulance(int id, int stateAmb);
+        Incident getIncident(int id);
     }
 }

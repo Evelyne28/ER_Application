@@ -156,7 +156,7 @@ img {
 #cPhoneInput, #cNameInput {
     width: 99%;
 }
-button[id$="respond"], button[id$="info"], #btnWait, #btnEndCall {
+button[id$="respond"], button[id$="info"], button[id$="done"], #btnWait, #btnEndCall {
   background: #ff0000;
   background-image: -webkit-linear-gradient(top, #ff0000, #330f0f);
   background-image: -moz-linear-gradient(top, #ff0000, #330f0f);

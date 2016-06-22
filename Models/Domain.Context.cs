@@ -41,6 +41,7 @@ namespace ER_application.Models
         public virtual DbSet<PatientAmbulance> PatientAmbulance { get; set; }
         public virtual DbSet<PatientDisease> PatientDisease { get; set; }
         public virtual DbSet<PatientInjury> PatientInjury { get; set; }
+        public virtual DbSet<PatientIntervention> PatientIntervention { get; set; }
         public virtual DbSet<PatientVital> PatientVital { get; set; }
         public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
         public virtual DbSet<UserMode> UserMode { get; set; }

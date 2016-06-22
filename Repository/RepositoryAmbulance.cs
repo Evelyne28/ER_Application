@@ -23,6 +23,7 @@ namespace ER_application.Repository
         public IGenericRepository<VitalSign> repoVS;
         public IGenericRepository<PatientVital> repoPV;
         public IGenericRepository<InjuryMechanism> repoIM;
+        public IGenericRepository<PatientIntervention> repoPInt;
         
         public RepositoryAmbulance() {
             
@@ -38,6 +39,7 @@ namespace ER_application.Repository
             repoVS = new GenericRepository<VitalSign>(context);
             repoPV = new GenericRepository<PatientVital>(context);
             repoIM = new GenericRepository<InjuryMechanism>(context);
+            repoPInt = new GenericRepository<PatientIntervention>(context);
         }
 
         public int addPatient(Patient p)
@@ -92,6 +94,12 @@ namespace ER_application.Repository
                 p.Allergy.Add(allergy);
             }
             context.SaveChanges();
+        }
+
+        public void addPatientIntervention(PatientIntervention pi)
+        {
+            DetachAll();
+            repoPInt.Add(pi);
         }
 
         public List<Patient> getPatients()

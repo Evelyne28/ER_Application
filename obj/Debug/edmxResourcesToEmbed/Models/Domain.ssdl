@@ -167,6 +167,19 @@
     <Property Name="paID" Type="int" />
     <Property Name="injID" Type="int" />
   </EntityType>
+  <EntityType Name="PatientIntervention">
+    <Key>
+      <PropertyRef Name="piID" />
+    </Key>
+    <Property Name="piID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="paID" Type="int" />
+    <Property Name="intName" Type="varchar" MaxLength="30" />
+    <Property Name="intType" Type="varchar" MaxLength="30" />
+    <Property Name="intNumber" Type="int" />
+    <Property Name="intHour" Type="int" />
+    <Property Name="intMin" Type="int" />
+    <Property Name="intSupport" Type="varchar" MaxLength="5" />
+  </EntityType>
   <EntityType Name="PatientVital">
     <Key>
       <PropertyRef Name="pvID" />
@@ -408,6 +421,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK__PatientInt__paID__1D4655FB">
+    <End Role="PatientAmbulance" Type="Self.PatientAmbulance" Multiplicity="0..1" />
+    <End Role="PatientIntervention" Type="Self.PatientIntervention" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PatientAmbulance">
+        <PropertyRef Name="paID" />
+      </Principal>
+      <Dependent Role="PatientIntervention">
+        <PropertyRef Name="paID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK__PatientVit__paID__7FB5F314">
     <End Role="PatientAmbulance" Type="Self.PatientAmbulance" Multiplicity="0..1" />
     <End Role="PatientVital" Type="Self.PatientVital" Multiplicity="*" />
@@ -450,6 +475,7 @@
     <EntitySet Name="PatientAmbulance" EntityType="Self.PatientAmbulance" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="PatientDisease" EntityType="Self.PatientDisease" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="PatientInjury" EntityType="Self.PatientInjury" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PatientIntervention" EntityType="Self.PatientIntervention" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="PatientVital" EntityType="Self.PatientVital" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="UserMode" EntityType="Self.UserMode" Schema="dbo" store:Type="Tables" />
@@ -517,6 +543,10 @@
     <AssociationSet Name="FK__PatientInj__paID__56B3DD81" Association="Self.FK__PatientInj__paID__56B3DD81">
       <End Role="PatientAmbulance" EntitySet="PatientAmbulance" />
       <End Role="PatientInjury" EntitySet="PatientInjury" />
+    </AssociationSet>
+    <AssociationSet Name="FK__PatientInt__paID__1D4655FB" Association="Self.FK__PatientInt__paID__1D4655FB">
+      <End Role="PatientAmbulance" EntitySet="PatientAmbulance" />
+      <End Role="PatientIntervention" EntitySet="PatientIntervention" />
     </AssociationSet>
     <AssociationSet Name="FK__PatientVit__paID__7FB5F314" Association="Self.FK__PatientVit__paID__7FB5F314">
       <End Role="PatientAmbulance" EntitySet="PatientAmbulance" />

@@ -62,7 +62,7 @@
         </div>
         <table id="tableActions">
             <tr>
-                <td class="gravity">Gravitatea situatiei</td>
+                <td class="gravity">Gradul de urgenta</td>
             </tr>
             <tr>
                 <td>

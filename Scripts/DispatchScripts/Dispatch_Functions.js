@@ -95,7 +95,12 @@ function ajaxGetAmbulances() {
                 sendIncident(ambID, copyOfPhone, incident, "1", coordInc);
                 $('#callTable #th' + copyOfPhone).parent().remove();
                 $('#tableWaiting #th' + copyOfPhone).parent().remove();
-                $("#tableResolved").append("<tr><th id='th" + copyOfPhone + "</th><td>" + copyOfPhone + "</td></tr>");
+                resolvedCalls.push(copyOfPhone);
+                var nr = resolvedCalls[0];
+                if (resolvedCalls.length > 10)
+                    resolvedCalls.shift();
+                $('#tableResolved #th' + nr).parent().remove();
+                $("#tableResolved").append("<tr><th id='th" + copyOfPhone + "'>" + copyOfPhone + "</th><td><button id='" + copyOfPhone + "done'> Info </button></td></tr>");
                 //ajaxUpdateIncidentResolved(ambID);
                 e.preventDefault();
             });
@@ -107,7 +112,40 @@ function ajaxGetAmbulances() {
     })
 }
 
-function ajaxUpdateIncident() {
+function ajaxGetIncident(number, id) {
+    $.ajax({
+        type: "POST",
+        data: '{id:"' + id + '"}',
+        url: "Dispatch.aspx/GetIncident",
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (data) {
+            $.each(data.d, function (index, item) {
+                if (index == 'locationGPS') 
+                    $("#" + number + "addressInput").val(item);
+                if (index == 'callerLocation')
+                    $("#" + number + "cLocationInput").val(item);
+                if (index == 'callerPhone')
+                    $("#" + number + "cPhoneInput").val(item);
+                if (index == 'callerName')
+                    $("#" + number + "cNameInput").val(item);
+                if (index == 'patientLocation')
+                    $("#" + number + "pLocationInput").val(item);
+                if (index == 'patientState')
+                    $("#" + number + "pStateInput").val(item);
+                if (index == 'patientInfo')
+                    $("#" + number + "pInfoInput").val(item);
+                if (index == 'description')
+                    $("#" + number + "descInput").val(item);
+            });
+        },
+        error: function (result) {
+            alert(result);
+        }
+    });
+}
+
+function ajaxUpdateIncident(resolved) {
     //var id = $("#" + phoneNumber + "cPos").val();
     var addressInput = $("#" + phoneNumber + "addressInput").val();
     var cLocationInput = $("#" + phoneNumber + "cLocationInput").val();
@@ -119,7 +157,8 @@ function ajaxUpdateIncident() {
     $.ajax({
         type: "POST",
         data: '{incidentID:"' + incidentID + '", gps:"' + addressInput + '", cLocation:"' + cLocationInput + '", cName:"' + cNameInput + '", pLocation:"'
-            + pLocationInput + '", pState:"' + pStateInput + '", pInfo:"' + pInfoInput + '", description:"' + descriptionInput + '", gravity:"' + color +'"}',
+            + pLocationInput + '", pState:"' + pStateInput + '", pInfo:"' + pInfoInput + '", description:"' + descriptionInput + '", gravity:"'
+            + color + '", resolved:"' + resolved + '"}',
         url: "Dispatch.aspx/updateIncident",
         contentType: "application/json; charset=utf-8",
         dataType: "json",

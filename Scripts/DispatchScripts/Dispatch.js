@@ -9,6 +9,7 @@ var incidentID = "";
 var allNumbers = [];
 var busyNumbers = [];
 var waitingMap = [];
+var resolvedCalls = [];
 var dictionary = {};
 var timestart = null;
 var ambAssign = 0;
@@ -309,7 +310,7 @@ $(function () {
         $("#" + nr + "descInput").val(incident.description);
         //Show resolved 
         $("#img" + number).remove();
-        $('#th' + number).prepend('<img id="img"' + number + ' src="../Images/checked.png" />');
+        //$('#th' + number).prepend('<img id="img"' + number + ' src="../Images/checked.png" />');
         //Update ambulance state
         $("#imgAmb_" + nameAmb).remove();
         if (state == "1") {
@@ -337,7 +338,7 @@ $(function () {
                 else
                     $('#' + allNumbers[i] + 'respond').addClass('buttonOpacity');
             }
-            ajaxUpdateIncident();
+            ajaxUpdateIncident(1);
             ambAssign = 1;
             manageAmb();
             //$('#tableActions').hide();
@@ -373,7 +374,7 @@ $(function () {
             }
             dictionary[phoneNumber] = "0;0";
             //cronometro(0,0);
-            ajaxUpdateIncident();
+            ajaxUpdateIncident(2);
             manageAmb();
             phoneNumber = "";
             
@@ -386,9 +387,16 @@ $(function () {
         parts = id.split("_");
         incidentID = parts[0];
         phoneNumber = parts[1];
-        $("#" + number + "table").siblings().hide();
-        $("#" + number + "table").show();
-
+        $("#" + phoneNumber + "table").siblings().hide();
+        if ($("#infoCall  #" + phoneNumber + "table").length > 0) {
+            $("#" + phoneNumber + "table").show();
+        }
+        else {
+            createTable(phoneNumber, incidentID);
+            $('#infoCall').show();
+            $("#" + phoneNumber + "table").show();
+            ajaxGetIncident(incidentID);
+        }
         ajaxGetAmbulances();
         manageAmb();
         ev.preventDefault();

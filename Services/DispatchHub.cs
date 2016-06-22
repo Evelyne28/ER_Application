@@ -26,7 +26,7 @@ namespace ER_application.Services
             String number = response.Split(';')[1];
             ServerWorker.singleTonServer.map[number].response = response;
         }
-
+   
         public void sendResolvedDispatch(string nameAmb, string state, string number, Incident incident)
         {
             Clients.All.receiveResolvedDispatch(nameAmb, state, number, incident);

@@ -11,7 +11,7 @@
 function notifyAmbulance() {
     var color = $("#dispatchMenu").css("background-color");
     if (color == 'rgb(51, 51, 51)') {
-        $("#dispatchMenu").css('background-color', 'red');
+        $("#dispatchMenu").css('background-color', 'rgba(198, 241, 255, 0.62)');
     }
     else {
         $("#dispatchMenu").css('background-color', '#333');

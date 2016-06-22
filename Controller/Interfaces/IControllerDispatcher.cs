@@ -21,5 +21,6 @@ namespace ER_application.Controller.Interfaces
         void updateIncident(Incident i, int id);
         void updateIncidentResolved(int id);
         void updateIncidentGravity(int id, string gravityLevel);
+        Incident getIncident(int id);
     }
 }

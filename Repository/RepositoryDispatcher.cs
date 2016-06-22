@@ -87,6 +87,7 @@ namespace ER_application.Repository
                     result.patientInfo = i.patientInfo;
                     result.description = i.description;
                     result.gravity = i.gravity;
+                    result.resolved = i.resolved;
                     db.SaveChanges();
                 }
             }
@@ -140,6 +141,11 @@ namespace ER_application.Repository
                              }).ToList();
 
             return (int)patientID.ElementAt(0).patientID;
+        }
+
+        public Incident getIncident(int id)
+        {
+            return repoInc.Get(id);
         }
 
         public List<Incident> readIncidents()

@@ -90,17 +90,17 @@ function createObservations(number) {
 }
 
 function createInjuries(number) {
-    $('<div id="' + number + 'divInjuries"><p class="pInjury"> Probleme </p><ul id="' + number + 'ulInjuries"></ul></div>').appendTo('#' + number + 'divReceive');
+    $('<div id="' + number + 'divInjuries"><p class="pInjury"> Leziuni suferite </p><ul id="' + number + 'ulInjuries"></ul></div>').appendTo('#' + number + 'divReceive');
 }
 
 function createMechanism(number) {
-    $('<div id="' + number + 'divMechanism"><p class="pMechanism"> Mechanism of injury </p><ul id="' + number + 'ulMechanism"></ul></div>').appendTo('#' + number + 'divReceive');
+    $('<div id="' + number + 'divMechanism"><p class="pMechanism"> Modalitate de ranire </p><ul id="' + number + 'ulMechanism"></ul></div>').appendTo('#' + number + 'divReceive');
 }
 
 function createVitals(id) {
-    $('<table id="' + id + 'vitalTable"><tr id="vitalHeader"><th>Time</th> <th>Sistolic</th> <th>Diastolic</th>' + 
-        '<th>Puls</th> <th><Respiratie</th> <th>SPO2</th> <th>CO2</th> <th>Blood sugar</th> <th>Temperature</th>' +
-        '<th>Skin</th> <th>Pupils left/right</th> <th>Pain</th> <th>Conciousness</th>').appendTo('#' + id + 'vitalDiv');
+    $('<table id="' + id + 'vitalTable"><tr id="vitalHeader"><th>Time</th> <th>Pres. sistolica</th> <th>Pres. diastolica</th>' + 
+        '<th>Puls</th> <th><Respiratie</th> <th>SPO2</th> <th>CO2</th> <th>Glicemie</th> <th>Temperatura</th>' +
+        '<th>Piele</th> <th>Pupile stanga/dreapta</th> <th>Scala a durerii</th> <th>Nivel de constiinta</th>').appendTo('#' + id + 'vitalDiv');
 }
 
 function createVitalRow(id, item) {

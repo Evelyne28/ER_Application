@@ -4,6 +4,36 @@ var gmarkers = [];
 var vitalSigns = [];
 var vitalCount = 1;
 var interval;
+var clickX = new Array();
+var clickY = new Array();
+var clickDrag = new Array();
+var paint;
+
+function addClick(x, y, dragging) {
+    clickX.push(x);
+    clickY.push(y);
+    clickDrag.push(dragging);
+}
+
+function redraw() {
+    context.clearRect(0, 0, context.canvas.width, context.canvas.height); // Clears the canvas
+
+    context.strokeStyle = "#df4b26";
+    context.lineJoin = "round";
+    context.lineWidth = 5;
+
+    for (var i = 0; i < clickX.length; i++) {
+        context.beginPath();
+        if (clickDrag[i] && i) {
+            context.moveTo(clickX[i - 1], clickY[i - 1]);
+        } else {
+            context.moveTo(clickX[i] - 1, clickY[i]);
+        }
+        context.lineTo(clickX[i], clickY[i]);
+        context.closePath();
+        context.stroke();
+    }
+}
 
 //Map init and centered in Cluj-Napoca
 function initialize() {
@@ -19,35 +49,69 @@ function initialize() {
 }
 
 function sendPatientER(fromWho, patient, allergyList, diseasesList) {
-    var chat = $.connection.chatHub;
-    chat.server.sendPatientER(fromWho, patient, allergyList, diseasesList);
+    var ambulanceHub = $.connection.ambulanceHub;
+    ambulanceHub.server.sendPatientER(fromWho, patient, allergyList, diseasesList);
 }
 
 function sendProblemER(fromWho, pComplaint, mObservations, injuries, mechanisms) {
-    var chat = $.connection.chatHub;
-    chat.server.sendProblemER(fromWho, pComplaint, mObservations, injuries, mechanisms);
+    var ambulanceHub = $.connection.ambulanceHub;
+    ambulanceHub.server.sendProblemER(fromWho, pComplaint, mObservations, injuries, mechanisms);
 }
 
 function sendVitalsER(fromWho, vitalSigns) {
-    var chat = $.connection.chatHub;
-    chat.server.sendVitalsER(fromWho, vitalSigns);
+    var ambulanceHub = $.connection.ambulanceHub;
+    ambulanceHub.server.sendVitalsER(fromWho, vitalSigns);
 }
 
 function sendVitals(fromWho, vitalsList) {
-    var chat = $.connection.chatHub;
-    chat.server.sendVitalsER(fromWho, vitalsList);
+    var ambulanceHub = $.connection.ambulanceHub;
+    ambulanceHub.server.sendVitalsER(fromWho, vitalsList);
 }
 
 google.maps.event.addDomListener(window, "load", initialize);
 
-$(function () {   
-    var chat = $.connection.ambulanceHub;
+$(function () {
+   // context = document.getElementById('canvasInAPerfectWorld').getContext("2d");
+    var canvasDiv = document.getElementById('canvasDiv');
+    canvas = document.createElement('canvas');
+    canvas.setAttribute('width', '350px');
+    canvas.setAttribute('height', '200px');
+    canvas.setAttribute('id', 'canvas');
+    canvasDiv.appendChild(canvas);
+    if (typeof G_vmlCanvasManager != 'undefined') {
+        canvas = G_vmlCanvasManager.initElement(canvas);
+    }
+    context = canvas.getContext("2d");
+
+    $('#canvas').mousedown(function (e) {
+        var mouseX = e.pageX - this.offsetLeft;
+        var mouseY = e.pageY - this.offsetTop;
+
+        paint = true;
+        addClick(e.pageX - this.offsetLeft, e.pageY - this.offsetTop);
+        redraw();
+    });
+
+    $('#canvas').mousemove(function (e) {
+        if (paint) {
+            addClick(e.pageX - this.offsetLeft, e.pageY - this.offsetTop, true);
+            redraw();
+        }
+    });
+    $('#canvas').mouseup(function (e) {
+        paint = false;
+    });
+    $('#canvas').mouseleave(function (e) {
+        paint = false;
+    });
+    var ambulanceHub = $.connection.ambulanceHub;
     //var parts = username.split(' ');
     //username = parts[1];
     //ajaxOnLoad();
     $("#patientDiv").hide();
     $("#problemDiv").hide();
     $("#vitalDiv").hide();
+    $('#interventionsDiv').hide();
 
     $(document).click(function () {
         clearInterval(interval);    
@@ -71,9 +135,15 @@ $(function () {
         $('#inputVitals').hide();
         $('#divRight').hide();
     });
+    $('#interventionsMenu').on('click', function () {
+        menuAdministration('interventions');
+        $('#inputVitals').hide();
+        $('#divRight').hide();
+    });
 
-    chat.client.receiveIncidentDispatch = function (nameAmb, incident, coordInc) {
+    ambulanceHub.client.receiveIncidentDispatch = function (nameAmb, incident, coordInc) {
         interval = setInterval(notifyAmbulance, 400);
+        $("#dispatchMenu").css('background-color', '#333');
         var id = $('#ambulanceID').val();
         //nameAmb = nameAmb.substring(3, nameAmb.length-1);
         if (nameAmb == id) {
@@ -107,7 +177,7 @@ $(function () {
     }
 
     //Show GPS location of number
-    chat.client.receiveCoordinates = function (toWho, coordinates) {
+    ambulanceHub.client.receiveCoordinates = function (toWho, coordinates) {
         var id = $('#ambulanceID').val();
         toWho = toWho.substring(3, toWho.length - 1);
         if (toWho == id) {
@@ -209,6 +279,37 @@ $(function () {
 
     $(document).on('click', '#btnSave', function (ev) {
         ajaxSaveProblems();
+        ev.preventDefault();
+    });
+
+    $(document).on('click', '#btnSaveInterventions', function (ev) {
+        var intList = [];
+        $('#blsDiv input[type="checkbox"]:checked').each(function () {
+            var intervention = {};
+            var name = $(this).attr('value');
+            if (name == 'Controlul hemoragiei prin')
+                intervention.intType = $('#inputBleeding').val();
+            if (name == 'Imobilizare membru prin') {
+                var selectedButton = $('#imobLimb input[type="radio"]:checked').val();
+                intervention.intType = selectedButton;
+            }
+            if (name == 'RCP inceputa') {
+                intervention.intHour = $('#rcpHour').val();
+                intervention.intMin = $('#rcpMinute').val();
+            }
+            if (name == 'Defibrilare') {
+                intervention.intNumber = $('#inputDefibNr').val();
+                var selectedButton = $('#defibrilation input[type="radio"]:checked').val();
+                intervention.intType = selectedButton;
+            }
+            if (name == 'Ventilatie artificiala') {
+                var selectedButton = $('#artificialVentilation input[type="radio"]:checked').val();
+                intervention.intType = selectedButton;
+            }
+            intervention.intName = name;
+            intList.push(intervention);
+        });
+        ajaxSaveInterventions(intList);
         ev.preventDefault();
     });
 

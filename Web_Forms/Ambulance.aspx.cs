@@ -20,7 +20,7 @@ namespace ER_application.Web_Forms
         {
             String licensePlate = Session["licensePlate"].ToString();
             //welcome.InnerHtml = "Welcome " + licensePlate;
-            dispatchMenu.InnerHtml = "Ambulanta" + licensePlate;
+            dispatchMenu.InnerHtml = "Ambulanta " + licensePlate;
             ambulanceID.Value = Session["ambulanceID"].ToString();
             controller = new ControllerAmbulance();
         }
@@ -130,6 +130,14 @@ namespace ER_application.Web_Forms
             String paID = HttpContext.Current.Session["paID"].ToString();
             int id = Convert.ToInt32(paID);
             controller.addVitalSigns(vitalSigns, id);
+        }
+
+        [WebMethod]
+        public static void SaveInterventions(List<PatientIntervention> interventionList)
+        {
+            String paID = HttpContext.Current.Session["paID"].ToString();
+            int id = Convert.ToInt32(paID);
+            controller.addPatientIntervention(interventionList, id);
         }
 
         [WebMethod(EnableSession = true)]

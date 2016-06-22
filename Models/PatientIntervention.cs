@@ -12,19 +12,17 @@ namespace ER_application.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class InjuryMechanism
+    public partial class PatientIntervention
     {
-        public int imID { get; set; }
+        public int piID { get; set; }
         public Nullable<int> paID { get; set; }
-        public Nullable<int> mecID { get; set; }
+        public string intName { get; set; }
+        public string intType { get; set; }
+        public Nullable<int> intNumber { get; set; }
+        public Nullable<int> intHour { get; set; }
+        public Nullable<int> intMin { get; set; }
+        public string intSupport { get; set; }
     
-        public virtual Mechanism Mechanism { get; set; }
         public virtual PatientAmbulance PatientAmbulance { get; set; }
-
-        public InjuryMechanism(int paID, int mecID)
-        {
-            this.paID = paID;
-            this.mecID = mecID;
-        }
     }
 }
